@@ -24,9 +24,12 @@ target_sources(biz
 		"includes/biz/patcher.h"
 		"includes/biz/argument_parser.h"
 		"includes/biz/updater.h"
+		"includes/common/i_file.h"
 	PRIVATE
+		"includes/common/file.h"
 		"src/application.cpp"
 		"src/entry.cpp"
+		"src/file.cpp"
 		"src/patcher.cpp"
 		"src/argument_parser.cpp"
 		"src/updater.cpp"

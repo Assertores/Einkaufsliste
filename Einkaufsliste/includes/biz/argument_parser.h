@@ -18,7 +18,8 @@ void InterpreteStartArguments(
 	const std::vector<std::string_view>& aArgs,
 	AppSettings& aApp,
 	UpdaterSettings& aUpdater,
-	PatcherSettings& aPatcher);
+	PatcherSettings& aPatcher,
+	std::ostream& aOutput);
 
 std::vector<std::pair<int, std::string_view>>
 RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& aInterpreter);

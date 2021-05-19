@@ -15,7 +15,8 @@ InterpreteStartArguments(
 	const std::vector<std::string_view>& aArgs,
 	AppSettings& aApp,
 	UpdaterSettings& aUpdater,
-	PatcherSettings& aPatcher)
+	PatcherSettings& aPatcher,
+	std::ostream& aOutput)
 {
 	Interpreter interpreter;
 	interpreter["--no-patch"] = [&](auto& /*unused*/) {
@@ -34,7 +35,7 @@ InterpreteStartArguments(
 
 	for (auto& [line, argument] : errors)
 	{
-		std::cout << "[LOG] argument: '" << argument << "' (nr. " << line
+		aOutput << "[LOG] argument: '" << argument << "' (nr. " << line
 				  << ") was not interpreted \n";
 	}
 }
