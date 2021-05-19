@@ -18,10 +18,10 @@ InterpreteStartArguments(
 	PatcherSettings& aPatcher)
 {
 	Interpreter interpreter;
-	interpreter["--no-patch"] = [&](auto /*unused*/) {
+	interpreter["--no-patch"] = [&](auto& /*unused*/) {
 		aPatcher.doPatching = true;
 	};
-	interpreter["--set-update-url"] = [&](auto aQueue) {
+	interpreter["--set-update-url"] = [&](auto& aQueue) {
 		aUpdater.url = aQueue.front();
 		aQueue.pop();
 	};

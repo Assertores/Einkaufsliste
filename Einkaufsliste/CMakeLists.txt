@@ -7,4 +7,4 @@ include(CTest)
 
 include("root.cmake")
 add_subdirectory("extern/googletest")
-add_subdirectory("tests")
+add_subdirectory("tests/utests")
