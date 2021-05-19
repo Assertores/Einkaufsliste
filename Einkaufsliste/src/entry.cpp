@@ -1,8 +1,8 @@
 #include "biz/entry.h"
 
 #include "biz/application.h"
+#include "biz/argument_parser.h"
 #include "biz/patcher.h"
-#include "biz/start_argument_parser.h"
 #include "biz/updater.h"
 
 namespace biz {
