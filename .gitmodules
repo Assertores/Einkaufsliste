@@ -1,0 +1,3 @@
+[submodule "Einkaufsliste/extern/googletest"]
+	path = Einkaufsliste/extern/googletest
+	url = https://github.com/google/googletest.git
