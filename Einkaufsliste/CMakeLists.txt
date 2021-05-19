@@ -22,3 +22,18 @@ target_include_directories(biz
 	PUBLIC
 		"includes"
 )
+
+target_sources(biz
+	PUBLIC
+		"includes/biz/application.h"
+		"includes/biz/entry.h"
+		"includes/biz/patcher.h"
+		"includes/biz/start_argument_parser.h"
+		"includes/biz/updater.h"
+	PRIVATE
+		"src/application.cpp"
+		"src/entry.cpp"
+		"src/patcher.cpp"
+		"src/start_argument_parser.cpp"
+		"src/updater.cpp"
+)
