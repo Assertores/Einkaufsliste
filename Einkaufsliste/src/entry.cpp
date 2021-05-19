@@ -4,15 +4,17 @@
 #include "biz/argument_parser.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
+#include "common/file.h"
 
 namespace biz {
 int
-Entry(const std::vector<std::string_view>& aArgs)
+Entry(const std::vector<std::string_view>& aArgs, std::istream& aInput, std::ostream& aOutput)
 {
 	AppSettings appSettings {};
 	UpdaterSettings updaterSettings {};
 	PatcherSettings patcherSettings {};
-	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
+
+	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings, aOutput);
 	Update(updaterSettings);
 	Patch(patcherSettings);
 	Run(appSettings);
