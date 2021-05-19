@@ -1,0 +1,75 @@
+FormatStyle: file
+HeaderFilterRegex: ''
+User: user
+WarningsAsErrors: '*'
+
+Checks: >-
+    -*,
+    bugprone-*,
+    cert-*,
+    clang-analyzer-*,
+    clang-diagnostic-*,
+    cppcoreguidelines-*,
+    -cppcoreguidelines-macro-usage,
+    -cppcoreguidelines-owning-memory,
+    -cppcoreguidelines-pro-type-reinterpret-cast,
+    hicpp-*,
+    -hicpp-special-member-functions, # NOTE(andreas): redirects to `cppcoreguidelines-special-member-functions` which has special options
+    misc-*,
+    modernize-*,
+    -modernize-use-trailing-return-type,
+    performance-*,
+    portability-*,
+    readability-*,
+
+CheckOptions:
+    - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+      value: true
+    - key: readability-identifier-naming.ClassCase
+      value: CamelCase
+    - key: readability-identifier-naming.ClassConstantCase
+      value: camelBack
+    - key: readability-identifier-naming.EnumCase
+      value: CamelCase
+    - key: readability-identifier-naming.EnumConstantCase
+      value: CamelCase
+    - key: readability-identifier-naming.FunctionCase
+      value: CamelCase
+    - key: readability-identifier-naming.GlobalConstantCase
+      value: CamelCase
+    - key: readability-identifier-naming.GlobalConstantPrefix
+      value: loc
+    - key: readability-identifier-naming.IgnoreMainLikeFunctions
+      value: true
+    - key: readability-identifier-naming.MacroDefinitionCase
+      value: UPPER_CASE
+    - key: readability-identifier-naming.MemberCase
+      value: camelBack
+    - key: readability-identifier-naming.MethodCase
+      value: CamelCase
+    - key: readability-identifier-naming.NamespaceCase
+      value: lower_case
+    - key: readability-identifier-naming.ParameterCase
+      value: CamelCase
+    - key: readability-identifier-naming.ParameterPrefix
+      value: a
+    - key: readability-identifier-naming.PrivateMemberCase
+      value: CamelCase 
+    - key: readability-identifier-naming.PrivateMemberPrefix
+      value: my
+    - key: readability-identifier-naming.PrivateMethodPrefix
+      value: Priv
+    - key: readability-identifier-naming.ProtectedMemberCase
+      value: CamelCase
+    - key: readability-identifier-naming.ProtectedMemberPrefix
+      value: my
+    - key: readability-identifier-naming.StructCase # Note(andreas): clang-tidy does not differentiate between class members and struct members so all class rules also apply to structs
+      value: CamelCase
+    - key: readability-identifier-naming.TypeAliasCase
+      value: CamelCase
+    - key: readability-identifier-naming.TypedefCase
+      value: CamelCase
+    - key: readability-identifier-naming.UnionCase
+      value: CamelCase
+    - key: readability-identifier-naming.VariableCase
+      value: camelBack
