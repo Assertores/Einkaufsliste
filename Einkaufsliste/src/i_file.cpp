@@ -3,7 +3,9 @@
 #include "common/json_parser.h"
 
 namespace common {
-IFile::IFile(std::filesystem::path aPath)
+std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles {};
+
+IFile::IFile(const std::filesystem::path& aPath)
 {
 	// TODO: deside what parser to use via the file ending
 	myFileImplimentation = IFileImpl::Open<JsonParser>(aPath);
@@ -15,44 +17,46 @@ IFile::~IFile()
 }
 
 bool
-IFile::FieldIsArray(std::filesystem::path aKey)
+IFile::FieldIsArray(const std::filesystem::path& aKey)
 {
 	return myFileImplimentation->GetKey(aKey).size() > 1;
 }
 
 void
-IFile::WriteField(std::filesystem::path aKey, std::string_view aValue)
+IFile::WriteField(const std::filesystem::path& aKey, std::string_view aValue)
 {
 	myFileImplimentation->ClearField(aKey);
 	myFileImplimentation->AddToKey(aKey, aValue);
 }
 
 std::string_view
-IFile::ReadFromField(std::filesystem::path aKey)
+IFile::ReadFromField(const std::filesystem::path& aKey)
 {
 	return myFileImplimentation->GetKey(aKey)[0];
 }
 
 void
-IFile::AddToField(std::filesystem::path aKey, std::vector<std::string_view> aValue)
+IFile::AddToField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue)
 {
-	for (auto& it : aValue)
+	for (const auto& it : aValue)
 	{
 		myFileImplimentation->AddToKey(aKey, it);
 	}
 }
 
 void
-IFile::RemoveFromField(std::filesystem::path aKey, std::vector<std::string_view> aValue)
+IFile::RemoveFromField(
+	const std::filesystem::path& aKey,
+	const std::vector<std::string_view>& aValue)
 {
-	for (auto& it : aValue)
+	for (const auto& it : aValue)
 	{
 		myFileImplimentation->RemoveFromKey(aKey, it);
 	}
 }
 
 std::vector<std::string_view>
-IFile::ReadAllFromField(std::filesystem::path aKey)
+IFile::ReadAllFromField(const std::filesystem::path& aKey)
 {
 	return myFileImplimentation->GetKey(aKey);
 }
