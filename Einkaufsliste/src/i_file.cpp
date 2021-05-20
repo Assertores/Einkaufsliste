@@ -1,6 +1,7 @@
 #include "common/i_file.h"
 
 #include "common/json_parser.h"
+#include "common/md_parser.h"
 
 namespace common {
 std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles {};
@@ -8,7 +9,18 @@ std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles {
 IFile::IFile(const std::filesystem::path& aPath)
 {
 	// TODO: deside what parser to use via the file ending
-	myFileImplimentation = IFileImpl::Open<JsonParser>(aPath);
+	auto extention = aPath.extension().string();
+	if (extention == ".json")
+	{
+		myFileImplimentation = IFileImpl::Open<JsonParser>(aPath);
+		return;
+	}
+	if (extention == ".md")
+	{
+		myFileImplimentation = IFileImpl::Open<MdParser>(aPath);
+		return;
+	}
+	myFileImplimentation = IFileImpl::Open<MdParser>(aPath);
 }
 
 IFile::~IFile()

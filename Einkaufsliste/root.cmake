@@ -28,6 +28,7 @@ target_sources(biz
 		"includes/common/i_file.h"
 		"includes/common/i_file_impl.h"
 		"includes/common/json_parser.h"
+		"includes/common/md_parser.h"
 		"includes/common/recipe.h"
 	PRIVATE
 		"src/application.cpp"
@@ -35,6 +36,7 @@ target_sources(biz
 		"src/entry.cpp"
 		"src/i_file.cpp"
 		"src/json_parser.cpp"
+		"src/md_parser.cpp"
 		"src/patcher.cpp"
 		"src/recipe.cpp"
 		"src/updater.cpp"
