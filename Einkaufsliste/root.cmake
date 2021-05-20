@@ -27,11 +27,15 @@ target_sources(biz
 		"includes/biz/updater.h"
 		"includes/common/i_file.h"
 		"includes/common/i_file_impl.h"
+		"includes/common/json_parser.h"
+		"includes/common/recipe.h"
 	PRIVATE
 		"src/application.cpp"
 		"src/argument_parser.cpp"
 		"src/entry.cpp"
 		"src/i_file.cpp"
+		"src/json_parser.cpp"
 		"src/patcher.cpp"
+		"src/recipe.cpp"
 		"src/updater.cpp"
 )
