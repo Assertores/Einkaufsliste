@@ -9,4 +9,4 @@ struct UpdaterSettings
 };
 
 void Update(const UpdaterSettings& aSettings);
-}
+} // namespace biz

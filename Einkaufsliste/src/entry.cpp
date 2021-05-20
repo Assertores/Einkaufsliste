@@ -4,7 +4,6 @@
 #include "biz/argument_parser.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
-#include "common/file.h"
 
 namespace biz {
 int
