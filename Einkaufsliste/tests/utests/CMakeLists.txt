@@ -16,4 +16,5 @@ target_link_libraries(UnitTests
 target_sources(UnitTests
 	PRIVATE
 		"src/argument_parser_test.cpp"
+		"src/file_implimentation_test.cpp"
 )

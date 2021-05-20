@@ -6,8 +6,9 @@ namespace common {
 class JsonParser final : public IFileImpl
 {
 public:
-	void Open(std::filesystem::path aPath) override;
+	void Open(const std::filesystem::path& aPath) override;
 	void Save() override;
+	void Refresh() override;
 
 	void AddToKey(std::filesystem::path aKey, std::string_view aValue) override;
 	void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) override;

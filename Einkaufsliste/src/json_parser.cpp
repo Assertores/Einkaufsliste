@@ -2,12 +2,17 @@
 
 namespace common {
 void
-JsonParser::Open(std::filesystem::path aPath)
+JsonParser::Open(const std::filesystem::path& aPath)
 {
 }
 
 void
 JsonParser::Save()
+{
+}
+
+void
+JsonParser::Refresh()
 {
 }
 
