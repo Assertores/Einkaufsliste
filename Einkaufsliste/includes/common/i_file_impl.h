@@ -12,7 +12,8 @@ class IFileImpl
 public:
 	template <typename Impl, typename = std::enable_if_t<std::is_base_of_v<IFileImpl, Impl>>>
 	static std::shared_ptr<IFileImpl> Open(std::filesystem::path aPath);
-	virtual void Open(std::filesystem::path aPath);
+
+	virtual void Open(std::filesystem::path aPath) = 0;
 	virtual void Save() = 0;
 	virtual void Refresh() = 0;
 

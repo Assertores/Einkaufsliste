@@ -12,6 +12,7 @@ class IFile
 {
 public:
 	IFile(std::filesystem::path aPath);
+	~IFile();
 
 protected:
 	bool FieldIsArray(std::filesystem::path aKey);

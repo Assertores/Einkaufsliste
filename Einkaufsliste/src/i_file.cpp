@@ -9,6 +9,11 @@ IFile::IFile(std::filesystem::path aPath)
 	myFileImplimentation = IFileImpl::Open<JsonParser>(aPath);
 }
 
+IFile::~IFile()
+{
+	myFileImplimentation->Save();
+}
+
 bool
 IFile::FieldIsArray(std::filesystem::path aKey)
 {
