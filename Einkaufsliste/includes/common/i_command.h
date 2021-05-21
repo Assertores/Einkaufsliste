@@ -12,6 +12,7 @@ public:
 	static void Execute(std::unique_ptr<ICommand> aCommand);
 	static void ReExecute();
 	static void Revert();
+	static void Clear();
 
 	virtual std::unique_ptr<ICommand> Clone() = 0;
 

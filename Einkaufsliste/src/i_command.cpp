@@ -1,6 +1,9 @@
 #include "common/i_command.h"
 
 namespace common {
+std::vector<std::unique_ptr<ICommand>> ICommand::myCommandHistory {};
+size_t ICommand::myBackOffset = 0;
+
 void
 ICommand::Execute(std::unique_ptr<ICommand> aCommand)
 {
@@ -31,5 +34,12 @@ ICommand::Revert()
 	}
 	myCommandHistory[myCommandHistory.size() - 1 - myBackOffset]->DoRevert();
 	myBackOffset++;
+}
+
+void
+ICommand::Clear()
+{
+	myCommandHistory.clear();
+	myBackOffset = 0;
 }
 } // namespace common
