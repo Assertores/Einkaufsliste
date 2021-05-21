@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-namespace common {
+namespace interface {
 class ICommand
 {
 public:
@@ -25,4 +25,4 @@ private:
 	static std::vector<std::unique_ptr<ICommand>> myCommandHistory;
 	static size_t myBackOffset;
 };
-} // namespace common
+} // namespace interface

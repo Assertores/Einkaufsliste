@@ -6,12 +6,13 @@
 #include <utility>
 #include <vector>
 
-namespace common {
+namespace interface {
 class IFileImpl
 {
 public:
 	template <typename Impl, typename = std::enable_if_t<std::is_base_of_v<IFileImpl, Impl>>>
 	static std::shared_ptr<IFileImpl> Open(const std::filesystem::path& aPath);
+	static void Clear() { myFiles.clear(); }
 
 	virtual ~IFileImpl() = default;
 
@@ -24,6 +25,7 @@ public:
 	virtual void ClearField(std::filesystem::path aKey) = 0;
 
 	virtual std::vector<std::string_view> GetKey(std::filesystem::path aKey) = 0;
+	virtual std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) = 0;
 
 private:
 	static std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> myFiles;
@@ -43,4 +45,4 @@ IFileImpl::Open(const std::filesystem::path& aPath)
 	file->Open(aPath);
 	return file;
 }
-} // namespace common
+} // namespace interface

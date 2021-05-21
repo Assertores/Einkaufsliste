@@ -4,10 +4,10 @@
 #include <string>
 #include <fstream>
 
-#include "i_file_impl.h"
+#include "interface/i_file_impl.h"
 
 namespace common {
-class MdParser final : public IFileImpl
+class MdParser final : public interface::IFileImpl
 {
 public:
 	void Open(const std::filesystem::path& aPath) override;
@@ -19,6 +19,7 @@ public:
 	void ClearField(std::filesystem::path aKey) override;
 
 	std::vector<std::string_view> GetKey(std::filesystem::path aKey) override;
+	std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) override;
 
 	void Parse(std::istream& aIn);
 	void Serialize(std::ostream& aOut);

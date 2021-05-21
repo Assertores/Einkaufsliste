@@ -1,9 +1,11 @@
-#include "common/i_file.h"
+#include "interface/i_file.h"
+
+#include <queue>
 
 #include "common/json_parser.h"
 #include "common/md_parser.h"
 
-namespace common {
+namespace interface {
 std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles {};
 
 IFile::IFile(const std::filesystem::path& aPath)
@@ -12,15 +14,15 @@ IFile::IFile(const std::filesystem::path& aPath)
 	auto extention = aPath.extension().string();
 	if (extention == ".json")
 	{
-		myFileImplimentation = IFileImpl::Open<JsonParser>(aPath);
+		myFileImplimentation = IFileImpl::Open<common::JsonParser>(aPath);
 		return;
 	}
 	if (extention == ".md")
 	{
-		myFileImplimentation = IFileImpl::Open<MdParser>(aPath);
+		myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
 		return;
 	}
-	myFileImplimentation = IFileImpl::Open<MdParser>(aPath);
+	myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
 }
 
 IFile::~IFile()
@@ -72,4 +74,29 @@ IFile::ReadAllFromField(const std::filesystem::path& aKey)
 {
 	return myFileImplimentation->GetKey(aKey);
 }
-} // namespace common
+
+std::vector<std::filesystem::path>
+IFile::GetAllKeys()
+{
+	std::queue<std::filesystem::path> openKeys;
+	for (const auto& it : myFileImplimentation->GetKeys(""))
+	{
+		openKeys.emplace(it);
+	}
+
+	std::vector<std::filesystem::path> keys;
+	for (; !openKeys.empty(); openKeys.pop())
+	{
+		auto newKeys = myFileImplimentation->GetKeys(openKeys.front());
+		if (newKeys.empty())
+		{
+			keys.emplace_back(openKeys.front());
+		}
+		for (const auto& it : newKeys)
+		{
+			openKeys.emplace(it);
+		}
+	}
+	return keys;
+}
+} // namespace interface

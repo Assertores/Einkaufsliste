@@ -1,9 +1,9 @@
 #pragma once
 
-#include "i_file_impl.h"
+#include "interface/i_file_impl.h"
 
 namespace common {
-class JsonParser final : public IFileImpl
+class JsonParser final : public interface::IFileImpl
 {
 public:
 	void Open(const std::filesystem::path& aPath) override;
@@ -15,5 +15,6 @@ public:
 	void ClearField(std::filesystem::path aKey) override;
 
 	std::vector<std::string_view> GetKey(std::filesystem::path aKey) override;
+	std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) override;
 };
 } // namespace common
