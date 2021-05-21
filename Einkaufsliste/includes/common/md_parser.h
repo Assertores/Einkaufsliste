@@ -20,8 +20,10 @@ public:
 
 	std::vector<std::string_view> GetKey(std::filesystem::path aKey) override;
 
+	void Parse(std::istream& aIn);
+	void Serialize(std::ostream& aOut);
 private:
 	std::map<std::filesystem::path, std::vector<std::string>> myContent;
-	std::ofstream myFile;
+	std::filesystem::path myFile;
 };
 } // namespace common
