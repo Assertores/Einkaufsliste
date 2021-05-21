@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-#include "base/path_utils.h"
-
 namespace common {
 void
 MdParser::Open(const std::filesystem::path& aPath)
@@ -21,7 +19,7 @@ MdParser::Open(const std::filesystem::path& aPath)
 void
 MdParser::Save()
 {
-	std::vector<std::filesystem::path> keys;
+	std::vector<std::filesystem::path> keys {};
 	for (const auto& it : myContent)
 	{
 		keys.emplace_back(it.first);
