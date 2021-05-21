@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "common/i_file_impl.h"
+#include "interface/i_file_impl.h"
 
-class FileImplMock : public common::IFileImpl
+class FileImplMock : public interface::IFileImpl
 {
 public:
 	void Open(const std::filesystem::path& aPath) override { openWasCalled = true; }
@@ -21,23 +21,29 @@ public:
 
 TEST(FileImpl, opening_same_file_twice_returns_cashed_instance) // NOLINT
 {
-	auto subject1 = common::IFileImpl::Open<FileImplMock>("some/path");
-	auto subject2 = common::IFileImpl::Open<FileImplMock>("some/path");
+	auto subject1 = interface::IFileImpl::Open<FileImplMock>("some/path");
+	auto subject2 = interface::IFileImpl::Open<FileImplMock>("some/path");
 
 	EXPECT_EQ(subject1, subject2);
+
+	interface::IFileImpl::Clear();
 }
 
 TEST(FileImpl, opening_different_file_returns_different_instance) // NOLINT
 {
-	auto subject1 = common::IFileImpl::Open<FileImplMock>("some/path");
-	auto subject2 = common::IFileImpl::Open<FileImplMock>("some/different/path");
+	auto subject1 = interface::IFileImpl::Open<FileImplMock>("some/path");
+	auto subject2 = interface::IFileImpl::Open<FileImplMock>("some/different/path");
 
 	EXPECT_NE(subject1, subject2);
+
+	interface::IFileImpl::Clear();
 }
 
 TEST(FileImpl, opening_calls_open_funktion_on_instance) // NOLINT
 {
-	auto subject = common::IFileImpl::Open<FileImplMock>("some/path");
+	auto subject = interface::IFileImpl::Open<FileImplMock>("some/path");
 
 	EXPECT_TRUE(dynamic_cast<FileImplMock*>(subject.get())->openWasCalled);
+
+	interface::IFileImpl::Clear();
 }

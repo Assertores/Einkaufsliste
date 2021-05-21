@@ -58,6 +58,21 @@ MdParser::GetKey(std::filesystem::path aKey)
 	return result;
 }
 
+std::vector<std::filesystem::path>
+MdParser::GetKeys(std::filesystem::path aKey)
+{
+	std::vector<std::filesystem::path> result;
+	for (const auto& it : myContent)
+	{
+		auto relPath = it.first.lexically_relative(aKey);
+		if (relPath != "." && *relPath.begin() != "..") // NOLINT TODO: check if key is a parent path
+		{
+			result.push_back(it.first);
+		}
+	}
+	return result;
+}
+
 void
 MdParser::Parse(std::istream& aIn)
 {

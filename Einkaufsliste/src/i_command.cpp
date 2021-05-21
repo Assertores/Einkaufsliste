@@ -1,6 +1,6 @@
-#include "common/i_command.h"
+#include "interface/i_command.h"
 
-namespace common {
+namespace interface {
 std::vector<std::unique_ptr<ICommand>> ICommand::myCommandHistory {};
 size_t ICommand::myBackOffset = 0;
 
@@ -42,4 +42,4 @@ ICommand::Clear()
 	myCommandHistory.clear();
 	myBackOffset = 0;
 }
-} // namespace common
+} // namespace interface

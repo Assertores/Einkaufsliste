@@ -36,4 +36,10 @@ JsonParser::GetKey(std::filesystem::path aKey)
 {
 	return std::vector<std::string_view>();
 }
+
+std::vector<std::filesystem::path>
+JsonParser::GetKeys(std::filesystem::path aKey)
+{
+	return std::vector<std::filesystem::path>();
+}
 } // namespace common

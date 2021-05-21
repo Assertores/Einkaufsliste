@@ -2,9 +2,9 @@
 
 #include <gtest/gtest.h>
 
-#include "common/i_command.h"
+#include "interface/i_command.h"
 
-class CommandMock : public common::ICommand
+class CommandMock : public interface::ICommand
 {
 public:
 	std::function<bool()> doExecute = []() {
@@ -33,11 +33,11 @@ TEST(Command, command_gets_executed) // NOLINT
 		return false;
 	};
 
-	common::ICommand::Execute(mockedCommand.Clone());
+	interface::ICommand::Execute(mockedCommand.Clone());
 
 	EXPECT_TRUE(wasExecuted);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, non_revertable_command_is_not_reverted) // NOLINT
@@ -51,12 +51,12 @@ TEST(Command, non_revertable_command_is_not_reverted) // NOLINT
 		wasReversed = true;
 	};
 
-	common::ICommand::Execute(mockedCommand.Clone());
-	common::ICommand::Revert();
+	interface::ICommand::Execute(mockedCommand.Clone());
+	interface::ICommand::Revert();
 
 	EXPECT_FALSE(wasReversed);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, non_revertable_command_is_not_executed_again) // NOLINT
@@ -68,13 +68,13 @@ TEST(Command, non_revertable_command_is_not_executed_again) // NOLINT
 		return false;
 	};
 
-	common::ICommand::Execute(mockedCommand.Clone());
-	common::ICommand::Revert();
-	common::ICommand::ReExecute();
+	interface::ICommand::Execute(mockedCommand.Clone());
+	interface::ICommand::Revert();
+	interface::ICommand::ReExecute();
 
 	EXPECT_EQ(executeCount, 1);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, revertable_command_is_reverted) // NOLINT
@@ -88,12 +88,12 @@ TEST(Command, revertable_command_is_reverted) // NOLINT
 		wasReversed = true;
 	};
 
-	common::ICommand::Execute(mockedCommand.Clone());
-	common::ICommand::Revert();
+	interface::ICommand::Execute(mockedCommand.Clone());
+	interface::ICommand::Revert();
 
 	EXPECT_TRUE(wasReversed);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, revertable_command_is_executed_again) // NOLINT
@@ -105,13 +105,13 @@ TEST(Command, revertable_command_is_executed_again) // NOLINT
 		return true;
 	};
 
-	common::ICommand::Execute(mockedCommand.Clone());
-	common::ICommand::Revert();
-	common::ICommand::ReExecute();
+	interface::ICommand::Execute(mockedCommand.Clone());
+	interface::ICommand::Revert();
+	interface::ICommand::ReExecute();
 
 	EXPECT_EQ(executeCount, 2);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, you_can_revert_and_reexecute_a_chain_of_commands) // NOLINT
@@ -129,16 +129,16 @@ TEST(Command, you_can_revert_and_reexecute_a_chain_of_commands) // NOLINT
 		return true;
 	};
 
-	common::ICommand::Execute(mockedCommand1.Clone());
-	common::ICommand::Execute(mockedCommand2.Clone());
-	common::ICommand::Revert();
-	common::ICommand::Revert();
-	common::ICommand::ReExecute();
+	interface::ICommand::Execute(mockedCommand1.Clone());
+	interface::ICommand::Execute(mockedCommand2.Clone());
+	interface::ICommand::Revert();
+	interface::ICommand::Revert();
+	interface::ICommand::ReExecute();
 
 	EXPECT_EQ(executeCount1, 2);
 	EXPECT_EQ(executeCount2, 1);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }
 
 TEST(Command, you_can_change_the_history_of_commands) // NOLINT
@@ -162,20 +162,20 @@ TEST(Command, you_can_change_the_history_of_commands) // NOLINT
 		return true;
 	};
 
-	common::ICommand::Execute(mockedCommand1.Clone());
-	common::ICommand::Execute(mockedCommand2.Clone());
-	common::ICommand::Revert();
-	common::ICommand::Revert();
-	common::ICommand::ReExecute();
-	common::ICommand::Execute(mockedCommand3.Clone());
-	common::ICommand::Revert();
-	common::ICommand::Revert();
-	common::ICommand::ReExecute();
-	common::ICommand::ReExecute();
+	interface::ICommand::Execute(mockedCommand1.Clone());
+	interface::ICommand::Execute(mockedCommand2.Clone());
+	interface::ICommand::Revert();
+	interface::ICommand::Revert();
+	interface::ICommand::ReExecute();
+	interface::ICommand::Execute(mockedCommand3.Clone());
+	interface::ICommand::Revert();
+	interface::ICommand::Revert();
+	interface::ICommand::ReExecute();
+	interface::ICommand::ReExecute();
 
 	EXPECT_EQ(executeCount1, 3);
 	EXPECT_EQ(executeCount2, 1);
 	EXPECT_EQ(executeCount3, 2);
 
-	common::ICommand::Clear();
+	interface::ICommand::Clear();
 }

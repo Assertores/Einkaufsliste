@@ -5,7 +5,7 @@
 #include <string_view>
 #include <vector>
 
-namespace common {
+namespace interface {
 class IFileImpl;
 
 class IFile
@@ -24,8 +24,9 @@ protected:
 	void
 	RemoveFromField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue);
 	std::vector<std::string_view> ReadAllFromField(const std::filesystem::path& aKey);
+	std::vector<std::filesystem::path> GetAllKeys();
 
 private:
 	std::shared_ptr<IFileImpl> myFileImplimentation;
 };
-} // namespace common
+} // namespace interface

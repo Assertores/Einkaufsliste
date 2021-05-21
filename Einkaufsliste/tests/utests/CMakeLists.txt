@@ -18,4 +18,5 @@ target_sources(UnitTests
 		"src/argument_parser_test.cpp"
 		"src/command_test.cpp"
 		"src/file_implimentation_test.cpp"
- "src/md_parser_test.cpp")
+		"src/md_parser_test.cpp"
+)
