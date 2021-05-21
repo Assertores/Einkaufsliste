@@ -13,6 +13,8 @@ public:
 	template <typename Impl, typename = std::enable_if_t<std::is_base_of_v<IFileImpl, Impl>>>
 	static std::shared_ptr<IFileImpl> Open(const std::filesystem::path& aPath);
 
+	virtual ~IFileImpl() = default;
+
 	virtual void Open(const std::filesystem::path& aPath) = 0;
 	virtual void Save() = 0;
 	virtual void Refresh() = 0;

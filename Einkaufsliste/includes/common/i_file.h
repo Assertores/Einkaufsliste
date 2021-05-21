@@ -12,7 +12,7 @@ class IFile
 {
 public:
 	IFile(const std::filesystem::path& aPath);
-	~IFile();
+	virtual ~IFile();
 
 protected:
 	bool FieldIsArray(const std::filesystem::path& aKey);
