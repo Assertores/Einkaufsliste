@@ -2,6 +2,7 @@
 
 #include <string_view>
 
+#include "common/unit.h"
 #include "interface/i_file.h"
 
 namespace common {
@@ -10,17 +11,16 @@ class Recipe final : public interface::IFile
 public:
 	Recipe(const std::filesystem::path& aPath)
 		: IFile(aPath) {};
+	Recipe(std::shared_ptr<interface::IFileImpl> aFileImpl)
+		: IFile(aFileImpl) {};
 	void SetDescription(std::string_view aText);
-	std::string_view GetDescription();
+	std::string GetDescription() const;
 
-	void AddIngredient(std::string_view aIngredient);
-	void RemoveIngredient(std::string_view aIngredient);
-	std::vector<std::string_view> GetIngredients();
+	void AddIngredient(const Unit& aIngredient);
+	void RemoveIngredient(const Unit& aIngredient);
+	std::vector<std::string> GetIngredients() const;
 
 	void SetName(std::string_view aName);
-	std::string_view GetName();
-
-private:
-	std::string myName;
+	std::string GetName() const;
 };
 } // namespace common

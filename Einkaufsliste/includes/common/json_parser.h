@@ -14,7 +14,7 @@ public:
 	void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) override;
 	void ClearField(std::filesystem::path aKey) override;
 
-	std::vector<std::string_view> GetKey(std::filesystem::path aKey) override;
-	std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) override;
+	std::vector<std::string> GetField(std::filesystem::path aKey) const override;
+	std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) const override;
 };
 } // namespace common

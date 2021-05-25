@@ -20,7 +20,7 @@ TEST(Recipe, read_and_write) // NOLINT
 		subject.SetDescription(description);
 		for (const auto& it : ingredians)
 		{
-			subject.AddIngredient(it);
+			// subject.AddIngredient(it);
 		}
 	}
 	interface::IFileImpl::Clear();

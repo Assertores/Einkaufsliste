@@ -24,8 +24,8 @@ public:
 	virtual void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) = 0;
 	virtual void ClearField(std::filesystem::path aKey) = 0;
 
-	virtual std::vector<std::string_view> GetKey(std::filesystem::path aKey) = 0;
-	virtual std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) = 0;
+	virtual std::vector<std::string> GetField(std::filesystem::path aKey) const = 0;
+	virtual std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) const = 0;
 
 private:
 	static std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> myFiles;

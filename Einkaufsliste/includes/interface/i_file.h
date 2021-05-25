@@ -12,19 +12,21 @@ class IFile
 {
 public:
 	IFile(const std::filesystem::path& aPath);
+	IFile(std::shared_ptr<IFileImpl> aFileImpl)
+		: myFileImplimentation(aFileImpl) {};
 	virtual ~IFile();
 
 protected:
-	bool FieldIsArray(const std::filesystem::path& aKey);
+	bool FieldIsArray(const std::filesystem::path& aKey) const;
 
 	void WriteField(const std::filesystem::path& aKey, std::string_view aValue);
-	std::string_view ReadFromField(const std::filesystem::path& aKey);
+	std::string ReadFromField(const std::filesystem::path& aKey) const;
 
 	void AddToField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue);
 	void
 	RemoveFromField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue);
-	std::vector<std::string_view> ReadAllFromField(const std::filesystem::path& aKey);
-	std::vector<std::filesystem::path> GetAllKeys();
+	std::vector<std::string> ReadAllFromField(const std::filesystem::path& aKey) const;
+	std::vector<std::filesystem::path> GetAllKeys() const;
 
 private:
 	std::shared_ptr<IFileImpl> myFileImplimentation;

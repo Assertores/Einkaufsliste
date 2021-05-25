@@ -13,13 +13,13 @@ TEST(MdParser, markdown_file_is_parset) // NOLINT
 
 	subject.Parse(input);
 
-	ASSERT_EQ(subject.GetKey("a/b/c/d").size(), 1);
-	EXPECT_EQ(subject.GetKey("a/b/c/d")[0], "e");
+	ASSERT_EQ(subject.GetField("a/b/c/d").size(), 1);
+	EXPECT_EQ(subject.GetField("a/b/c/d")[0], "e");
 
-	ASSERT_EQ(subject.GetKey("a/x/y").size(), 3);
-	EXPECT_EQ(subject.GetKey("a/x/y")[0], "u");
-	EXPECT_EQ(subject.GetKey("a/x/y")[1], "v");
-	EXPECT_EQ(subject.GetKey("a/x/y")[2], "w");
+	ASSERT_EQ(subject.GetField("a/x/y").size(), 3);
+	EXPECT_EQ(subject.GetField("a/x/y")[0], "u");
+	EXPECT_EQ(subject.GetField("a/x/y")[1], "v");
+	EXPECT_EQ(subject.GetField("a/x/y")[2], "w");
 }
 
 TEST(MdParser, markdown_is_correctly_serialised) // NOLINT
