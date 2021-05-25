@@ -22,7 +22,7 @@ IFile::IFile(const std::filesystem::path& aPath)
 		myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
 		return;
 	}
-	myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
+	myFileImplimentation = IFileImpl::Open<interface::fake::FileImpl>(aPath);
 }
 
 IFile::~IFile()

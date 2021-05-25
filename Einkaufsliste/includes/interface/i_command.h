@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 
 namespace interface {
 class ICommand
@@ -25,4 +26,33 @@ private:
 	static std::vector<std::unique_ptr<ICommand>> myCommandHistory;
 	static size_t myBackOffset;
 };
+
+namespace fake {
+class Command : public ICommand
+{
+public:
+	std::function<bool()> doExecute = [this]() {
+		doExecuteCount++;
+		return false;
+	};
+	std::function<void()> doRevert = [this]() {
+		doRevertCount++;
+	};
+
+	std::unique_ptr<ICommand> Clone() override
+	{
+		// TODO: don't clone lambdas if they are default
+		auto result = std::make_unique<Command>();
+		result->doExecute = doExecute;
+		result->doRevert = doRevert;
+		return result;
+	}
+
+	bool DoExecute() override { return doExecute(); }
+	void DoRevert() override { doRevert(); };
+
+	int doExecuteCount = 0;
+	int doRevertCount = 0;
+};
+}
 } // namespace interface
