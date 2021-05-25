@@ -7,46 +7,44 @@ namespace common {
 void
 Recipe::SetDescription(std::string_view aText)
 {
-	WriteField(myName + "/" + locDescriptionKey, aText);
+	WriteField(GetName() + "/" + locDescriptionKey, aText);
 }
 
-std::string_view
-Recipe::GetDescription()
+std::string
+Recipe::GetDescription() const
 {
-	return ReadFromField(myName + "/" + locDescriptionKey);
-}
-
-void
-Recipe::AddIngredient(std::string_view aIngredient)
-{
-	AddToField(myName + "/" + locIngredientsKey, { aIngredient });
+	return ReadFromField(GetName() + "/" + locDescriptionKey);
 }
 
 void
-Recipe::RemoveIngredient(std::string_view aIngredient)
+Recipe::AddIngredient(const Unit& aIngredient)
 {
-	RemoveFromField(myName + "/" + locIngredientsKey, { aIngredient });
+	// TODO: correctly impliment this function
+	// AddToField(myName + "/" + locIngredientsKey, { aIngredient });
 }
 
-std::vector<std::string_view>
-Recipe::GetIngredients()
+void
+Recipe::RemoveIngredient(const Unit& aIngredient)
 {
-	return ReadAllFromField(myName + "/" + locIngredientsKey);
+	// TODO: correctly impliment this function
+	// RemoveFromField(myName + "/" + locIngredientsKey, { aIngredient });
+}
+
+std::vector<std::string>
+Recipe::GetIngredients() const
+{
+	return ReadAllFromField(GetName() + "/" + locIngredientsKey);
 }
 
 void
 Recipe::SetName(std::string_view aName)
 {
-	myName = std::string(aName);
+	// TODO: set name
 }
 
-std::string_view
-Recipe::GetName()
+std::string
+Recipe::GetName() const
 {
-	if (myName.empty())
-	{
-		myName = GetAllKeys()[0].begin()->string();
-	}
-	return myName;
+	return GetAllKeys()[0].begin()->string();
 }
 } // namespace common

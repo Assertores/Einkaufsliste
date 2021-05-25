@@ -47,19 +47,14 @@ MdParser::ClearField(std::filesystem::path aKey)
 	myContent[aKey] = std::vector<std::string>();
 }
 
-std::vector<std::string_view>
-MdParser::GetKey(std::filesystem::path aKey)
+std::vector<std::string>
+MdParser::GetField(std::filesystem::path aKey) const
 {
-	std::vector<std::string_view> result(myContent[aKey].size());
-	for (int i = 0; i < myContent[aKey].size(); i++)
-	{
-		result[i] = myContent[aKey][i];
-	}
-	return result;
+	return myContent.find(aKey)->second;
 }
 
 std::vector<std::filesystem::path>
-MdParser::GetKeys(std::filesystem::path aKey)
+MdParser::GetKeys(std::filesystem::path aKey) const
 {
 	std::vector<std::filesystem::path> result;
 	for (const auto& it : myContent)

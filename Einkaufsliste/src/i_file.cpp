@@ -31,9 +31,9 @@ IFile::~IFile()
 }
 
 bool
-IFile::FieldIsArray(const std::filesystem::path& aKey)
+IFile::FieldIsArray(const std::filesystem::path& aKey) const
 {
-	return myFileImplimentation->GetKey(aKey).size() > 1;
+	return myFileImplimentation->GetField(aKey).size() > 1;
 }
 
 void
@@ -43,10 +43,10 @@ IFile::WriteField(const std::filesystem::path& aKey, std::string_view aValue)
 	myFileImplimentation->AddToKey(aKey, aValue);
 }
 
-std::string_view
-IFile::ReadFromField(const std::filesystem::path& aKey)
+std::string
+IFile::ReadFromField(const std::filesystem::path& aKey) const
 {
-	return myFileImplimentation->GetKey(aKey)[0];
+	return myFileImplimentation->GetField(aKey)[0];
 }
 
 void
@@ -69,14 +69,14 @@ IFile::RemoveFromField(
 	}
 }
 
-std::vector<std::string_view>
-IFile::ReadAllFromField(const std::filesystem::path& aKey)
+std::vector<std::string>
+IFile::ReadAllFromField(const std::filesystem::path& aKey) const
 {
-	return myFileImplimentation->GetKey(aKey);
+	return myFileImplimentation->GetField(aKey);
 }
 
 std::vector<std::filesystem::path>
-IFile::GetAllKeys()
+IFile::GetAllKeys() const
 {
 	std::queue<std::filesystem::path> openKeys;
 	for (const auto& it : myFileImplimentation->GetKeys(""))

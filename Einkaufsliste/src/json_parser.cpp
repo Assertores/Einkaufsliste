@@ -31,14 +31,14 @@ JsonParser::ClearField(std::filesystem::path aKey)
 {
 }
 
-std::vector<std::string_view>
-JsonParser::GetKey(std::filesystem::path aKey)
+std::vector<std::string>
+JsonParser::GetField(std::filesystem::path aKey) const
 {
-	return std::vector<std::string_view>();
+	return std::vector<std::string>();
 }
 
 std::vector<std::filesystem::path>
-JsonParser::GetKeys(std::filesystem::path aKey)
+JsonParser::GetKeys(std::filesystem::path aKey) const
 {
 	return std::vector<std::filesystem::path>();
 }
