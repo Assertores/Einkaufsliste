@@ -28,6 +28,8 @@ target_sources(biz
 		"includes/common/json_parser.h"
 		"includes/common/md_parser.h"
 		"includes/common/recipe.h"
+		"includes/common/unit.h"
+		"includes/common/unit_convertion.h"
 		"includes/interface/i_command.h"
 		"includes/interface/i_file.h"
 		"includes/interface/i_file_impl.h"
@@ -41,5 +43,7 @@ target_sources(biz
 		"src/md_parser.cpp"
 		"src/patcher.cpp"
 		"src/recipe.cpp"
+		"src/unit.cpp"
+		"src/unit_convertion.cpp"
 		"src/updater.cpp"
 )
