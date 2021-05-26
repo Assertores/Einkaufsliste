@@ -17,17 +17,18 @@ enum class LogLevel
 };
 enum LogType : uint8_t
 {
-	None = 0,
-	Generic = 1 << 0,
-	StartUp = 1 << 1,
-	Network = 1 << 2,
-	File = 1 << 3,
-	Commands = 1 << 4,
-	Units = 1 << 5,
+	LogType_None = 0,
+	LogType_Generic = 1 << 0,
+	LogType_StartUp = 1 << 1,
+	LogType_Network = 1 << 2,
+	LogType_File = 1 << 3,
+	LogType_Commands = 1 << 4,
+	LogType_Units = 1 << 5,
 
-	Application = Generic | StartUp | Units,
-	IO = Network | File,
-	All = Generic | StartUp | Network | File | Commands | Units,
+	LogType_Application = LogType_Generic | LogType_StartUp | LogType_Units,
+	LogType_IO = LogType_Network | LogType_File,
+	LogType_All = LogType_Generic | LogType_StartUp | LogType_Network | LogType_File
+		| LogType_Commands | LogType_Units,
 };
 
 using LogMask = std::underlying_type_t<LogType>;
@@ -35,26 +36,25 @@ using LogMask = std::underlying_type_t<LogType>;
 class ILogger
 {
 	friend class ReplayableLogger;
+
 public:
 	static std::shared_ptr<ILogger> Instance() { return myInstance; }
 	// returns sharedpointer to logger given via parameter for continuation.
-	template <
-		typename LogT,
-		typename = std::enable_if_t<std::is_base_of_v<ILogger, LogT>>>
+	template <typename LogT, typename = std::enable_if_t<std::is_base_of_v<ILogger, LogT>>>
 	static std::shared_ptr<ILogger> SetInstance(LogT aLogger);
 
 	void Log(LogLevel aLevel, LogType aType, std::string_view aLog);
 	void SetLog(LogLevel aLevel, LogMask aTypeMask);
 
 protected:
-
 	virtual void DoLog(std::string_view aLog) = 0;
+
 private:
 	static std::shared_ptr<ILogger> myInstance;
 	static std::queue<std::string> myReplayQueue;
 
-	LogLevel myLogLevel;
-	LogMask myLogMask;
+	LogLevel myLogLevel = LogLevel::Verbose;
+	LogMask myLogMask = LogType_All;
 };
 
 namespace fake {
@@ -65,11 +65,7 @@ public:
 		doLogCount++;
 	};
 
-	void
-	DoLog(std::string_view aLog) override
-	{
-		DoLog(aLog);
-	}
+	void DoLog(std::string_view aLog) override { DoLog(aLog); }
 
 	int doLogCount = 0;
 };

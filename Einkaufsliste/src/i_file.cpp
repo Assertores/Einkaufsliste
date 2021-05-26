@@ -4,13 +4,13 @@
 
 #include "common/json_parser.h"
 #include "common/md_parser.h"
+#include "interface/i_logger.h"
 
 namespace interface {
 std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles {};
 
 IFile::IFile(const std::filesystem::path& aPath)
 {
-	// TODO: deside what parser to use via the file ending
 	auto extention = aPath.extension().string();
 	if (extention == ".json")
 	{
@@ -22,6 +22,12 @@ IFile::IFile(const std::filesystem::path& aPath)
 		myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
 		return;
 	}
+	// TODO(andreas): add all parsers here
+
+	interface::ILogger::Instance()->Log(
+		interface::LogLevel::Debug,
+		interface::LogType_File,
+		"no parser for this extention: " + extention);
 	myFileImplimentation = IFileImpl::Open<interface::fake::FileImpl>(aPath);
 }
 
@@ -46,7 +52,12 @@ IFile::WriteField(const std::filesystem::path& aKey, std::string_view aValue)
 std::string
 IFile::ReadFromField(const std::filesystem::path& aKey) const
 {
-	return myFileImplimentation->GetField(aKey)[0];
+	auto field = myFileImplimentation->GetField(aKey);
+	if (field.empty())
+	{
+		return "";
+	}
+	return field[0];
 }
 
 void
@@ -75,6 +86,7 @@ IFile::ReadAllFromField(const std::filesystem::path& aKey) const
 	return myFileImplimentation->GetField(aKey);
 }
 
+// TODO(andreas): change this!!!!
 std::vector<std::filesystem::path>
 IFile::GetAllKeys() const
 {

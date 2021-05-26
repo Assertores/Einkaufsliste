@@ -41,7 +41,7 @@ public:
 
 	std::unique_ptr<ICommand> Clone() override
 	{
-		// TODO: don't clone lambdas if they are default
+		// TODO(andreas): don't clone lambdas if they are default
 		auto result = std::make_unique<Command>();
 		result->doExecute = doExecute;
 		result->doRevert = doRevert;

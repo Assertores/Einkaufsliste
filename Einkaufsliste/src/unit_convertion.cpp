@@ -3,6 +3,8 @@
 #include <charconv>
 #include <map>
 
+#include "interface/i_logger.h"
+
 namespace common {
 void
 UnitConvertion::SetConvertionRate(std::string_view aUnit, float aConvertionRate)
@@ -19,11 +21,14 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 		return false;
 	}
 	float value = NAN;
-	const auto* end = &*rate.end();
+	const auto* end = rate.data() + rate.size(); // NOLINT
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end)
 	{
-		// TODO: log that file was faulty
+		interface::ILogger::Instance()->Log(
+			interface::LogLevel::Error,
+			interface::LogType_Units,
+			rate + " is not a floatingpoint number");
 		return false;
 	}
 	aOutConvertionRate = value;
