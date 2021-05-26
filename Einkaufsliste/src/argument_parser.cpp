@@ -1,10 +1,11 @@
 #include "biz/argument_parser.h"
 
-#include <iostream>
+#include <sstream>
 #include <string_view>
 
 #include "biz/patcher.h"
 #include "biz/updater.h"
+#include "interface/i_logger.h"
 
 namespace biz {
 static constexpr std::string_view locDefaultUrl =
@@ -15,8 +16,7 @@ InterpreteStartArguments(
 	const std::vector<std::string_view>& aArgs,
 	AppSettings& aApp,
 	UpdaterSettings& aUpdater,
-	PatcherSettings& aPatcher,
-	std::ostream& aOutput)
+	PatcherSettings& aPatcher)
 {
 	Interpreter interpreter;
 	interpreter["--no-patch"] = [&](auto& /*unused*/) {
@@ -35,8 +35,12 @@ InterpreteStartArguments(
 
 	for (auto& [line, argument] : errors)
 	{
-		aOutput << "[LOG] argument: '" << argument << "' (nr. " << line
-				  << ") was not interpreted \n";
+		std::stringstream log;
+		log << " argument: '" << argument << "' (nr. " << line << ") was not interpreted";
+		interface::ILogger::Instance()->Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::StartUp,
+			log.str());
 	}
 }
 
