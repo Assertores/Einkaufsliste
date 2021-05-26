@@ -19,14 +19,14 @@ Recipe::GetDescription() const
 void
 Recipe::AddIngredient(const Unit& aIngredient)
 {
-	// TODO: correctly impliment this function
+	// TODO(andreas): correctly impliment this function
 	// AddToField(myName + "/" + locIngredientsKey, { aIngredient });
 }
 
 void
 Recipe::RemoveIngredient(const Unit& aIngredient)
 {
-	// TODO: correctly impliment this function
+	// TODO(andreas): correctly impliment this function
 	// RemoveFromField(myName + "/" + locIngredientsKey, { aIngredient });
 }
 
@@ -39,7 +39,7 @@ Recipe::GetIngredients() const
 void
 Recipe::SetName(std::string_view aName)
 {
-	// TODO: set name
+	// TODO(andreas): set name
 }
 
 std::string

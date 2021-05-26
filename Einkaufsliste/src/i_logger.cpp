@@ -16,7 +16,7 @@ ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)
 	{
 		return;
 	}
-	if (myLogMask & aType)
+	if ((myLogMask & aType) != 0)
 	{
 		DoLog(aLog);
 	}

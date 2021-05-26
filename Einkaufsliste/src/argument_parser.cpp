@@ -26,7 +26,7 @@ InterpreteStartArguments(
 		aUpdater.url = aQueue.front();
 		aQueue.pop();
 	};
-	// TODO: add all arguments here
+	// TODO(andreas): add all arguments here
 
 	aPatcher.doPatching = true;
 	aUpdater.url = locDefaultUrl;
@@ -39,7 +39,7 @@ InterpreteStartArguments(
 		log << " argument: '" << argument << "' (nr. " << line << ") was not interpreted";
 		interface::ILogger::Instance()->Log(
 			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
+			interface::LogType_StartUp,
 			log.str());
 	}
 }
