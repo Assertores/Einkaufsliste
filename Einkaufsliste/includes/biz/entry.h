@@ -7,6 +7,6 @@
 namespace biz {
 int Entry(
 	const std::vector<std::string_view>& aArgs,
-	std::istream& aInput = std::cin,
-	std::ostream& aOutput = std::cout);
+	std::ostream& aOutput = std::cout,
+	std::istream& aInput = std::cin);
 } // namespace biz
