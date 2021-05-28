@@ -4,15 +4,17 @@
 #include "biz/argument_parser.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
+#include "common/log_on_console.h"
 #include "interface/i_logger.h"
 
 namespace biz {
 int
-Entry(const std::vector<std::string_view>& aArgs, std::istream& aInput, std::ostream& aOutput)
+Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput)
 {
 	{
-		interface::ILogger::SetLog(interface::LogLevel::Error, interface::LogMasks::All);
 		common::LogOnConsole logger(aOutput);
+		interface::ILogger::SetLogLevel(interface::LogLevel::Error);
+		interface::ILogger::SetLogMask(interface::LogMasks::All);
 		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 

@@ -25,9 +25,14 @@ ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)
 }
 
 void
-ILogger::SetLog(LogLevel aLevel, LogMask aTypeMask)
+ILogger::SetLogLevel(LogLevel aLevel)
 {
 	myLogLevel = aLevel;
+}
+
+void
+ILogger::SetLogMask(LogMask aTypeMask)
+{
 	myLogMask = aTypeMask;
 }
 }; // namespace interface

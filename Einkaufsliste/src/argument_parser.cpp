@@ -26,6 +26,30 @@ InterpreteStartArguments(
 		aUpdater.url = aQueue.front();
 		aQueue.pop();
 	};
+	interpreter["--log-level"] = [](auto& aQueue) {
+		auto element = aQueue.front();
+		aQueue.pop();
+		if (element == "silent")
+		{
+			interface::ILogger::SetLogLevel(interface::LogLevel::Silent);
+		}
+		else if (element == "fatal")
+		{
+			interface::ILogger::SetLogLevel(interface::LogLevel::Fatal);
+		}
+		else if (element == "error")
+		{
+			interface::ILogger::SetLogLevel(interface::LogLevel::Error);
+		}
+		else if (element == "debug")
+		{
+			interface::ILogger::SetLogLevel(interface::LogLevel::Debug);
+		}
+		else if (element == "verbose")
+		{
+			interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
+		}
+	};
 	// TODO(andreas): add all arguments here
 
 	aPatcher.doPatching = true;
@@ -36,7 +60,7 @@ InterpreteStartArguments(
 	for (auto& [line, argument] : errors)
 	{
 		std::stringstream log;
-		log << " argument: '" << argument << "' (nr. " << line << ") was not interpreted";
+		log << " argument '" << argument << "' (nr. " << line << ") was not interpreted";
 		interface::ILogger::Log(
 			interface::LogLevel::Verbose,
 			interface::LogType::StartUp,

@@ -58,7 +58,8 @@ public:
 	static void SetImplimentation(LogT aLogger);
 
 	static void Log(LogLevel aLevel, LogType aType, std::string_view aLog);
-	static void SetLog(LogLevel aLevel, LogMask aTypeMask);
+	static void SetLogLevel(LogLevel aLevel);
+	static void SetLogMask(LogMask aTypeMask);
 
 	static void Clear()
 	{
@@ -111,5 +112,45 @@ ILogger::SetImplimentation(LogT aLogger)
 		myReplayQueue.pop();
 	}
 	return;
+}
+
+constexpr std::string_view
+ToString(const LogLevel& aLevel)
+{
+	switch (aLevel)
+	{
+	case LogLevel::Silent:
+		return "[Silent]";
+	case LogLevel::Fatal:
+		return "[Fatal]";
+	case LogLevel::Error:
+		return "[Error]";
+	case LogLevel::Debug:
+		return "[Debug]";
+	case LogLevel::Verbose:
+		return "[Verbose]";
+	}
+	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
+}
+
+constexpr std::string_view
+ToString(const LogType& aLevel)
+{
+	switch (aLevel)
+	{
+	case LogType::Generic:
+		return "Generic";
+	case LogType::StartUp:
+		return "StartUp";
+	case LogType::Network:
+		return "Network";
+	case LogType::File:
+		return "File";
+	case LogType::Commands:
+		return "Commands";
+	case LogType::Units:
+		return "Units";
+	}
+	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
 }
 }; // namespace interface
