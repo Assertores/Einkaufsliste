@@ -31,9 +31,9 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end)
 	{
-		interface::ILogger::Instance()->Log(
+		interface::ILogger::Log(
 			interface::LogLevel::Error,
-			interface::LogType_Units,
+			interface::LogType::Units,
 			rate + " is not a floatingpoint number");
 		return false;
 	}

@@ -18,9 +18,9 @@ Unit::Unit(
 	float rate = NAN;
 	if (!aConvertionFile.GetConvertionRate(aUnit, rate))
 	{
-		interface::ILogger::Instance()->Log(
+		interface::ILogger::Log(
 			interface::LogLevel::Error,
-			interface::LogType_Units,
+			interface::LogType::Units,
 			std::string("tryed to create unit ot type ") + aType
 				+ " but the convertion file was not able to convert it ");
 		myAmount = aAmount;
@@ -88,7 +88,7 @@ Unit::FromString(std::string_view aString, const std::vector<UnitConvertion>& aC
 }
 
 std::string
-Unit::ToString(std::vector<Unit> aUnits)
+Unit::ToString(const std::vector<Unit>& aUnits)
 {
 	if (aUnits.empty())
 	{
@@ -100,9 +100,9 @@ Unit::ToString(std::vector<Unit> aUnits)
 	{
 		if (it.myType != aUnits[0].myType)
 		{
-			interface::ILogger::Instance()->Log(
+			interface::ILogger::Log(
 				interface::LogLevel::Debug,
-				interface::LogType_Units,
+				interface::LogType::Units,
 				std::string("units ") + aUnits[0].myType + " array contained unit of type "
 					+ it.myType);
 			return "";

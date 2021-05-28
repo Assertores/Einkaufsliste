@@ -22,7 +22,7 @@ public:
 	static std::string ResultsInUnitsOfType(std::string_view aString);
 	static std::vector<Unit>
 	FromString(std::string_view aString, const std::vector<UnitConvertion>& aConverters);
-	static std::string ToString(std::vector<Unit> aUnits);
+	static std::string ToString(const std::vector<Unit>& aUnits);
 
 	bool Equals(const Unit& aOther);
 

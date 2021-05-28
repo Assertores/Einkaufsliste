@@ -24,9 +24,9 @@ IFile::IFile(const std::filesystem::path& aPath)
 	}
 	// TODO(andreas): add all parsers here
 
-	interface::ILogger::Instance()->Log(
+	interface::ILogger::Log(
 		interface::LogLevel::Debug,
-		interface::LogType_File,
+		interface::LogType::File,
 		"no parser for this extention: " + extention);
 	myFileImplimentation = IFileImpl::Open<interface::fake::FileImpl>(aPath);
 }
