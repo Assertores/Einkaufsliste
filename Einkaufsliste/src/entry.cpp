@@ -11,8 +11,8 @@ int
 Entry(const std::vector<std::string_view>& aArgs, std::istream& aInput, std::ostream& aOutput)
 {
 	{
-		interface::fake::Logger logger;
 		interface::ILogger::SetLog(interface::LogLevel::Error, interface::LogMasks::All);
+		common::LogOnConsole logger(aOutput);
 		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 
