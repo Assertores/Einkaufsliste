@@ -12,8 +12,8 @@ Entry(const std::vector<std::string_view>& aArgs, std::istream& aInput, std::ost
 {
 	{
 		interface::fake::Logger logger;
-		logger.SetLog(interface::LogLevel::Error, interface::LogType_All);
-		interface::ILogger::SetInstance(std::move(logger));
+		interface::ILogger::SetLog(interface::LogLevel::Error, interface::LogMasks::All);
+		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 
 	AppSettings appSettings {};

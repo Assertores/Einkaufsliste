@@ -1,24 +1,26 @@
 #include "interface/i_logger.h"
 
 namespace interface {
-class ReplayableLogger : public ILogger
-{
-	void DoLog(std::string_view aLog) override { myReplayQueue.emplace(aLog); }
-};
-
-std::queue<std::string> ILogger::myReplayQueue {};
-std::shared_ptr<ILogger> ILogger::myInstance = std::make_shared<ReplayableLogger>();
+std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue {};
+std::shared_ptr<ILogger> ILogger::myLoggerImplimentation = nullptr;
+LogLevel ILogger::myLogLevel = LogLevel::Verbose;
+LogMask ILogger::myLogMask = LogMasks::All;
 
 void
 ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)
 {
-	if (aLevel < myLogLevel)
+	if (aLevel > myLogLevel)
 	{
 		return;
 	}
-	if ((myLogMask & aType) != 0)
+	if ((myLogMask & static_cast<LogMask>(aType)) != 0)
 	{
-		DoLog(aLog);
+		if (!myLoggerImplimentation)
+		{
+			myReplayQueue.emplace(aLevel, aType, aLog);
+			return;
+		}
+		myLoggerImplimentation->DoLog(aLevel, aType, aLog);
 	}
 }
 

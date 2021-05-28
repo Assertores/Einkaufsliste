@@ -37,9 +37,9 @@ InterpreteStartArguments(
 	{
 		std::stringstream log;
 		log << " argument: '" << argument << "' (nr. " << line << ") was not interpreted";
-		interface::ILogger::Instance()->Log(
+		interface::ILogger::Log(
 			interface::LogLevel::Verbose,
-			interface::LogType_StartUp,
+			interface::LogType::StartUp,
 			log.str());
 	}
 }

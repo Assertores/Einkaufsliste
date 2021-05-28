@@ -13,7 +13,7 @@ class IFile
 public:
 	IFile(const std::filesystem::path& aPath);
 	IFile(std::shared_ptr<IFileImpl> aFileImpl)
-		: myFileImplimentation(aFileImpl) {};
+		: myFileImplimentation(std::move(aFileImpl)) {};
 	virtual ~IFile();
 
 protected:
