@@ -45,6 +45,6 @@ Recipe::SetName(std::string_view aName)
 std::string
 Recipe::GetName() const
 {
-	return GetAllKeys()[0].begin()->string();
+	return GetSubKeys("")[0].begin()->string();
 }
 } // namespace common

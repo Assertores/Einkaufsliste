@@ -26,7 +26,7 @@ protected:
 	void
 	RemoveFromField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue);
 	std::vector<std::string> ReadAllFromField(const std::filesystem::path& aKey) const;
-	std::vector<std::filesystem::path> GetAllKeys() const;
+	std::vector<std::filesystem::path> GetSubKeys(const std::filesystem::path& aRoot) const;
 
 private:
 	std::shared_ptr<IFileImpl> myFileImplimentation;
