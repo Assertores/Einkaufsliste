@@ -88,27 +88,8 @@ IFile::ReadAllFromField(const std::filesystem::path& aKey) const
 
 // TODO(andreas): change this!!!!
 std::vector<std::filesystem::path>
-IFile::GetAllKeys() const
+IFile::GetSubKeys(const std::filesystem::path& aRoot) const
 {
-	std::queue<std::filesystem::path> openKeys;
-	for (const auto& it : myFileImplimentation->GetKeys(""))
-	{
-		openKeys.emplace(it);
-	}
-
-	std::vector<std::filesystem::path> keys;
-	for (; !openKeys.empty(); openKeys.pop())
-	{
-		auto newKeys = myFileImplimentation->GetKeys(openKeys.front());
-		if (newKeys.empty())
-		{
-			keys.emplace_back(openKeys.front());
-		}
-		for (const auto& it : newKeys)
-		{
-			openKeys.emplace(it);
-		}
-	}
-	return keys;
+	return myFileImplimentation->GetKeys(aRoot);
 }
 } // namespace interface

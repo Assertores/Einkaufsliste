@@ -13,6 +13,12 @@ UnitConvertion::SetConvertionRate(std::string_view aUnit, float aConvertionRate)
 }
 
 bool
+UnitConvertion::CanConvertUnit(std::string_view aUnit) const
+{
+	return !ReadFromField(aUnit).empty();
+}
+
+bool
 UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConvertionRate) const
 {
 	auto rate = ReadFromField(aCurrentUnit);
@@ -40,7 +46,7 @@ UnitConvertion::GetBestUnit(
 	float aBaseUnitAmount,
 	float& aOutConvertedAmount) const
 {
-	auto allUnits = GetAllKeys();
+	auto allUnits = GetSubKeys("");
 
 	std::string currentUnit;
 	float currentConvertedAmount = std::numeric_limits<float>::max();
