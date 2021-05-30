@@ -20,8 +20,6 @@ void InterpreteStartArguments(
 	UpdaterSettings& aUpdater,
 	PatcherSettings& aPatcher);
 
-void SetDefaultArguments(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
-
 void ReadArgumentsFromFile(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
 
 Interpreter

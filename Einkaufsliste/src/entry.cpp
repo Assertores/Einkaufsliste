@@ -7,6 +7,9 @@
 #include "common/log_on_console.h"
 #include "interface/i_logger.h"
 
+static constexpr std::string_view locDefaultUrl =
+	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
+
 namespace biz {
 int
 Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput)
@@ -18,9 +21,9 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 
-	AppSettings appSettings {};
-	UpdaterSettings updaterSettings {};
-	PatcherSettings patcherSettings {};
+	AppSettings appSettings { true, FrontendType::Cli, aOutput, aInput };
+	UpdaterSettings updaterSettings { true, locDefaultUrl.data() };
+	PatcherSettings patcherSettings { true };
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 	if (Update(updaterSettings))
@@ -30,7 +33,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	}
 	Patch(patcherSettings);
 	Application app(appSettings);
-	app.Run();
+	app.Run(appSettings);
 	return 0;
 }
 } // namespace biz

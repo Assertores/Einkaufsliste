@@ -2,28 +2,25 @@
 
 #include "common/recipe.h"
 
+namespace common {
 std::unique_ptr<interface::ICommand>
-common::OpenRecipe::Clone()
+OpenRecipe::Clone()
 {
-	return std::make_unique<OpenRecipe>(myFrontend, myHub);
+	return std::make_unique<OpenRecipe>(myFrontend, myRecipeObservable);
 }
 
 bool
-common::OpenRecipe::DoExecute()
+OpenRecipe::DoExecute()
 {
 	auto frontend = myFrontend.lock();
 	if (!frontend)
 	{
 		return false;
 	}
-	auto hub = myHub.lock();
-	if (!hub)
-	{
-		return false;
-	}
 
 	auto file = frontend->AskForFile();
-	hub->currentRecipe.Notify(Recipe(file));
+	myRecipeObservable.Notify(Recipe(file));
 
 	return false;
 }
+} // namespace common

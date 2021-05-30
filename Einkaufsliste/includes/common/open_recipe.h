@@ -2,23 +2,26 @@
 
 #include <memory>
 
+#include "common/observable.h"
+#include "common/recipe.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
-#include "interface/i_hub.h"
 
 namespace common {
 class OpenRecipe : public interface::ICommand
 {
 public:
-	OpenRecipe(std::weak_ptr<interface::IFrontend> aFrontend, std::weak_ptr<interface::IHub> aHub)
+	OpenRecipe(
+		std::weak_ptr<interface::IFrontend> aFrontend,
+		common::Observable<common::Recipe>& aRecipeObservable)
 		: myFrontend(std::move(aFrontend))
-		, myHub(std::move(aHub)) {};
+		, myRecipeObservable(myRecipeObservable) {};
 
 	virtual std::unique_ptr<ICommand> Clone() override;
 	virtual bool DoExecute() override;
 
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
-	std::weak_ptr<interface::IHub> myHub;
+	common::Observable<common::Recipe>& myRecipeObservable;
 };
 } // namespace common
