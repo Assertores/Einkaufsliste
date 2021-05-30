@@ -1,8 +1,10 @@
 #include "biz/application.h"
 
 namespace biz {
+Application::Application(const AppSettings& aSettings) {}
+
 void
-Run(const AppSettings& aSettings)
+Application::Run()
 {
 }
 } // namespace biz

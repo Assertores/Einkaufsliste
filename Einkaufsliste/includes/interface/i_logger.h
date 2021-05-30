@@ -23,6 +23,7 @@ enum class LogType : uint8_t
 	File = 1 << 3,
 	Commands = 1 << 4,
 	Units = 1 << 5,
+	Observer = 1 << 6,
 };
 
 using LogMask = std::underlying_type_t<LogType>;
@@ -44,7 +45,7 @@ static constexpr LogMask None = 0;
 static constexpr LogMask Application = LogType::Generic | LogType::StartUp | LogType::Units;
 static constexpr LogMask IO = LogType::Network | LogType::File;
 static constexpr LogMask All = LogType::Generic | LogType::StartUp | LogType::Network
-	| LogType::File | LogType::Commands | LogType::Units;
+	| LogType::File | LogType::Commands | LogType::Units | LogType::Observer;
 }
 
 
@@ -150,6 +151,8 @@ ToString(const LogType& aLevel)
 		return "Commands";
 	case LogType::Units:
 		return "Units";
+	case LogType::Observer:
+		return "Observer";
 	}
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
 }
