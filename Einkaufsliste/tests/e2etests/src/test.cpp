@@ -1,3 +1,5 @@
+#include <thread>
+
 #include <gtest/gtest.h>
 
 #include "biz/entry.h"
@@ -9,10 +11,28 @@ TEST(test, test) // NOLINT
 		std::vector<std::string_view> { "exe",
 										"--no-patch",
 										"--no-update",
+										"--shut-down",
 										"--log-level",
 										"verbose",
 										"-something" },
 		out);
 
 	EXPECT_FALSE(out.str().empty());
+}
+
+TEST(application, reacts_to_exit_commands) // NOLINT
+{
+	std::stringstream out;
+	std::stringstream in;
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
+	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
+
+	in << "exit";
+
+	EXPECT_TRUE(thread.joinable());
+	thread.join();
 }

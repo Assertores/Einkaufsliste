@@ -8,12 +8,12 @@ namespace interface {
 class ICommand
 {
 public:
-	virtual ~ICommand() = default;
-
 	static void Execute(std::unique_ptr<ICommand> aCommand);
 	static void ReExecute();
 	static void Revert();
 	static void Clear();
+
+	virtual ~ICommand() = default;
 
 	virtual std::unique_ptr<ICommand> Clone() = 0;
 

@@ -70,6 +70,8 @@ public:
 		myLogMask = LogMasks::None;
 	}
 
+	virtual ~ILogger() = default;
+
 protected:
 	virtual void DoLog(LogLevel aLevel, LogType aType, std::string_view aLog) = 0;
 
@@ -132,6 +134,7 @@ ToString(const LogLevel& aLevel)
 		return "[Verbose]";
 	}
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
+	return "";
 }
 
 constexpr std::string_view
@@ -155,5 +158,6 @@ ToString(const LogType& aLevel)
 		return "Observer";
 	}
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
+	return "";
 }
 }; // namespace interface

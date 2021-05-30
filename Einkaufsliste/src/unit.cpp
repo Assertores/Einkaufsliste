@@ -6,7 +6,6 @@
 #include "interface/i_logger.h"
 
 namespace common {
-
 Unit::Unit(
 	float aAmount,
 	std::string aType,

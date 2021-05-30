@@ -3,13 +3,12 @@
 #include <sstream>
 #include <string_view>
 
+#include "biz/application.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
 #include "interface/i_logger.h"
 
 namespace biz {
-static constexpr std::string_view locDefaultUrl =
-	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
 
 void
 InterpreteStartArguments(
@@ -18,7 +17,6 @@ InterpreteStartArguments(
 	UpdaterSettings& aUpdater,
 	PatcherSettings& aPatcher)
 {
-	SetDefaultArguments(aApp, aUpdater, aPatcher);
 	ReadArgumentsFromFile(aApp, aUpdater, aPatcher);
 
 	auto errors = RunInterpretion(aArgs, CreateInterpreter(aApp, aUpdater, aPatcher));
@@ -32,14 +30,6 @@ InterpreteStartArguments(
 			interface::LogType::StartUp,
 			log.str());
 	}
-}
-
-void
-SetDefaultArguments(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher)
-{
-	aPatcher.doPatching = true;
-	aUpdater.doUpdate = true;
-	aUpdater.url = locDefaultUrl;
 }
 
 void
@@ -60,6 +50,9 @@ CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings&
 	interpreter["--set-update-url"] = [&](auto& aQueue) {
 		aUpdater.url = aQueue.front();
 		aQueue.pop();
+	};
+	interpreter["--shut-down"] = [&](auto& /*unused*/) {
+		aApp.doRun = false;
 	};
 	interpreter["--log-level"] = [](auto& aQueue) {
 		auto element = aQueue.front();
