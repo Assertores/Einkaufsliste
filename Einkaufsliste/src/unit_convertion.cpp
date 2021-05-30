@@ -27,6 +27,7 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 		return false;
 	}
 	float value = std::numeric_limits<float>::quiet_NaN();
+#if gcc_is_unable_to_compile_from_chars
 	const auto* end = rate.data() + rate.size(); // NOLINT
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end)
@@ -37,14 +38,25 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 			rate + " is not a floatingpoint number");
 		return false;
 	}
+#else
+	// don't ask!!
+	char* ptr = nullptr; // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
+	value = std::strtof(rate.data(), &ptr);
+	if (ptr != rate.data() + rate.size()) // NOLINT
+	{
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Units,
+			rate + " is not a floatingpoint number");
+		return false;
+	}
+#endif
 	aOutConvertionRate = value;
 	return true;
 }
 
 std::string
-UnitConvertion::GetBestUnit(
-	float aBaseUnitAmount,
-	float& aOutConvertedAmount) const
+UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const
 {
 	auto allUnits = GetSubKeys("");
 
