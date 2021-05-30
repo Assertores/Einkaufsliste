@@ -18,9 +18,44 @@ InterpreteStartArguments(
 	UpdaterSettings& aUpdater,
 	PatcherSettings& aPatcher)
 {
+	SetDefaultArguments(aApp, aUpdater, aPatcher);
+	ReadArgumentsFromFile(aApp, aUpdater, aPatcher);
+
+	auto errors = RunInterpretion(aArgs, CreateInterpreter(aApp, aUpdater, aPatcher));
+
+	for (auto& [line, argument] : errors)
+	{
+		std::stringstream log;
+		log << " argument '" << argument << "' (nr. " << line << ") was not interpreted";
+		interface::ILogger::Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::StartUp,
+			log.str());
+	}
+}
+
+void
+SetDefaultArguments(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher)
+{
+	aPatcher.doPatching = true;
+	aUpdater.doUpdate = true;
+	aUpdater.url = locDefaultUrl;
+}
+
+void
+ReadArgumentsFromFile(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher)
+{
+}
+
+Interpreter
+CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher)
+{
 	Interpreter interpreter;
 	interpreter["--no-patch"] = [&](auto& /*unused*/) {
-		aPatcher.doPatching = true;
+		aPatcher.doPatching = false;
+	};
+	interpreter["--no-update"] = [&](auto& /*unused*/) {
+		aUpdater.doUpdate = false;
 	};
 	interpreter["--set-update-url"] = [&](auto& aQueue) {
 		aUpdater.url = aQueue.front();
@@ -50,22 +85,7 @@ InterpreteStartArguments(
 			interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
 		}
 	};
-	// TODO(andreas): add all arguments here
-
-	aPatcher.doPatching = true;
-	aUpdater.url = locDefaultUrl;
-
-	auto errors = RunInterpretion(aArgs, interpreter);
-
-	for (auto& [line, argument] : errors)
-	{
-		std::stringstream log;
-		log << " argument '" << argument << "' (nr. " << line << ") was not interpreted";
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
-			log.str());
-	}
+	return std::move(interpreter);
 }
 
 std::vector<std::pair<int, std::string_view>>

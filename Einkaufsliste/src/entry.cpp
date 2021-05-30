@@ -23,9 +23,14 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	PatcherSettings patcherSettings {};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
-	Update(updaterSettings);
+	if (Update(updaterSettings))
+	{
+		// TODO(andreas): restart application
+		return 1;
+	}
 	Patch(patcherSettings);
-	Run(appSettings);
+	Application app(appSettings);
+	app.Run();
 	return 0;
 }
 } // namespace biz

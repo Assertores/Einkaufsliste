@@ -5,8 +5,9 @@
 namespace biz {
 struct UpdaterSettings
 {
+	bool doUpdate;
 	std::string url;
 };
 
-void Update(const UpdaterSettings& aSettings);
+bool Update(const UpdaterSettings& aSettings);
 } // namespace biz
