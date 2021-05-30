@@ -14,7 +14,7 @@ Unit::Unit(
 	: myType(std::move(aType))
 	, myConvertionFile(aConvertionFile)
 {
-	float rate = NAN;
+	float rate = std::numeric_limits<float>::quiet_NaN();
 	if (!aConvertionFile.GetConvertionRate(aUnit, rate))
 	{
 		interface::ILogger::Log(
@@ -69,7 +69,7 @@ Unit::FromString(std::string_view aString, const std::vector<UnitConvertion>& aC
 				aString = aString.substr(aString.find_first_of(" & ") + 3);
 			}
 		}
-		float value = NAN;
+		float value = std::numeric_limits<float>::quiet_NaN();
 		auto errors =
 			std::from_chars(element.data(), element.data() + element.size(), value); // NOLINT
 		auto unit = element.substr(errors.ptr - element.data());
@@ -106,7 +106,7 @@ Unit::ToString(const std::vector<Unit>& aUnits)
 					+ it.myType);
 			return "";
 		}
-		float amount = NAN;
+		float amount = std::numeric_limits<float>::quiet_NaN();
 		auto unit = it.myConvertionFile.GetBestUnit(it.myAmount, amount);
 		strBuilder << amount << unit << " & ";
 	}

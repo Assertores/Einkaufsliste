@@ -2,18 +2,19 @@
 
 static constexpr const char* locDescriptionKey = "Description";
 static constexpr const char* locIngredientsKey = "Ingredients";
+static constexpr const char* locNameKey = "Name";
 
 namespace common {
 void
 Recipe::SetDescription(std::string_view aText)
 {
-	WriteField(GetName() + "/" + locDescriptionKey, aText);
+	WriteField(locDescriptionKey, aText);
 }
 
 std::string
 Recipe::GetDescription() const
 {
-	return ReadFromField(GetName() + "/" + locDescriptionKey);
+	return ReadFromField(locDescriptionKey);
 }
 
 void
@@ -33,18 +34,18 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 std::vector<std::string>
 Recipe::GetIngredients() const
 {
-	return ReadAllFromField(GetName() + "/" + locIngredientsKey);
+	return ReadAllFromField(locIngredientsKey);
 }
 
 void
 Recipe::SetName(std::string_view aName)
 {
-	// TODO(andreas): set name
+	WriteField(locNameKey, aName);
 }
 
 std::string
 Recipe::GetName() const
 {
-	return GetSubKeys("")[0].begin()->string();
+	return ReadFromField(locNameKey);
 }
 } // namespace common

@@ -26,7 +26,7 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 	{
 		return false;
 	}
-	float value = NAN;
+	float value = std::numeric_limits<float>::quiet_NaN();
 	const auto* end = rate.data() + rate.size(); // NOLINT
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end)
@@ -52,7 +52,7 @@ UnitConvertion::GetBestUnit(
 	float currentConvertedAmount = std::numeric_limits<float>::max();
 	for (const auto& it : allUnits)
 	{
-		float rate = NAN;
+		float rate = std::numeric_limits<float>::quiet_NaN();
 		GetConvertionRate(it.string(), rate);
 		rate *= aBaseUnitAmount;
 
