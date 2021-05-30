@@ -22,3 +22,5 @@ target_sources(UnitTests
 		"src/md_parser_test.cpp"
 		"src/unit_test.cpp"
 )
+
+add_test(NAME UnitTests COMMAND UnitTests)

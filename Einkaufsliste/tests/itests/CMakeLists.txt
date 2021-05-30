@@ -17,3 +17,5 @@ target_sources(IntegrationTests
 	PRIVATE
 		"src/recipe_test.cpp"
 )
+
+add_test(NAME UnitTests COMMAND UnitTests)
