@@ -13,7 +13,7 @@ class Observable
 public:
 	void Subscribe(std::weak_ptr<interface::IObserver<T>> aObserver)
 	{
-		myObservers.emplace(std::move(aObserver));
+		myObservers.emplace(aObserver);
 	}
 	void Remove(std::weak_ptr<interface::IObserver<T>> aObserver) { myObservers.erase(aObserver); }
 	void Notify(T aValue);
