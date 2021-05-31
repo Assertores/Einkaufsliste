@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <set>
+
 #include "interface/i_logger.h"
 #include "interface/i_observer.h"
 
@@ -10,13 +13,16 @@ class Observable
 public:
 	void Subscribe(std::weak_ptr<interface::IObserver<T>> aObserver)
 	{
-		myObservers.insert(std::move(aObserver));
+		myObservers.emplace(std::move(aObserver));
 	}
 	void Remove(std::weak_ptr<interface::IObserver<T>> aObserver) { myObservers.erase(aObserver); }
 	void Notify(T aValue);
 
 private:
-	std::set<std::weak_ptr<interface::IObserver<T>>> myObservers;
+	std::set<
+		std::weak_ptr<interface::IObserver<T>>,
+		std::owner_less<std::weak_ptr<interface::IObserver<T>>>>
+		myObservers;
 };
 
 template <typename T>

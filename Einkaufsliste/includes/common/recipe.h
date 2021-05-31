@@ -13,6 +13,9 @@ public:
 		: IFile(aPath) {};
 	Recipe(std::shared_ptr<interface::IFileImpl> aFileImpl)
 		: IFile(aFileImpl) {};
+
+	std::string Print() const override;
+
 	void SetDescription(std::string_view aText);
 	std::string GetDescription() const;
 

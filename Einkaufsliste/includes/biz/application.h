@@ -1,10 +1,11 @@
 #pragma once
 
-#include <memory>
 #include <iostream>
+#include <memory>
 
 #include "common/observable.h"
 #include "common/recipe.h"
+#include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
 namespace biz {
@@ -30,6 +31,7 @@ public:
 private:
 	std::shared_ptr<interface::IFrontend> myFrontend;
 
-	common::Observable<common::Recipe> currentRecipe;
+	std::shared_ptr<common::Observable<common::Recipe>> myCurrentRecipe =
+		std::make_shared<common::Observable<common::Recipe>>();
 };
 } // namespace biz

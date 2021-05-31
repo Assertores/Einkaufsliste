@@ -1,10 +1,25 @@
 #include "common/recipe.h"
 
+#include <sstream>
+
 static constexpr const char* locDescriptionKey = "Description";
 static constexpr const char* locIngredientsKey = "Ingredients";
 static constexpr const char* locNameKey = "Name";
 
 namespace common {
+std::string
+Recipe::Print() const
+{
+	std::stringstream result;
+	result << "Name: " << GetName() << '\n';
+	result << "Ingrediance:\n";
+	for (const auto& it : GetIngredients())
+	{
+		result << "- " << it << '\n';
+	}
+	result << "Description:\n" << GetDescription() << '\n';
+	return result.str();
+}
 void
 Recipe::SetDescription(std::string_view aText)
 {
