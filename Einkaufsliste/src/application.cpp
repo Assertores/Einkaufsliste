@@ -1,6 +1,7 @@
 #include "biz/application.h"
 
 #include "biz/command_line_interface.h"
+#include "common/open_recipe.h"
 #include "interface/i_logger.h"
 
 namespace biz {
@@ -8,9 +9,12 @@ Application::Application(const AppSettings& aSettings)
 {
 	switch (aSettings.frontendType)
 	{
-	case FrontendType::Cli:
-		myFrontend = std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output);
+	case FrontendType::Cli: {
+		auto openRecipe = std::make_shared<common::OpenRecipe>();
+		myFrontend = std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, openRecipe);
+		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		break;
+	}
 	default:
 		interface::ILogger::Log(
 			interface::LogLevel::Fatal,

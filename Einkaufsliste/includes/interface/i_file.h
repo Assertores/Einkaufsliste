@@ -16,6 +16,8 @@ public:
 		: myFileImplimentation(std::move(aFileImpl)) {};
 	virtual ~IFile();
 
+	virtual std::string Print() const = 0;
+
 protected:
 	bool FieldIsArray(const std::filesystem::path& aKey) const;
 

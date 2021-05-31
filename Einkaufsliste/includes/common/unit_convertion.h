@@ -13,6 +13,9 @@ public:
 		: IFile(aPath) {};
 	UnitConvertion(std::shared_ptr<interface::IFileImpl> aFileImpl)
 		: IFile(aFileImpl) {};
+
+	std::string Print() const override;
+
 	bool CanConvertUnit(std::string_view aUnit) const;
 	// returns wether or not it was able to convert. out parameter is only set if successfull.
 	bool GetConvertionRate(std::string_view aCurrentUnit, float& aOutConvertionRate) const;

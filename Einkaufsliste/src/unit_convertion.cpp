@@ -2,10 +2,21 @@
 
 #include <charconv>
 #include <map>
+#include <sstream>
 
 #include "interface/i_logger.h"
 
 namespace common {
+std::string
+UnitConvertion::Print() const
+{
+	std::stringstream reslut;
+	for (const auto& it : GetSubKeys(""))
+	{
+		reslut << it << ": " << ReadFromField(it) << '\n';
+	}
+	return reslut.str();
+}
 void
 UnitConvertion::SetConvertionRate(std::string_view aUnit, float aConvertionRate)
 {

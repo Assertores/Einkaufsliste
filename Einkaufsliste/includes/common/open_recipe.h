@@ -11,17 +11,15 @@ namespace common {
 class OpenRecipe : public interface::ICommand
 {
 public:
-	OpenRecipe(
+	void SetReferences(
 		std::weak_ptr<interface::IFrontend> aFrontend,
-		common::Observable<common::Recipe>& aRecipeObservable)
-		: myFrontend(std::move(aFrontend))
-		, myRecipeObservable(myRecipeObservable) {};
+		std::weak_ptr<common::Observable<common::Recipe>> aRecipeObservable);
 
 	virtual std::unique_ptr<ICommand> Clone() override;
 	virtual bool DoExecute() override;
 
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
-	common::Observable<common::Recipe>& myRecipeObservable;
+	std::weak_ptr<common::Observable<common::Recipe>> myRecipeObservable;
 };
 } // namespace common

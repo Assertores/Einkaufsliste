@@ -1,5 +1,6 @@
 #include "biz/command_line_interface.h"
 
+#include "common/open_recipe.h"
 #include "interface/i_logger.h"
 
 namespace biz {
@@ -15,11 +16,16 @@ CommandLineInterface::AskForFile()
 bool
 CommandLineInterface::Poll()
 {
+	myOutput << "write command: ";
 	std::string command;
 	myInput >> command;
 	if (command == "exit" || command == "quit")
 	{
 		return true;
+	}
+	if (command == "open-recipe")
+	{
+		interface::ICommand::Execute(myOpenRecipeCommand->Clone());
 	}
 	// TODO: add funktionality here
 

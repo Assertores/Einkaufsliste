@@ -36,3 +36,21 @@ TEST(application, reacts_to_exit_commands) // NOLINT
 	EXPECT_TRUE(thread.joinable());
 	thread.join();
 }
+#if false
+TEST(application, can_open_recipe) // NOLINT
+{
+	std::stringstream out;
+	std::stringstream in;
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
+	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
+
+	in << "open-recipe";
+	in << "assets/exampleRecipe.md";
+
+	thread.join();
+}
+#endif
