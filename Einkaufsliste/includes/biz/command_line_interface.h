@@ -13,17 +13,21 @@ public:
 	CommandLineInterface(
 		std::istream& aInput,
 		std::ostream& aOutput,
-		std::shared_ptr<interface::ICommand> aOpenRecipeCommand)
+		std::shared_ptr<interface::ICommand> aOpenRecipeCommand,
+		std::shared_ptr<interface::ICommand> aPrintCurrentFileCommand)
 		: myInput(aInput)
 		, myOutput(aOutput)
-		, myOpenRecipeCommand(aOpenRecipeCommand) {};
+		, myOpenRecipeCommand(aOpenRecipeCommand)
+		, myPrintCurrentFileCommand(aPrintCurrentFileCommand) {};
 
 	std::filesystem::path AskForFile() override;
+	common::Unit AskForUnit() override;
 	bool Poll() override;
 
 private:
 	std::istream& myInput;
 	std::ostream& myOutput;
 	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
+	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
 };
 } // namespace biz

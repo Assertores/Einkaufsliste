@@ -2,6 +2,8 @@
 
 #include <filesystem>
 
+#include "common/unit.h"
+
 namespace interface {
 class IFrontend
 {
@@ -12,5 +14,6 @@ public:
 	virtual bool Poll() = 0;
 
 	virtual std::filesystem::path AskForFile() = 0;
+	virtual common::Unit AskForUnit() = 0;
 };
 }; // namespace interface
