@@ -13,6 +13,16 @@ CommandLineInterface::AskForFile()
 	myInput >> path;
 	return path;
 }
+
+std::filesystem::path
+CommandLineInterface::AskForFolder()
+{
+	std::filesystem::path path;
+	myOutput << "please enter a folder path: ";
+	myInput >> path;
+	return path;
+}
+
 common::Unit
 CommandLineInterface::AskForUnit()
 {

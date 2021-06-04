@@ -95,7 +95,8 @@ TEST(Unit, parses_string_into_units) // NOLINT
 		return std::vector<std::filesystem::path> { "kg" };
 	};
 	common::UnitConvertion convertion(mockingFileImpl);
-	auto subject = common::Unit::FromString("apple 1kg & 3kg", std::vector<common::UnitConvertion> { convertion });
+	common::Unit::SetConvertionFiles({ convertion });
+	auto subject = common::Unit::FromString("apple 1kg & 3kg");
 
 	ASSERT_EQ(subject.size(), 2);
 	EXPECT_TRUE(subject[0].Equals(common::Unit(1, "apple", "kg", convertion)));

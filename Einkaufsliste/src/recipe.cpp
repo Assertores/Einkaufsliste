@@ -1,5 +1,6 @@
 #include "common/recipe.h"
 
+#include <algorithm>
 #include <sstream>
 
 static constexpr const char* locDescriptionKey = "Description";
@@ -35,15 +36,61 @@ Recipe::GetDescription() const
 void
 Recipe::AddIngredient(const Unit& aIngredient)
 {
-	// TODO(andreas): correctly impliment this function
-	// AddToField(myName + "/" + locIngredientsKey, { aIngredient });
+	auto ingrediants = ReadAllFromField(locIngredientsKey);
+	auto element = std::find_if(
+		ingrediants.begin(),
+		ingrediants.end(),
+		[type = aIngredient.GetType()](const auto& aElement) {
+			return Unit::ResultsInUnitsOfType(aElement) == type;
+		});
+
+	if (element == ingrediants.end())
+	{
+		AddToField(locIngredientsKey, { Unit::ToString({ aIngredient }) });
+		return;
+	}
+
+	auto units = Unit::FromString(*element);
+	for (auto& it : units)
+	{
+		if (it.Add(aIngredient))
+		{
+			RemoveFromField(locIngredientsKey, { *element });
+			AddToField(locIngredientsKey, { Unit::ToString(units) });
+			return;
+		}
+	}
+
+	units.emplace_back(aIngredient);
+	AddToField(locIngredientsKey, { Unit::ToString(units) });
 }
 
 void
 Recipe::RemoveIngredient(const Unit& aIngredient)
 {
-	// TODO(andreas): correctly impliment this function
-	// RemoveFromField(myName + "/" + locIngredientsKey, { aIngredient });
+	auto ingrediants = ReadAllFromField(locIngredientsKey);
+	auto element = std::find_if(
+		ingrediants.begin(),
+		ingrediants.end(),
+		[type = aIngredient.GetType()](const auto& aElement) {
+			return Unit::ResultsInUnitsOfType(aElement) == type;
+		});
+
+	if (element == ingrediants.end())
+	{
+		return;
+	}
+
+	auto units = Unit::FromString(*element);
+	for (auto& it : units)
+	{
+		if (it.Subtract(aIngredient))
+		{
+			RemoveFromField(locIngredientsKey, { *element });
+			AddToField(locIngredientsKey, { Unit::ToString(units) });
+			return;
+		}
+	}
 }
 
 std::vector<std::string>

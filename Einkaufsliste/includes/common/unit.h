@@ -16,19 +16,30 @@ public:
 		std::string_view aUnit,
 		const UnitConvertion& aConvertionFile);
 
-	// returns wether or not it was able to add aOther to this object
-	bool Add(const Unit& aOther);
 	// returns the name of the type given string will result in
 	static std::string ResultsInUnitsOfType(std::string_view aString);
 	static std::vector<Unit>
-	FromString(std::string_view aString, const std::vector<UnitConvertion>& aConverters);
+	FromString(std::string_view aString);
 	static std::string ToString(const std::vector<Unit>& aUnits);
+	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles)
+	{
+		myConvertionFiles = aConvertionFiles;
+	}
 
-	bool Equals(const Unit& aOther);
+	// returns wether or not it was able to add aOther to this object
+	bool Add(const Unit& aOther);
+	bool Subtract(const Unit& aOther);
+
+	std::string GetType() const { return myType; }
+	bool Equals(const Unit& aOther) const
+	{
+		return myType == aOther.myType && myAmount == aOther.myAmount;
+	}
 
 private:
 	float myAmount = 0;
 	std::string myType;
 	UnitConvertion myConvertionFile;
+	static std::vector<UnitConvertion> myConvertionFiles;
 };
 } // namespace common

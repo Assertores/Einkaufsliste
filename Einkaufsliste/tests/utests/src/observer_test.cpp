@@ -51,7 +51,7 @@ TEST(Observer, observer_is_pased_a_copy) // NOLINT
 TEST(Observer, notify_empty_observable_does_not_crash) // NOLINT
 {
 	common::Observable<int> subject;
-	EXPECT_NO_THROW(subject.Notify(2));	// NOLINT
+	EXPECT_NO_THROW(subject.Notify(2)); // NOLINT
 }
 
 TEST(Observer, unsubscribed_observer_is_not_called) // NOLINT
