@@ -16,7 +16,8 @@ std::unique_ptr<interface::ICommand>
 OpenRecipe::Clone()
 {
 	auto result = std::make_unique<OpenRecipe>();
-	result->SetReferences(myFrontend, myRecipeObservable);
+	result->myFrontend = myFrontend;
+	result->myRecipeObservable = myRecipeObservable;
 	return result;
 }
 

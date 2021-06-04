@@ -6,6 +6,8 @@
 #include "interface/i_logger.h"
 
 namespace common {
+std::vector<UnitConvertion> Unit::myConvertionFiles {};
+
 Unit::Unit(
 	float aAmount,
 	std::string aType,
@@ -39,6 +41,17 @@ Unit::Add(const Unit& aOther)
 	return true;
 }
 
+bool
+Unit::Subtract(const Unit& aOther)
+{
+	if (aOther.myType != myType)
+	{
+		return false;
+	}
+	myAmount -= aOther.myAmount;
+	return true;
+}
+
 std::string
 Unit::ResultsInUnitsOfType(std::string_view aString)
 {
@@ -46,7 +59,7 @@ Unit::ResultsInUnitsOfType(std::string_view aString)
 }
 
 std::vector<Unit>
-Unit::FromString(std::string_view aString, const std::vector<UnitConvertion>& aConverters)
+Unit::FromString(std::string_view aString)
 {
 	auto type = std::string(ResultsInUnitsOfType(aString));
 	aString = aString.substr(aString.find_first_of(' ') + 1);
@@ -80,7 +93,7 @@ Unit::FromString(std::string_view aString, const std::vector<UnitConvertion>& aC
 		value = std::strtof(element.data(), &ptr);
 		auto unit = element.substr(ptr - element.data());
 #endif
-		for (const auto& it : aConverters)
+		for (const auto& it : myConvertionFiles)
 		{
 			if (it.CanConvertUnit(unit))
 			{
@@ -119,11 +132,5 @@ Unit::ToString(const std::vector<Unit>& aUnits)
 	}
 	auto result = strBuilder.str();
 	return result.substr(0, result.size() - 3);
-}
-
-bool
-Unit::Equals(const Unit& aOther)
-{
-	return myType == aOther.myType && myAmount == aOther.myAmount;
 }
 } // namespace common

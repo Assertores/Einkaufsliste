@@ -21,6 +21,7 @@ public:
 		, myPrintCurrentFileCommand(aPrintCurrentFileCommand) {};
 
 	std::filesystem::path AskForFile() override;
+	std::filesystem::path AskForFolder() override;
 	common::Unit AskForUnit() override;
 	bool Poll() override;
 
