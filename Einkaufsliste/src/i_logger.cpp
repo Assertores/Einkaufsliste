@@ -4,7 +4,7 @@ namespace interface {
 std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue {};
 std::shared_ptr<ILogger> ILogger::myLoggerImplimentation = nullptr;
 LogLevel ILogger::myLogLevel = LogLevel::Verbose;
-LogMask ILogger::myLogMask = LogMasks::All;
+LogMask ILogger::myLogMask = locLogMaskAll;
 
 void
 ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)

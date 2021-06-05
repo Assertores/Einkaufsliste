@@ -9,21 +9,21 @@ namespace common {
 class Recipe final : public interface::IFile
 {
 public:
-	Recipe(const std::filesystem::path& aPath)
+	explicit Recipe(const std::filesystem::path& aPath)
 		: IFile(aPath) {};
-	Recipe(std::shared_ptr<interface::IFileImpl> aFileImpl)
-		: IFile(aFileImpl) {};
+	explicit Recipe(std::shared_ptr<interface::IFileImpl> aFileImpl)
+		: IFile(std::move(aFileImpl)) {};
 
-	std::string Print() const override;
+	[[nodiscard]] std::string Print() const override;
 
 	void SetDescription(std::string_view aText);
-	std::string GetDescription() const;
+	[[nodiscard]] std::string GetDescription() const;
 
 	void AddIngredient(const Unit& aIngredient);
 	void RemoveIngredient(const Unit& aIngredient);
-	std::vector<std::string> GetIngredients() const;
+	[[nodiscard]] std::vector<std::string> GetIngredients() const;
 
 	void SetName(std::string_view aName);
-	std::string GetName() const;
+	[[nodiscard]] std::string GetName() const;
 };
 } // namespace common

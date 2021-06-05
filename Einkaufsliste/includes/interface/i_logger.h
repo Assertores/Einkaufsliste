@@ -40,14 +40,12 @@ operator|(const LogMask& aLhs, const LogType& aRhs)
 	return aLhs | static_cast<LogMask>(aRhs);
 }
 
-namespace LogMasks {
-static constexpr LogMask None = 0;
-static constexpr LogMask Application = LogType::Generic | LogType::StartUp | LogType::Units;
-static constexpr LogMask IO = LogType::Network | LogType::File;
-static constexpr LogMask All = LogType::Generic | LogType::StartUp | LogType::Network
+static constexpr LogMask locLogMaskNone = 0;
+static constexpr LogMask locLogMaskApplication =
+	LogType::Generic | LogType::StartUp | LogType::Units;
+static constexpr LogMask locLogMaskIO = LogType::Network | LogType::File;
+static constexpr LogMask locLogMaskAll = LogType::Generic | LogType::StartUp | LogType::Network
 	| LogType::File | LogType::Commands | LogType::Units | LogType::Observer;
-}
-
 
 class ILogger
 {
@@ -67,7 +65,7 @@ public:
 		myLoggerImplimentation = nullptr;
 		myReplayQueue = {};
 		myLogLevel = LogLevel::Verbose;
-		myLogMask = LogMasks::None;
+		myLogMask = locLogMaskNone;
 	}
 
 	virtual ~ILogger() = default;
@@ -114,7 +112,6 @@ ILogger::SetImplimentation(LogT aLogger)
 			std::get<2>(myReplayQueue.front()));
 		myReplayQueue.pop();
 	}
-	return;
 }
 
 constexpr std::string_view

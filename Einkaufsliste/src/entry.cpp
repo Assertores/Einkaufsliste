@@ -17,7 +17,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	{
 		common::LogOnConsole logger(aOutput);
 		interface::ILogger::SetLogLevel(interface::LogLevel::Error);
-		interface::ILogger::SetLogMask(interface::LogMasks::All);
+		interface::ILogger::SetLogMask(interface::locLogMaskAll);
 		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 

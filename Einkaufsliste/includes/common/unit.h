@@ -23,15 +23,15 @@ public:
 	static std::string ToString(const std::vector<Unit>& aUnits);
 	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles)
 	{
-		myConvertionFiles = aConvertionFiles;
+		myConvertionFiles = std::move(aConvertionFiles);
 	}
 
 	// returns wether or not it was able to add aOther to this object
 	bool Add(const Unit& aOther);
 	bool Subtract(const Unit& aOther);
 
-	std::string GetType() const { return myType; }
-	bool Equals(const Unit& aOther) const
+	[[nodiscard]] std::string GetType() const { return myType; }
+	[[nodiscard]] bool Equals(const Unit& aOther) const
 	{
 		return myType == aOther.myType && myAmount == aOther.myAmount;
 	}

@@ -17,8 +17,8 @@ public:
 		std::shared_ptr<interface::ICommand> aPrintCurrentFileCommand)
 		: myInput(aInput)
 		, myOutput(aOutput)
-		, myOpenRecipeCommand(aOpenRecipeCommand)
-		, myPrintCurrentFileCommand(aPrintCurrentFileCommand) {};
+		, myOpenRecipeCommand(std::move(aOpenRecipeCommand))
+		, myPrintCurrentFileCommand(std::move(aPrintCurrentFileCommand)) {};
 
 	std::filesystem::path AskForFile() override;
 	std::filesystem::path AskForFolder() override;

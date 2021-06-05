@@ -6,6 +6,7 @@ include("CodeAnalysis.cmake")
 include(CTest)
 
 include("root.cmake")
+
 add_subdirectory("extern/googletest")
 add_subdirectory("tests/e2etests")
 add_subdirectory("tests/utests")

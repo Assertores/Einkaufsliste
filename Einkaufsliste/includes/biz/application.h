@@ -24,7 +24,7 @@ struct AppSettings
 class Application
 {
 public:
-	Application(const AppSettings& aSettings);
+	explicit Application(const AppSettings& aSettings);
 
 	void Run(const AppSettings& aSettings);
 

@@ -7,7 +7,9 @@
 # https://confluence.ubisoft.com/x/wpauOg
 
 FormatStyle: file
-HeaderFilterRegex: ''
+HeaderFilterRegex: 'includes' # NOTE(andreas): clang tidys regex seams to be to bad to be able to understand
+#                               '^((?!extern).)*$' whitch would exclude everything from the folder extern.
+#                               therefore i just hope that everyone else is using the folder name include in singular.
 User: user
 WarningsAsErrors: '*'
 
@@ -34,6 +36,8 @@ Checks: >-
 
 CheckOptions:
     - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+      value: true
+    - key: hicpp-signed-bitwise.IgnorePositiveIntegerLiterals
       value: true
     - key: readability-identifier-naming.ClassCase
       value: CamelCase

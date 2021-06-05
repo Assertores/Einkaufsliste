@@ -19,7 +19,7 @@ public:
 		onChangeCount++;
 	};
 
-	void OnChange(T aElement) { onChange(aElement); }
+	void OnChange(T aElement) override { onChange(aElement); }
 
 	int onChangeCount = 0;
 };

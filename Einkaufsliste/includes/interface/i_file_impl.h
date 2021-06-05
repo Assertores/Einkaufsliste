@@ -25,8 +25,9 @@ public:
 	virtual void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) = 0;
 	virtual void ClearField(std::filesystem::path aKey) = 0;
 
-	virtual std::vector<std::string> GetField(std::filesystem::path aKey) const = 0;
-	virtual std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) const = 0;
+	[[nodiscard]] virtual std::vector<std::string> GetField(std::filesystem::path aKey) const = 0;
+	[[nodiscard]] virtual std::vector<std::filesystem::path>
+	GetKeys(std::filesystem::path aKey) const = 0;
 
 private:
 	static std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> myFiles;
@@ -79,11 +80,12 @@ public:
 		removeFromKey(aKey, aValue);
 	}
 	void ClearField(std::filesystem::path aKey) override { clearField(aKey); }
-	std::vector<std::string> GetField(std::filesystem::path aKey) const override
+	[[nodiscard]] std::vector<std::string> GetField(std::filesystem::path aKey) const override
 	{
 		return getField(aKey);
 	}
-	std::vector<std::filesystem::path> GetKeys(std::filesystem::path aKey) const override
+	[[nodiscard]] std::vector<std::filesystem::path>
+	GetKeys(std::filesystem::path aKey) const override
 	{
 		return getKeys(aKey);
 	};
