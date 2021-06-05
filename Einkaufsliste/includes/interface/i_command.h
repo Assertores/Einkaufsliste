@@ -1,8 +1,8 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <vector>
-#include <functional>
 
 namespace interface {
 class ICommand
@@ -54,5 +54,5 @@ public:
 	int doExecuteCount = 0;
 	int doRevertCount = 0;
 };
-}
+} // namespace fake
 } // namespace interface

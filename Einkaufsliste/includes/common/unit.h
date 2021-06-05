@@ -18,8 +18,7 @@ public:
 
 	// returns the name of the type given string will result in
 	static std::string ResultsInUnitsOfType(std::string_view aString);
-	static std::vector<Unit>
-	FromString(std::string_view aString);
+	static std::vector<Unit> FromString(std::string_view aString);
 	static std::string ToString(const std::vector<Unit>& aUnits);
 	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles)
 	{
