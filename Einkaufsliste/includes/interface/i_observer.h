@@ -11,7 +11,7 @@ public:
 };
 
 namespace fake {
-	template <typename T>
+template <typename T>
 class Observer : public IObserver<T>
 {
 public:

@@ -1,8 +1,8 @@
 #include "biz/command_line_interface.h"
 
 #include "common/open_recipe.h"
-#include "interface/i_logger.h"
 #include "interface/i_file_impl.h"
+#include "interface/i_logger.h"
 
 namespace biz {
 std::filesystem::path
@@ -30,7 +30,11 @@ CommandLineInterface::AskForUnit()
 		interface::LogLevel::Fatal,
 		interface::LogType::Commands,
 		"not implimented");
-	return common::Unit(3, "fake", "kg", common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()));
+	return common::Unit(
+		3,
+		"fake",
+		"kg",
+		common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()));
 }
 
 bool

@@ -1,8 +1,8 @@
 #pragma once
 
+#include <fstream>
 #include <map>
 #include <string>
-#include <fstream>
 
 #include "interface/i_file_impl.h"
 
@@ -24,6 +24,7 @@ public:
 
 	void Parse(std::istream& aIn);
 	void Serialize(std::ostream& aOut);
+
 private:
 	std::map<std::filesystem::path, std::vector<std::string>> myContent;
 	std::filesystem::path myFile;

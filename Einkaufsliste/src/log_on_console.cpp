@@ -13,8 +13,8 @@ LogOnConsole::DoLog(interface::LogLevel aLevel, interface::LogType aType, std::s
 	auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	std::string time;
 	time.reserve(locBufferSize);
-	// NOTE(andreas): localtime_s is only available in visual studio localtime_r is not. to be able to compile in
-	// visual studio and github ci i use the deprecated version
+	// NOTE(andreas): localtime_s is only available in visual studio localtime_r is not. to be able
+	// to compile in visual studio and github ci i use the deprecated version
 	strftime(
 		time.data(),
 		locBufferSize,
