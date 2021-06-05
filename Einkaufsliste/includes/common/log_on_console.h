@@ -8,7 +8,7 @@ namespace common {
 class LogOnConsole : public interface::ILogger
 {
 public:
-	LogOnConsole(std::ostream& aOut)
+	explicit LogOnConsole(std::ostream& aOut)
 		: myOut(aOut)
 	{
 	}

@@ -6,7 +6,7 @@ TEST(Logger, logs_get_replayed) // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::LogMasks::All);
+	interface::ILogger::SetLogMask(interface::locLogMaskAll);
 	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::Generic, "lbukwe");
 
 	ASSERT_EQ(subject.doLogCount, 0);
@@ -34,7 +34,7 @@ TEST(Logger, replay_data_is_same) // NOLINT
 	};
 
 	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::LogMasks::All);
+	interface::ILogger::SetLogMask(interface::locLogMaskAll);
 	interface::ILogger::Log(logLevel, logType, log);
 
 	interface::ILogger::SetImplimentation(std::move(subject));
@@ -50,7 +50,7 @@ TEST(Logger, only_higher_or_equal_log_level_is_loged) // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Error);
-	interface::ILogger::SetLogMask(interface::LogMasks::All);
+	interface::ILogger::SetLogMask(interface::locLogMaskAll);
 	interface::ILogger::SetImplimentation(subject);
 
 	interface::ILogger::Log(interface::LogLevel::Fatal, interface::LogType::Generic, "lbukwe");
@@ -67,7 +67,7 @@ TEST(Logger, only_logs_Type_in_mask) // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::LogMasks::None | interface::LogType::Network);
+	interface::ILogger::SetLogMask(interface::locLogMaskNone | interface::LogType::Network);
 	interface::ILogger::SetImplimentation(subject);
 
 	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::Network, "lbukwe");

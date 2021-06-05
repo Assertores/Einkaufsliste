@@ -33,7 +33,10 @@ IFile::IFile(const std::filesystem::path& aPath)
 
 IFile::~IFile()
 {
-	myFileImplimentation->Save();
+	if (myFileImplimentation)
+	{
+		myFileImplimentation->Save();
+	}
 }
 
 bool

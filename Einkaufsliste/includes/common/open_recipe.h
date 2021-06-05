@@ -15,8 +15,8 @@ public:
 		std::weak_ptr<interface::IFrontend> aFrontend,
 		std::weak_ptr<common::Observable<common::Recipe>> aRecipeObservable);
 
-	virtual std::unique_ptr<ICommand> Clone() override;
-	virtual bool DoExecute() override;
+	std::unique_ptr<ICommand> Clone() override;
+	bool DoExecute() override;
 
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
