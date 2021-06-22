@@ -5,7 +5,7 @@ target_link_libraries(Einkaufsliste
 		biz
 )
 
-add_library(biz)
+add_library(biz STATIC)
 SET_TARGET_PROPERTIES(biz PROPERTIES LINKER_LANGUAGE CXX)
 
 target_compile_features(biz
@@ -13,9 +13,15 @@ target_compile_features(biz
 		cxx_std_17
 )
 
+target_link_libraries(Einkaufsliste
+	PRIVATE
+		cpr::cpr
+)
+
 target_include_directories(biz
 	PUBLIC
 		"includes"
+		"extern/cpr/include"
 )
 
 target_sources(biz
