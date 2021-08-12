@@ -22,7 +22,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	}
 
 	AppSettings appSettings { true, FrontendType::Cli, aOutput, aInput };
-	UpdaterSettings updaterSettings { true, locDefaultUrl.data() };
+	UpdaterSettings updaterSettings { true, false, locDefaultUrl.data() };
 	PatcherSettings patcherSettings { true };
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);

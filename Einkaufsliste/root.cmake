@@ -13,7 +13,7 @@ target_compile_features(biz
 		cxx_std_17
 )
 
-target_link_libraries(Einkaufsliste
+target_link_libraries(biz
 	PRIVATE
 		cpr::cpr
 		rapidjson
