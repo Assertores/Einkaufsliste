@@ -10,6 +10,7 @@ set(CPR_BUILD_TESTS OFF)
 set(CPR_BUILD_TESTS_SSL OFF)
 
 add_subdirectory("extern/googletest")
+add_subdirectory("extern/rapidjson")
 add_subdirectory("extern/cpr")
 
 include("root.cmake")

@@ -4,3 +4,6 @@
 [submodule "Einkaufsliste/extern/cpr"]
 	path = Einkaufsliste/extern/cpr
 	url = https://github.com/whoshuu/cpr.git
+[submodule "Einkaufsliste/extern/rapidjson"]
+	path = Einkaufsliste/extern/rapidjson
+	url = https://github.com/mehrdad-shokri/rapidjson.git
