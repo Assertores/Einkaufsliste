@@ -16,6 +16,7 @@ target_compile_features(biz
 target_link_libraries(Einkaufsliste
 	PRIVATE
 		cpr::cpr
+		rapidjson
 )
 
 target_include_directories(biz
