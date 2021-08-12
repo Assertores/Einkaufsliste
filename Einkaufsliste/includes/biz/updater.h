@@ -6,6 +6,7 @@ namespace biz {
 struct UpdaterSettings
 {
 	bool doUpdate;
+	bool getPrerelease;
 	std::string url;
 };
 
