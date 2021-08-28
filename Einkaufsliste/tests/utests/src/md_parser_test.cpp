@@ -36,3 +36,10 @@ TEST(MdParser, markdown_is_correctly_serialised) // NOLINT
 
 	EXPECT_EQ(output.str(), "# a\n## b\n### c\nd\n- e\n\n## x\ny\n- u\n- v\n- w\n\n");
 }
+
+TEST(MdParser, getting_a_nonexistent_field_wont_result_in_death) // NOLINT
+{
+	common::MdParser subject;
+
+	EXPECT_EQ(subject.GetField("vudsag").size(), 0);
+}

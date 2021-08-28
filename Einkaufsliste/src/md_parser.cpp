@@ -50,7 +50,13 @@ MdParser::ClearField(std::filesystem::path aKey)
 std::vector<std::string>
 MdParser::GetField(std::filesystem::path aKey) const
 {
-	return myContent.find(aKey)->second;
+	auto const it = myContent.find(aKey);
+	if (it == myContent.end())
+	{
+		return {};
+	}
+
+	return it->second;
 }
 
 std::vector<std::filesystem::path>
