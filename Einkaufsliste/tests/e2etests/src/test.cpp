@@ -68,11 +68,11 @@ TEST(application, can_open_recipe) // NOLINT
 	in << "assets/exampleRecipe.md\n";
 	in << "exit";
 
-	std::vector<std::string_view> args = {"exe",
-		"--no-patch",
-		"--no-update",
-		"--log-level",
-		"verbose"};
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -80,8 +80,8 @@ TEST(application, can_open_recipe) // NOLINT
 
 TEST(application, can_name_recipe) // NOLINT
 {
-	const auto *const name = "hsaudfhak";
-	const auto *const fileName = "assets/exampleRecipe.md";
+	const auto* const name = "hsaudfhak";
+	const auto* const fileName = "assets/exampleRecipe.md";
 
 	std::stringstream out;
 	std::stringstream in;
@@ -106,4 +106,3 @@ TEST(application, can_name_recipe) // NOLINT
 	common::Recipe result(parser);
 	EXPECT_EQ(result.GetName(), name);
 }
-
