@@ -16,5 +16,6 @@ public:
 	virtual std::filesystem::path AskForFile() = 0;
 	virtual std::filesystem::path AskForFolder() = 0;
 	virtual common::Unit AskForUnit() = 0;
+	virtual std::string AskForText() = 0;
 };
 }; // namespace interface
