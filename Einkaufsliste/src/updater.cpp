@@ -1,14 +1,14 @@
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS // NOLINT
+												// "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
 #include "biz/updater.h"
-#if false
+
 #include <filesystem>
 
 #include <cpr/cpr.h>
 #undef max
 #undef min
-#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS // NOLINT
-#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING // NOLINT
-#include <rapidjson/document.h> // NOLINT clang-diagnostic-deprecated-declarations
-#endif
+#include <rapidjson/document.h>
+
 namespace biz {
 
 static constexpr auto locHttpOk = 200;
@@ -16,7 +16,6 @@ static constexpr auto locHttpOk = 200;
 bool
 Update(const UpdaterSettings& aSettings)
 {
-	#if false
 	if (!aSettings.doUpdate)
 	{
 		return false;
@@ -81,8 +80,5 @@ Update(const UpdaterSettings& aSettings)
 	// TODO(andreas): unzip
 	// TODO(andreas): save new version number or something
 	return true;
-	#else
-	return false;
-	#endif
 }
 } // namespace biz
