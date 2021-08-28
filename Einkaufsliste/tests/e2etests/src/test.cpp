@@ -30,7 +30,7 @@ TEST(application, reacts_to_exit_commands) // NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
-	in << "exit";
+	in << "exit\n";
 
 	std::vector<std::string_view> args = { "exe",
 										   "--no-patch",
@@ -47,7 +47,7 @@ TEST(application, reacts_to_quit_commands) // NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
-	in << "quit";
+	in << "quit\n";
 
 	std::vector<std::string_view> args = { "exe",
 										   "--no-patch",
@@ -66,7 +66,7 @@ TEST(application, can_open_recipe) // NOLINT
 	std::stringstream in;
 	in << "open-recipe\n";
 	in << "assets/exampleRecipe.md\n";
-	in << "exit";
+	in << "exit\n";
 
 	std::vector<std::string_view> args = { "exe",
 										   "--no-patch",
@@ -75,6 +75,7 @@ TEST(application, can_open_recipe) // NOLINT
 										   "verbose" };
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
+	// TODO(andreas): how to test this?
 	thread.join();
 }
 
@@ -89,7 +90,99 @@ TEST(application, can_name_recipe) // NOLINT
 	in << fileName << "\n";
 	in << "change-recipe-name\n";
 	in << name << "\n";
-	in << "exit";
+	in << "exit\n";
+
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
+	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
+
+	thread.join();
+
+	auto parser = std::make_shared<common::MdParser>();
+	auto file = std::ifstream(fileName);
+	parser->Parse(file);
+	common::Recipe result(parser);
+	EXPECT_EQ(result.GetName(), name);
+}
+
+TEST(application, can_add_description_to_recipe) // NOLINT
+{
+	const auto* const description = "bsdgse";
+	const auto* const fileName = "assets/exampleRecipe.md";
+
+	std::stringstream out;
+	std::stringstream in;
+	in << "open-recipe\n";
+	in << fileName << "\n";
+	in << "change-recipe-description\n";
+	in << description << "\n";
+	in << "exit\n";
+
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
+	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
+
+	thread.join();
+
+	auto parser = std::make_shared<common::MdParser>();
+	auto file = std::ifstream(fileName);
+	parser->Parse(file);
+	common::Recipe result(parser);
+	EXPECT_EQ(result.GetDescription(), description);
+}
+
+TEST(application, can_undo) // NOLINT
+{
+	const auto* const name = "dfzjzejdsaf";
+	const auto* const fileName = "assets/exampleRecipe.md";
+	auto parser = std::make_shared<common::MdParser>();
+	auto file = std::ifstream(fileName);
+	parser->Parse(file);
+	common::Recipe result(parser);
+
+	const auto prevName = result.GetName();
+
+	std::stringstream out;
+	std::stringstream in;
+	in << "open-recipe\n";
+	in << fileName << "\n";
+	in << "change-recipe-name\n";
+	in << name << "\n";
+	in << "undo\n";
+	in << "exit\n";
+
+	std::vector<std::string_view> args = { "exe",
+										   "--no-patch",
+										   "--no-update",
+										   "--log-level",
+										   "verbose" };
+	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
+
+	thread.join();
+
+	EXPECT_EQ(result.GetName(), prevName);
+}
+
+TEST(application, can_redo) // NOLINT
+{
+	const auto* const name = "ezzsjzsdaf";
+	const auto* const fileName = "assets/exampleRecipe.md";
+
+	std::stringstream out;
+	std::stringstream in;
+	in << "open-recipe\n";
+	in << fileName << "\n";
+	in << "change-recipe-name\n";
+	in << name << "\n";
+	in << "undo\n";
+	in << "redo\n";
+	in << "exit\n";
 
 	std::vector<std::string_view> args = { "exe",
 										   "--no-patch",
