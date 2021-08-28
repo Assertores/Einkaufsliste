@@ -47,9 +47,39 @@ CommandLineInterface::Poll()
 	{
 		return true;
 	}
+	if (command == "undo")
+	{
+		interface::ICommand::Revert();
+		return true;
+	}
+	if (command == "redo")
+	{
+		interface::ICommand::ReExecute();
+		return true;
+	}
 	if (command == "open-recipe")
 	{
 		interface::ICommand::Execute(myOpenRecipeCommand->Clone());
+		return false;
+	}
+	if (command == "change-recipe-name")
+	{
+		interface::ICommand::Execute(myChangeNameOfRecipeCommand->Clone());
+		return false;
+	}
+	if (command == "change-recipe-description")
+	{
+		interface::ICommand::Execute(myChangeDescriptionOfRecipeCommand->Clone());
+		return false;
+	}
+	if (command == "add-recipe-ingredient")
+	{
+		interface::ICommand::Execute(myAddIngredientToRecipeCommand->Clone());
+		return false;
+	}
+	if (command == "remove-recipe-ingredient")
+	{
+		interface::ICommand::Execute(myRemoveIngredientToRecipeCommand->Clone());
 		return false;
 	}
 	if (command == "print")
