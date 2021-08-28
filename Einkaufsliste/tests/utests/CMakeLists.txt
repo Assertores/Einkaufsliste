@@ -17,7 +17,7 @@ target_link_libraries(UnitTests
 target_sources(UnitTests
 	PRIVATE
 		"src/argument_parser_test.cpp"
-		"src/command_test.cpp"
+		"src/command_chain_test.cpp"
 		"src/file_implimentation_test.cpp"
 		"src/log_on_console_test.cpp"
 		"src/logger_test.cpp"
