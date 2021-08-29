@@ -7,8 +7,7 @@ namespace common {
 class OpenConvertionFile : public interface::ICommand
 {
 public:
-	std::unique_ptr<ICommand> Clone() override;
-	bool DoExecute() override;
+	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;

@@ -24,8 +24,7 @@ public:
 	~PrintCurrentFile() override;
 	void SetReferences(std::ostream* aOut, std::weak_ptr<Observable<Recipe>> aCurrentRecipe);
 
-	std::unique_ptr<ICommand> Clone() override;
-	bool DoExecute() override;
+	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
 	void OnChange(Recipe aElement) override;
 

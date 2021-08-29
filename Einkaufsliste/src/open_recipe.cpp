@@ -12,32 +12,23 @@ OpenRecipe::SetReferences(
 	myRecipeObservable = std::move(aRecipeObservable);
 }
 
-std::unique_ptr<interface::ICommand>
-OpenRecipe::Clone()
-{
-	auto result = std::make_unique<OpenRecipe>();
-	result->myFrontend = myFrontend;
-	result->myRecipeObservable = myRecipeObservable;
-	return result;
-}
-
-bool
-OpenRecipe::DoExecute()
+std::unique_ptr<interface::ICommandMemento>
+OpenRecipe::Execute()
 {
 	auto frontend = myFrontend.lock();
 	if (!frontend)
 	{
-		return false;
+		return nullptr;
 	}
 	auto recipeObservable = myRecipeObservable.lock();
 	if (!recipeObservable)
 	{
-		return false;
+		return nullptr;
 	}
 
 	auto file = frontend->AskForFile();
 	recipeObservable->Notify(Recipe(std::filesystem::current_path() / file));
 
-	return false;
+	return nullptr; // TODO(andreas): memento?
 }
 } // namespace common

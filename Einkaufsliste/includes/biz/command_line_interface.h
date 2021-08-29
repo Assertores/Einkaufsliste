@@ -31,6 +31,8 @@ public:
 	std::filesystem::path AskForFile() override;
 	std::filesystem::path AskForFolder() override;
 	common::Unit AskForUnit() override;
+	std::string AskForText() override;
+
 	bool Poll() override;
 
 private:

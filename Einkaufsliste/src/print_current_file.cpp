@@ -27,25 +27,16 @@ PrintCurrentFile::~PrintCurrentFile()
 	recipe->Remove(weak_from_this());
 }
 
-std::unique_ptr<interface::ICommand>
-PrintCurrentFile::Clone()
-{
-	auto result = std::make_unique<PrintCurrentFile>();
-	result->SetReferences(myOut, myCurrentRecipe);
-	result->myCurrentFile = myCurrentFile;
-	return result;
-}
-
-bool
-PrintCurrentFile::DoExecute()
+std::unique_ptr<interface::ICommandMemento>
+PrintCurrentFile::Execute()
 {
 	if (!myCurrentFile)
 	{
 		*myOut << "no file to print\n";
-		return false;
+		return nullptr;
 	}
 	*myOut << myCurrentFile->Print();
-	return false;
+	return nullptr;
 }
 
 void

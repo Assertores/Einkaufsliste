@@ -1,34 +1,28 @@
 #include "common/change_recipe_name.h"
 
 namespace common {
-std::unique_ptr<interface::ICommand>
-ChangeRecipeName::Clone()
-{
-	// TODO(andreas): command cant be unique because some need to make shared from this
-	auto result = std::make_unique<
-}
 
-bool
-ChangeRecipeName::DoExecute()
+std::unique_ptr<interface::ICommandMemento>
+ChangeRecipeName::Execute()
 {
 	myPrevName = myCurrentRecipe->GetName();
 
 	auto frontend = myFrontend.lock();
 	if (!frontend)
 	{
-		return false;
+		return nullptr;
 	}
 	myCurrentRecipe->SetName(frontend->AskForText());
-	return true;
+	return nullptr; // TODO(andreas): change to memento
 }
 
 void
 ChangeRecipeName::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<Recipe>> aCurrentRecipe)
+	std::shared_ptr<Observable<Recipe>> aCurrentRecipe) // NOLINT "performance-unnecessary-value-param"
 {
-	aCurrentRecipe->Subscribe(weak_from_this());
-	myFrontend = aFrontend;
+	aCurrentRecipe->Subscribe(weak_from_this()); // TODO(andreas): unsubscripe on destructor?
+	myFrontend = std::move(aFrontend);
 }
 
 void

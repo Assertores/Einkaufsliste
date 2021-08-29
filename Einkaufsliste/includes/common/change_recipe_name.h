@@ -15,12 +15,11 @@ class ChangeRecipeName
 	, public std::enable_shared_from_this<ChangeRecipeName>
 {
 public:
-	std::unique_ptr<ICommand> Clone() override;
-	bool DoExecute() override;
+	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
 	void SetReferences(
 		std::weak_ptr<interface::IFrontend> aFrontend,
-		std::weak_ptr<Observable<Recipe>> aCurrentRecipe);
+		std::shared_ptr<Observable<Recipe>> aCurrentRecipe);
 
 	void OnChange(Recipe aElement) override;
 

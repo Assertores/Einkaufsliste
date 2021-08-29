@@ -3,21 +3,13 @@
 #include "common/unit_convertion.h"
 
 namespace common {
-std::unique_ptr<interface::ICommand>
-OpenConvertionFile::Clone()
-{
-	auto result = std::make_unique<OpenConvertionFile>();
-	result->myFrontend = myFrontend;
-	return result;
-}
-
-bool
-OpenConvertionFile::DoExecute()
+std::unique_ptr<interface::ICommandMemento>
+OpenConvertionFile::Execute()
 {
 	auto frontend = myFrontend.lock();
 	if (!frontend)
 	{
-		return false;
+		return nullptr;
 	}
 	auto folder = frontend->AskForFolder();
 	std::vector<UnitConvertion> files {};
@@ -27,6 +19,6 @@ OpenConvertionFile::DoExecute()
 	}
 	Unit::SetConvertionFiles(files);
 
-	return false;
+	return nullptr; // TODO(andreas): memento?
 }
 } // namespace common

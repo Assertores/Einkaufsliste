@@ -1,6 +1,6 @@
 #include "common/command_chain.h"
 
-#include "interface/i_command_memento"
+#include "interface/i_command_memento.h"
 
 namespace common {
 
@@ -15,25 +15,27 @@ CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand)
 	myCommandHistory.emplace_back(std::move(aCommand));
 }
 
-void
+bool
 CommandChain::Undo()
 {
 	if (myBackOffset == myCommandHistory.size())
 	{
-		return;
+		return false;
 	}
-	myCommandHistory[myCommandHistory.size() - 1 - myBackOffset]->DoRevert();
+	myCommandHistory[myCommandHistory.size() - 1 - myBackOffset]->Revert();
 	myBackOffset++;
+	return true;
 }
 
-void
+bool
 CommandChain::Redo()
 {
 	if (myBackOffset == 0)
 	{
-		return;
+		return false;
 	}
-	myCommandHistory[myCommandHistory.size() - myBackOffset]->DoExecute();
+	myCommandHistory[myCommandHistory.size() - myBackOffset]->ReExecute();
 	myBackOffset--;
+	return true;
 }
 } // namespace common
