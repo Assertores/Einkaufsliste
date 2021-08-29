@@ -37,12 +37,23 @@ CommandLineInterface::AskForUnit()
 		common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()));
 }
 
+
+std::string
+CommandLineInterface::AskForText()
+{
+	std::string result;
+	myOutput << "please enter your text (without white space characters): ";
+	myInput >> result;
+	return result;
+}
+
 bool
 CommandLineInterface::Poll()
 {
 	myOutput << "write command: ";
 	std::string command;
 	myInput >> command;
+#if false // TODO(andreas): reimpliment
 	if (command == "exit" || command == "quit")
 	{
 		return true;
@@ -88,6 +99,7 @@ CommandLineInterface::Poll()
 		return false;
 	}
 	// TODO: add funktionality here
+#endif
 
 	interface::ILogger::Log(
 		interface::LogLevel::Error,

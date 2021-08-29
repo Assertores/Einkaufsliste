@@ -3,28 +3,27 @@
 #include <functional>
 
 namespace interface {
-class ICommandNode
+class ICommandMemento
 {
 public:
-	virtual ~ICommandNode() = default;
+	virtual ~ICommandMemento() = default;
 
 	virtual void ReExecute() = 0;
 	virtual void Revert() = 0;
 };
 
 namespace fake {
-class Command : public ICommandMemento
+class CommandMemento : public ICommandMemento
 {
 public:
-	std::function<bool()> reExecute = [this]() {
+	std::function<void()> reExecute = [this]() {
 		reExecuteCount++;
-		return false;
 	};
 	std::function<void()> revert = [this]() {
 		revertCount++;
 	};
 
-	bool ReExecute() override { return reExecute(); }
+	void ReExecute() override { return reExecute(); }
 	void Revert() override { revert(); };
 
 	int reExecuteCount = 0;

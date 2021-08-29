@@ -3,9 +3,9 @@
 #include <functional>
 #include <memory>
 
-namespace interface {
-class ICommandMemento;
+#include "interface/i_command_memento.h"
 
+namespace interface {
 class ICommand
 {
 public:
