@@ -13,6 +13,7 @@ CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand)
 	}
 	myCommandHistory.resize(myCommandHistory.size() - myBackOffset);
 	myCommandHistory.emplace_back(std::move(aCommand));
+	myBackOffset = 0;
 }
 
 bool

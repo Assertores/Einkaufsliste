@@ -1,161 +1,123 @@
+#include "common/command_chain.h"
+
 #include <functional>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "interface/i_command.h"
+#include "interface/i_command_memento.h"
 
-TEST(Command, command_gets_executed) // NOLINT
+using ::testing::InSequence;
+using ::testing::NiceMock;
+
+class CommandMementoMock : public interface::ICommandMemento
 {
-	bool wasExecuted = false;
-	interface::fake::Command mockedCommand;
-	mockedCommand.doExecute = [&]() {
-		wasExecuted = true;
-		return false;
-	};
+public:
+	MOCK_METHOD(void, ReExecute, (), (override));
+	MOCK_METHOD(void, Revert, (), (override));
+};
 
-	interface::ICommand::Execute(mockedCommand.Clone());
+TEST(CommandChain, add_nullptr_is_ignored) // NOLINT
+{
+	common::CommandChain subject;
 
-	EXPECT_TRUE(wasExecuted);
+	subject.AddCommand(nullptr);
 
-	interface::ICommand::Clear();
+	EXPECT_FALSE(subject.Undo());
+	EXPECT_FALSE(subject.Redo());
 }
 
-TEST(Command, non_revertable_command_is_not_reverted) // NOLINT
+TEST(CommandChain, revertable_command_is_reverted) // NOLINT
 {
-	bool wasReversed = false;
-	interface::fake::Command mockedCommand;
-	mockedCommand.doExecute = [&]() {
-		return false;
-	};
-	mockedCommand.doRevert = [&]() {
-		wasReversed = true;
-	};
+	common::CommandChain subject;
+	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
 
-	interface::ICommand::Execute(mockedCommand.Clone());
-	interface::ICommand::Revert();
+	EXPECT_CALL(*command1, Revert);
 
-	EXPECT_FALSE(wasReversed);
+	subject.AddCommand(std::move(command1));
 
-	interface::ICommand::Clear();
+	EXPECT_TRUE(subject.Undo());
 }
 
-TEST(Command, non_revertable_command_is_not_executed_again) // NOLINT
+TEST(CommandChain, revertable_command_is_executed_again) // NOLINT
 {
-	int executeCount = 0;
-	interface::fake::Command mockedCommand;
-	mockedCommand.doExecute = [&]() {
-		executeCount++;
-		return false;
-	};
+	common::CommandChain subject;
+	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
 
-	interface::ICommand::Execute(mockedCommand.Clone());
-	interface::ICommand::Revert();
-	interface::ICommand::ReExecute();
+	EXPECT_CALL(*command1, ReExecute);
 
-	EXPECT_EQ(executeCount, 1);
+	subject.AddCommand(std::move(command1));
 
-	interface::ICommand::Clear();
+	subject.Undo();
+	EXPECT_TRUE(subject.Redo());
 }
 
-TEST(Command, revertable_command_is_reverted) // NOLINT
+TEST(CommandChain, you_can_revert_and_reexecute_a_chain_of_commands) // NOLINT
 {
-	bool wasReversed = false;
-	interface::fake::Command mockedCommand;
-	mockedCommand.doExecute = [&]() {
-		return true;
-	};
-	mockedCommand.doRevert = [&]() {
-		wasReversed = true;
-	};
+	common::CommandChain subject;
+	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
+	auto command2 = std::make_unique<NiceMock<CommandMementoMock>>();
 
-	interface::ICommand::Execute(mockedCommand.Clone());
-	interface::ICommand::Revert();
+	{
+		InSequence s;
+		EXPECT_CALL(*command2, Revert);
+		EXPECT_CALL(*command1, Revert);
+		EXPECT_CALL(*command1, ReExecute);
+	}
 
-	EXPECT_TRUE(wasReversed);
+	subject.AddCommand(std::move(command1));
+	subject.AddCommand(std::move(command2));
 
-	interface::ICommand::Clear();
+	subject.Undo();
+	subject.Undo();
+	subject.Redo();
 }
 
-TEST(Command, revertable_command_is_executed_again) // NOLINT
+TEST(CommandChain, you_can_change_the_history_of_commands) // NOLINT
 {
-	int executeCount = 0;
-	interface::fake::Command mockedCommand;
-	mockedCommand.doExecute = [&]() {
-		executeCount++;
-		return true;
-	};
+	common::CommandChain subject;
+	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
+	auto command2 = std::make_unique<NiceMock<CommandMementoMock>>();
+	auto command3 = std::make_unique<NiceMock<CommandMementoMock>>();
 
-	interface::ICommand::Execute(mockedCommand.Clone());
-	interface::ICommand::Revert();
-	interface::ICommand::ReExecute();
+	{
+		InSequence s;
+		EXPECT_CALL(*command2, Revert);
+		EXPECT_CALL(*command1, Revert);
+		EXPECT_CALL(*command1, ReExecute);
+		EXPECT_CALL(*command3, Revert);
+		EXPECT_CALL(*command1, Revert);
+		EXPECT_CALL(*command1, ReExecute);
+		EXPECT_CALL(*command3, ReExecute);
+	}
 
-	EXPECT_EQ(executeCount, 2);
+	subject.AddCommand(std::move(command1));
+	subject.AddCommand(std::move(command2));
 
-	interface::ICommand::Clear();
+	subject.Undo();
+	subject.Undo();
+	subject.Redo();
+
+	subject.AddCommand(std::move(command3));
+
+	subject.Undo();
+	subject.Undo();
+	subject.Redo();
+	subject.Redo();
 }
 
-TEST(Command, you_can_revert_and_reexecute_a_chain_of_commands) // NOLINT
+TEST(CommandChain, a_non_revertable_command_wont_clear_the_history) // NOLINT
 {
-	int executeCount1 = 0;
-	interface::fake::Command mockedCommand1;
-	mockedCommand1.doExecute = [&]() {
-		executeCount1++;
-		return true;
-	};
-	int executeCount2 = 0;
-	interface::fake::Command mockedCommand2;
-	mockedCommand2.doExecute = [&]() {
-		executeCount2++;
-		return true;
-	};
+	common::CommandChain subject;
+	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
 
-	interface::ICommand::Execute(mockedCommand1.Clone());
-	interface::ICommand::Execute(mockedCommand2.Clone());
-	interface::ICommand::Revert();
-	interface::ICommand::Revert();
-	interface::ICommand::ReExecute();
+	EXPECT_CALL(*command1, ReExecute);
 
-	EXPECT_EQ(executeCount1, 2);
-	EXPECT_EQ(executeCount2, 1);
+	subject.AddCommand(std::move(command1));
 
-	interface::ICommand::Clear();
-}
+	subject.Undo();
 
-TEST(Command, you_can_change_the_history_of_commands) // NOLINT
-{
-	int executeCount1 = 0;
-	interface::fake::Command mockedCommand1;
-	mockedCommand1.doExecute = [&]() {
-		executeCount1++;
-		return true;
-	};
-	int executeCount2 = 0;
-	interface::fake::Command mockedCommand2;
-	mockedCommand2.doExecute = [&]() {
-		executeCount2++;
-		return true;
-	};
-	int executeCount3 = 0;
-	interface::fake::Command mockedCommand3;
-	mockedCommand3.doExecute = [&]() {
-		executeCount3++;
-		return true;
-	};
+	subject.AddCommand(nullptr);
 
-	interface::ICommand::Execute(mockedCommand1.Clone());
-	interface::ICommand::Execute(mockedCommand2.Clone());
-	interface::ICommand::Revert();
-	interface::ICommand::Revert();
-	interface::ICommand::ReExecute();
-	interface::ICommand::Execute(mockedCommand3.Clone());
-	interface::ICommand::Revert();
-	interface::ICommand::Revert();
-	interface::ICommand::ReExecute();
-	interface::ICommand::ReExecute();
-
-	EXPECT_EQ(executeCount1, 3);
-	EXPECT_EQ(executeCount2, 1);
-	EXPECT_EQ(executeCount3, 2);
-
-	interface::ICommand::Clear();
+	subject.Redo();
 }
