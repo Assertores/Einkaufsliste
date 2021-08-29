@@ -1,6 +1,7 @@
 #include "biz/application.h"
 
 #include "biz/command_line_interface.h"
+#include "common/change_recipe_name.h"
 #include "common/open_recipe.h"
 #include "common/print_current_file.h"
 #include "interface/i_logger.h"
@@ -11,16 +12,15 @@ Application::Application(const AppSettings& aSettings)
 	switch (aSettings.frontendType)
 	{
 	case FrontendType::Cli: {
-		auto openRecipe = std::make_shared<common::OpenRecipe>();
-		auto printFile = std::make_shared<common::PrintCurrentFile>();
-		auto changeRecipeName =
-			std::make_shared<common::PrintCurrentFile>(); // TODO(andreas): impliment
+		auto openRecipe = common::OpenRecipe::Create();
+		auto printFile = common::PrintCurrentFile::Create();
+		auto changeRecipeName = common::ChangeRecipeName::Create();
 		auto changeRecipeDescription =
-			std::make_shared<common::PrintCurrentFile>(); // TODO(andreas): impliment
-		auto addRecipeIngrediant =
-			std::make_shared<common::PrintCurrentFile>(); // TODO(andreas): impliment
+			common::PrintCurrentFile::Create(); // TODO(andreas): impliment
+		auto addRecipeIngrediant = common::PrintCurrentFile::Create(); // TODO(andreas): impliment
 		auto removeRecipeIngrediant =
-			std::make_shared<common::PrintCurrentFile>(); // TODO(andreas): impliment
+			common::PrintCurrentFile::Create(); // TODO(andreas): impliment
+
 		myFrontend = std::make_shared<CommandLineInterface>(
 			aSettings.input,
 			aSettings.output,
@@ -30,11 +30,10 @@ Application::Application(const AppSettings& aSettings)
 			changeRecipeDescription,
 			addRecipeIngrediant,
 			removeRecipeIngrediant);
+
 		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		printFile->SetReferences(&aSettings.output, myCurrentRecipe);
-		changeRecipeName->SetReferences(
-			&aSettings.output,
-			myCurrentRecipe); // TODO(andreas): impliment
+		changeRecipeName->SetReferences(myFrontend, myCurrentRecipe);
 		changeRecipeDescription->SetReferences(
 			&aSettings.output,
 			myCurrentRecipe); // TODO(andreas): impliment

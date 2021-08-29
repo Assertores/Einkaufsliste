@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 
+#include "common/command_chain.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
@@ -38,6 +39,8 @@ public:
 private:
 	std::istream& myInput;
 	std::ostream& myOutput;
+	common::CommandChain myCommandChain;
+
 	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
 	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
 	std::shared_ptr<interface::ICommand> myChangeNameOfRecipeCommand;

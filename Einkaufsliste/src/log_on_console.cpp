@@ -18,7 +18,7 @@ LogOnConsole::DoLog(interface::LogLevel aLevel, interface::LogType aType, std::s
 	strftime(
 		time.data(),
 		locBufferSize,
-		"%d %m %Y %H:%M:%S",
+		"%d.%m.%Y %H:%M:%S",
 		localtime(&t)); // NOLINT(clang-diagnostic-deprecated-declarations)
 
 	myOut << time.c_str() << " | " << interface::ToString(aLevel) << ' '

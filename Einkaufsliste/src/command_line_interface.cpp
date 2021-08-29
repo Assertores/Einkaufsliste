@@ -37,7 +37,6 @@ CommandLineInterface::AskForUnit()
 		common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()));
 }
 
-
 std::string
 CommandLineInterface::AskForText()
 {
@@ -53,53 +52,52 @@ CommandLineInterface::Poll()
 	myOutput << "write command: ";
 	std::string command;
 	myInput >> command;
-#if false // TODO(andreas): reimpliment
 	if (command == "exit" || command == "quit")
 	{
 		return true;
 	}
+	// TODO(andreas): help
 	if (command == "undo")
 	{
-		interface::ICommand::Revert();
-		return true;
+		myCommandChain.Undo();
+		return false;
 	}
 	if (command == "redo")
 	{
-		interface::ICommand::ReExecute();
-		return true;
+		myCommandChain.Redo();
+		return false;
 	}
 	if (command == "open-recipe")
 	{
-		interface::ICommand::Execute(myOpenRecipeCommand->Clone());
+		myCommandChain.AddCommand(myOpenRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "change-recipe-name")
 	{
-		interface::ICommand::Execute(myChangeNameOfRecipeCommand->Clone());
+		myCommandChain.AddCommand(myChangeNameOfRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "change-recipe-description")
 	{
-		interface::ICommand::Execute(myChangeDescriptionOfRecipeCommand->Clone());
+		myCommandChain.AddCommand(myChangeDescriptionOfRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "add-recipe-ingredient")
 	{
-		interface::ICommand::Execute(myAddIngredientToRecipeCommand->Clone());
+		myCommandChain.AddCommand(myAddIngredientToRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "remove-recipe-ingredient")
 	{
-		interface::ICommand::Execute(myRemoveIngredientToRecipeCommand->Clone());
+		myCommandChain.AddCommand(myRemoveIngredientToRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "print")
 	{
-		interface::ICommand::Execute(myPrintCurrentFileCommand->Clone());
+		myCommandChain.AddCommand(myPrintCurrentFileCommand->Execute());
 		return false;
 	}
 	// TODO: add funktionality here
-#endif
 
 	interface::ILogger::Log(
 		interface::LogLevel::Error,
