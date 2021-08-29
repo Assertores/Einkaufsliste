@@ -26,12 +26,14 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	PatcherSettings patcherSettings { true };
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
+	aOutput << "checking for updates ...\n";
 	if (Update(updaterSettings))
 	{
 		// TODO(andreas): restart application
 		return 1;
 	}
 	Patch(patcherSettings);
+	aOutput << "starting ...\n";
 	Application app(appSettings);
 	app.Run(appSettings);
 	return 0;

@@ -19,6 +19,6 @@ OpenConvertionFile::Execute()
 	}
 	Unit::SetConvertionFiles(files);
 
-	return nullptr; // TODO(andreas): memento?
+	return nullptr;
 }
 } // namespace common

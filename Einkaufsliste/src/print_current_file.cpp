@@ -20,11 +20,10 @@ PrintCurrentFile::SetReferences(
 PrintCurrentFile::~PrintCurrentFile()
 {
 	auto recipe = myCurrentRecipe.lock();
-	if (!recipe)
+	if (recipe)
 	{
-		return;
+		recipe->Remove(weak_from_this());
 	}
-	recipe->Remove(weak_from_this());
 }
 
 std::unique_ptr<interface::ICommandMemento>

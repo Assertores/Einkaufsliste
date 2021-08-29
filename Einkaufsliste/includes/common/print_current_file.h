@@ -15,11 +15,10 @@ class PrintCurrentFile final
 	, public std::enable_shared_from_this<PrintCurrentFile>
 {
 public:
-	PrintCurrentFile() = default;
-	PrintCurrentFile(const PrintCurrentFile&) = default;
-	PrintCurrentFile(PrintCurrentFile&&) = default;
-	PrintCurrentFile& operator=(const PrintCurrentFile&) = default;
-	PrintCurrentFile& operator=(PrintCurrentFile&&) = default;
+	static std::shared_ptr<PrintCurrentFile> Create()
+	{
+		return std::make_shared<PrintCurrentFile>();
+	}
 
 	~PrintCurrentFile() override;
 	void SetReferences(std::ostream* aOut, std::weak_ptr<Observable<Recipe>> aCurrentRecipe);
@@ -27,6 +26,13 @@ public:
 	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
 	void OnChange(Recipe aElement) override;
+
+	// protected:
+	PrintCurrentFile() = default;
+	PrintCurrentFile(const PrintCurrentFile&) = default;
+	PrintCurrentFile(PrintCurrentFile&&) = default;
+	PrintCurrentFile& operator=(const PrintCurrentFile&) = default;
+	PrintCurrentFile& operator=(PrintCurrentFile&&) = default;
 
 private:
 	std::weak_ptr<Observable<Recipe>> myCurrentRecipe;
