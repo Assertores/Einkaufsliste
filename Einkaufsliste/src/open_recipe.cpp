@@ -6,7 +6,7 @@ namespace common {
 void
 OpenRecipe::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::weak_ptr<common::Observable<common::Recipe>> aRecipeObservable)
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable)
 {
 	myFrontend = std::move(aFrontend);
 	myRecipeObservable = std::move(aRecipeObservable);
@@ -27,7 +27,7 @@ OpenRecipe::Execute()
 	}
 
 	auto file = frontend->AskForFile();
-	recipeObservable->Notify(Recipe(std::filesystem::current_path() / file));
+	recipeObservable->Set(Recipe(std::filesystem::current_path() / file));
 
 	return nullptr; // TODO(andreas): memento?
 }

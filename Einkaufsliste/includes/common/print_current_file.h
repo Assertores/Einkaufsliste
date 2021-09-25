@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <ostream>
+#include <optional>
 
 #include "common/observable.h"
 #include "common/recipe.h"
@@ -11,7 +12,7 @@
 namespace common {
 class PrintCurrentFile final
 	: public interface::ICommand
-	, public interface::IObserver<Recipe>
+	, public interface::IObserver<std::optional<Recipe>>
 	, public std::enable_shared_from_this<PrintCurrentFile>
 {
 public:
@@ -21,11 +22,13 @@ public:
 	}
 
 	~PrintCurrentFile() override;
-	void SetReferences(std::ostream* aOut, std::weak_ptr<Observable<Recipe>> aCurrentRecipe);
+	void SetReferences(
+		std::ostream* aOut,
+		std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe);
 
 	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
-	void OnChange(Recipe aElement) override;
+	void OnChange(std::optional<Recipe> aElement) override;
 
 	// protected:
 	PrintCurrentFile() = default;
@@ -35,7 +38,7 @@ public:
 	PrintCurrentFile& operator=(PrintCurrentFile&&) = default;
 
 private:
-	std::weak_ptr<Observable<Recipe>> myCurrentRecipe;
+	std::weak_ptr<Observable<std::optional<Recipe>>> myCurrentRecipe;
 	std::ostream* myOut = nullptr;
 
 	std::shared_ptr<interface::IFile> myCurrentFile;

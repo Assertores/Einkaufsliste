@@ -4,7 +4,7 @@ namespace common {
 void
 PrintCurrentFile::SetReferences(
 	std::ostream* aOut,
-	std::weak_ptr<Observable<Recipe>> aCurrentRecipe)
+	std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)
 {
 	myOut = aOut;
 	myCurrentRecipe = std::move(aCurrentRecipe);
@@ -39,8 +39,12 @@ PrintCurrentFile::Execute()
 }
 
 void
-PrintCurrentFile::OnChange(Recipe aElement)
+PrintCurrentFile::OnChange(std::optional<Recipe> aElement)
 {
-	myCurrentFile = std::make_shared<Recipe>(std::move(aElement));
+	if (!aElement.has_value())
+	{
+		return;
+	}
+	myCurrentFile = std::make_shared<Recipe>(std::move(aElement.value()));
 }
 } // namespace common

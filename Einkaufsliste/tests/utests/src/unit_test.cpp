@@ -15,8 +15,8 @@ TEST(Unit, parses_it_correctly) // NOLINT
 		return std::vector<std::filesystem::path> { "kg" };
 	};
 	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit subject1(1, "apple", "kg", convertion);
-	common::Unit subject2(3, "apple", "kg", convertion);
+	common::Unit subject1(1, "kg", "apple", convertion);
+	common::Unit subject2(3, "kg", "apple", convertion);
 
 	auto result = common::Unit::ToString(std::vector<common::Unit> { subject1, subject2 });
 
@@ -33,8 +33,8 @@ TEST(Unit, different_types_are_not_parsed) // NOLINT
 		return std::vector<std::filesystem::path> { "kg" };
 	};
 	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit subject1(1, "apple", "kg", convertion);
-	common::Unit subject2(3, "banana", "kg", convertion);
+	common::Unit subject1(1, "kg", "apple", convertion);
+	common::Unit subject2(3, "kg", "banana", convertion);
 
 	auto result = common::Unit::ToString(std::vector<common::Unit> { subject1, subject2 });
 
@@ -51,8 +51,8 @@ TEST(Unit, same_types_can_be_added_together) // NOLINT
 		return std::vector<std::filesystem::path> { "kg" };
 	};
 	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit subject1(1, "apple", "kg", convertion);
-	common::Unit subject2(3, "apple", "kg", convertion);
+	common::Unit subject1(1, "kg", "apple", convertion);
+	common::Unit subject2(3, "kg", "apple", convertion);
 
 	ASSERT_TRUE(subject1.Add(subject2));
 	auto result = common::Unit::ToString(std::vector<common::Unit> { subject1 });
@@ -70,8 +70,8 @@ TEST(Unit, different_types_can_not_be_added_together) // NOLINT
 		return std::vector<std::filesystem::path> { "kg" };
 	};
 	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit subject1(1, "apple", "kg", convertion);
-	common::Unit subject2(3, "banana", "kg", convertion);
+	common::Unit subject1(1, "kg", "apple", convertion);
+	common::Unit subject2(3, "kg", "banana", convertion);
 
 	ASSERT_FALSE(subject1.Add(subject2));
 	auto result = common::Unit::ToString(std::vector<common::Unit> { subject1 });
@@ -99,6 +99,6 @@ TEST(Unit, parses_string_into_units) // NOLINT
 	auto subject = common::Unit::FromString("apple 1kg & 3kg");
 
 	ASSERT_EQ(subject.size(), 2);
-	EXPECT_TRUE(subject[0].Equals(common::Unit(1, "apple", "kg", convertion)));
-	EXPECT_TRUE(subject[1].Equals(common::Unit(3, "apple", "kg", convertion)));
+	EXPECT_TRUE(subject[0].Equals(common::Unit(1, "kg", "apple", convertion)));
+	EXPECT_TRUE(subject[1].Equals(common::Unit(3, "kg", "apple", convertion)));
 }

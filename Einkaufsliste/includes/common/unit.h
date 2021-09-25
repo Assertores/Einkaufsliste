@@ -7,13 +7,13 @@
 #include "common/unit_convertion.h"
 
 namespace common {
-class Unit final
+class Unit
 {
 public:
 	Unit(
 		float aAmount,
-		std::string aType,
 		std::string_view aUnit,
+		std::string aType,
 		const UnitConvertion& aConvertionFile);
 
 	// returns the name of the type given string will result in
@@ -34,6 +34,8 @@ public:
 	{
 		return myType == aOther.myType && myAmount == aOther.myAmount;
 	}
+
+	friend bool operator==(const Unit& aLhs, const Unit& aRhs) { return aLhs.Equals(aRhs); }
 
 private:
 	float myAmount = 0;
