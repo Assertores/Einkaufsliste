@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 
 #include "common/observable.h"
 #include "common/recipe.h"
@@ -15,7 +16,7 @@ public:
 
 	void SetReferences(
 		std::weak_ptr<interface::IFrontend> aFrontend,
-		std::weak_ptr<common::Observable<common::Recipe>> aRecipeObservable);
+		std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable);
 
 	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
@@ -24,6 +25,6 @@ public:
 
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
-	std::weak_ptr<common::Observable<common::Recipe>> myRecipeObservable;
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipeObservable;
 };
 } // namespace common

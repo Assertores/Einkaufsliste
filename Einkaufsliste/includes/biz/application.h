@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <optional>
 
 #include "common/observable.h"
 #include "common/recipe.h"
@@ -31,7 +32,7 @@ public:
 private:
 	std::shared_ptr<interface::IFrontend> myFrontend;
 
-	std::shared_ptr<common::Observable<common::Recipe>> myCurrentRecipe =
-		std::make_shared<common::Observable<common::Recipe>>();
+	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> myCurrentRecipe =
+		std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 };
 } // namespace biz

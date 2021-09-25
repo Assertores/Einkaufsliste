@@ -6,7 +6,7 @@
 #include "interface/i_file.h"
 
 namespace common {
-class UnitConvertion final : public interface::IFile
+class UnitConvertion : public interface::IFile
 {
 public:
 	explicit UnitConvertion(const std::filesystem::path& aPath)

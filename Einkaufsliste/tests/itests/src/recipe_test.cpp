@@ -2,14 +2,26 @@
 
 #include <gtest/gtest.h>
 
+#include "common/unit.h"
 #include "interface/i_file_impl.h"
 
 TEST(Recipe, read_and_write) // NOLINT
 {
-#if false
+	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	mockingFileImpl->getField = [](auto /*unused*/) {
+		return std::vector<std::string> { "1" };
+	};
+	mockingFileImpl->getKeys = [](auto /*unused*/) {
+		return std::vector<std::filesystem::path> { "kg" };
+	};
+	common::UnitConvertion convertion(mockingFileImpl);
+
+	common::Unit::SetConvertionFiles({ convertion });
 	const auto* name = "Example";
 	const auto* description = "this is a example recipe.";
-	std::vector<std::string_view> ingredians = { "apfel", "kirschen", "wassermelone" };
+	std::vector<common::Unit> ingredians = { { 1, "kg", "apfel", convertion },
+											 { 1, "kg", "kirschen", convertion },
+											 { 1, "kg", "wassermelone", convertion } };
 
 	const auto recipePath = std::filesystem::current_path() / "example.md";
 	std::filesystem::remove(recipePath);
@@ -21,9 +33,10 @@ TEST(Recipe, read_and_write) // NOLINT
 		subject.SetDescription(description);
 		for (const auto& it : ingredians)
 		{
-			// subject.AddIngredient(it);
+			subject.AddIngredient(it);
 		}
 	}
+	// NOTE(andreas): forces programm to read it in from the file
 	interface::IFileImpl::Clear();
 
 	common::Recipe subject(recipePath);
@@ -36,5 +49,4 @@ TEST(Recipe, read_and_write) // NOLINT
 	{
 		EXPECT_EQ(resultIngredians[i], ingredians[i]);
 	}
-#endif
 }

@@ -6,7 +6,7 @@
 #include "interface/i_file.h"
 
 namespace common {
-class Recipe final : public interface::IFile
+class Recipe : public interface::IFile
 {
 public:
 	explicit Recipe(const std::filesystem::path& aPath)
@@ -21,7 +21,7 @@ public:
 
 	void AddIngredient(const Unit& aIngredient);
 	void RemoveIngredient(const Unit& aIngredient);
-	[[nodiscard]] std::vector<std::string> GetIngredients() const;
+	[[nodiscard]] std::vector<Unit> GetIngredients() const;
 
 	void SetName(std::string_view aName);
 	[[nodiscard]] std::string GetName() const;

@@ -14,9 +14,18 @@ Recipe::Print() const
 	std::stringstream result;
 	result << "Name: " << GetName() << '\n';
 	result << "Ingrediance:\n";
-	for (const auto& it : GetIngredients())
+
+	auto ingredients = GetIngredients();
+
+	auto first = ingredients.begin();
+	const auto last = ingredients.end();
+	while (first != last)
 	{
-		result << "- " << it << '\n';
+		auto middle = std::partition(first, last, [type = first->GetType()](const auto& aOther) {
+			return aOther.GetType() == type;
+		});
+		result << "- " << Unit::ToString({ first, middle }) << '\n';
+		first = middle;
 	}
 	result << "Description:\n" << GetDescription() << '\n';
 	return result.str();
@@ -93,10 +102,21 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 	}
 }
 
-std::vector<std::string>
+std::vector<Unit>
 Recipe::GetIngredients() const
 {
-	return ReadAllFromField(locIngredientsKey);
+	const auto ingrediansAsString = ReadAllFromField(locIngredientsKey);
+	if (ingrediansAsString.empty())
+	{
+		return {};
+	}
+	std::vector<Unit> result;
+	for (const auto& it : ingrediansAsString)
+	{
+		auto units = Unit::FromString(it);
+		result.insert(result.end(), units.begin(), units.end());
+	}
+	return result;
 }
 
 void

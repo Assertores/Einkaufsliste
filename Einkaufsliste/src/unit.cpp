@@ -10,8 +10,8 @@ std::vector<UnitConvertion> Unit::myConvertionFiles {};
 
 Unit::Unit(
 	float aAmount,
-	std::string aType,
 	std::string_view aUnit,
+	std::string aType,
 	const UnitConvertion& aConvertionFile)
 	: myType(std::move(aType))
 	, myConvertionFile(aConvertionFile)
@@ -97,7 +97,7 @@ Unit::FromString(std::string_view aString)
 		{
 			if (it.CanConvertUnit(unit))
 			{
-				result.emplace_back(value, type, unit, it);
+				result.emplace_back(value, unit, type, it);
 				break;
 			}
 		}

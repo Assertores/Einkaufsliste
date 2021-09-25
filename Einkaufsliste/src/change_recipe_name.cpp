@@ -20,19 +20,22 @@ private:
 	std::string myPrevName;
 };
 
-ChangeRecipeName::~ChangeRecipeName()
-{
-	auto recipe = mySubscription.lock();
-	if (recipe)
-	{
-		recipe->Remove(weak_from_this());
-	}
-}
-
 std::unique_ptr<interface::ICommandMemento>
 ChangeRecipeName::Execute()
 {
-	const auto privName = myCurrentRecipe->GetName();
+	auto sub = myRecipe.lock();
+	if (!sub)
+	{
+		// TODO(andreas): connection to observable lost
+		return nullptr;
+	}
+	auto recipe = sub->Get();
+	if (!recipe.has_value())
+	{
+		// TODO(andreas): not recipe
+		return nullptr;
+	}
+	const auto privName = recipe.value().GetName();
 
 	auto frontend = myFrontend.lock();
 	if (!frontend)
@@ -40,23 +43,16 @@ ChangeRecipeName::Execute()
 		return nullptr;
 	}
 	const auto name = frontend->AskForText();
-	myCurrentRecipe->SetName(name);
-	return std::make_unique<ChangeRecipeNameMemento>(*myCurrentRecipe, name, privName);
+	recipe.value().SetName(name);
+	return std::make_unique<ChangeRecipeNameMemento>(recipe.value(), name, privName);
 }
 
 void
 ChangeRecipeName::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<Recipe>> aCurrentRecipe) // NOLINT
+	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe) // NOLINT
 {
-	aCurrentRecipe->Subscribe(weak_from_this()); // TODO(andreas): unsubscripe on destructor?
-	mySubscription = aCurrentRecipe;
+	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
-}
-
-void
-ChangeRecipeName::OnChange(Recipe aElement)
-{
-	myCurrentRecipe = std::make_unique<Recipe>(std::move(aElement));
 }
 } // namespace common
