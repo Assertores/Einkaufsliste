@@ -26,6 +26,10 @@ public:
 	{
 		return aLhs.myFileImplimentation == aRhs.myFileImplimentation;
 	}
+	friend bool operator!=(const IFile& aLhs, const IFile& aRhs)
+	{
+		return aLhs.myFileImplimentation != aRhs.myFileImplimentation;
+	}
 
 	[[nodiscard]] virtual std::string Print() const = 0;
 

@@ -19,9 +19,9 @@ TEST(Recipe, read_and_write) // NOLINT
 	common::Unit::SetConvertionFiles({ convertion });
 	const auto* name = "Example";
 	const auto* description = "this is a example recipe.";
-	std::vector<common::Unit> ingredians = { { 1, "kg", "apfel", convertion },
-											 { 1, "kg", "kirschen", convertion },
-											 { 1, "kg", "wassermelone", convertion } };
+	std::vector<common::Unit> ingredians = { { 1, "kg", "apfel" },
+											 { 1, "kg", "kirschen" },
+											 { 1, "kg", "wassermelone" } };
 
 	const auto recipePath = std::filesystem::current_path() / "example.md";
 	std::filesystem::remove(recipePath);

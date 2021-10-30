@@ -7,7 +7,7 @@ namespace common {
 class RemoveRecipeUnitMemento : public interface::ICommandMemento
 {
 public:
-	RemoveRecipeUnitMemento(Recipe aRecipe, common::Unit aNewUnit)
+	RemoveRecipeUnitMemento(Recipe aRecipe, Unit aNewUnit)
 		: myRecipe(std::move(aRecipe))
 		, myNewUnit(std::move(aNewUnit)) {};
 
@@ -17,7 +17,7 @@ public:
 
 private:
 	Recipe myRecipe;
-	common::Unit myNewUnit;
+	Unit myNewUnit;
 };
 
 std::unique_ptr<interface::ICommandMemento>

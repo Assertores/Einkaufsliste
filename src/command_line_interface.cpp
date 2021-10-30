@@ -25,14 +25,16 @@ CommandLineInterface::AskForFolder()
 common::Unit
 CommandLineInterface::AskForUnit()
 {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::Commands,
-		"not implimented");
-	return { 3,
-			 "kg",
-			 "fake",
-			 common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()) };
+	std::string type;
+	float amount = std::numeric_limits<float>::quiet_NaN();
+	std::string unit;
+	myOutput << "please enter the type of ingredient: ";
+	myInput >> type;
+	myOutput << "please enter the amount (without unit): ";
+	myInput >> amount;
+	myOutput << "please enter the unit: ";
+	myInput >> unit;
+	return { amount, unit, type };
 }
 
 std::string

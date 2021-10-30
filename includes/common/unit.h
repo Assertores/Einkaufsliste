@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -10,11 +11,7 @@ namespace common {
 class Unit
 {
 public:
-	Unit(
-		float aAmount,
-		std::string_view aUnit,
-		std::string aType,
-		const UnitConvertion& aConvertionFile);
+	Unit(float aAmount, std::string_view aUnit, std::string aType);
 
 	// returns the name of the type given string will result in
 	static std::string ResultsInUnitsOfType(std::string_view aString);
@@ -40,7 +37,7 @@ public:
 private:
 	float myAmount = 0;
 	std::string myType;
-	UnitConvertion myConvertionFile;
+	std::optional<UnitConvertion> myConvertionFile;
 	static std::vector<UnitConvertion> myConvertionFiles;
 };
 } // namespace common

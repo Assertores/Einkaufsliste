@@ -6,6 +6,7 @@
 
 #include "common/observable.h"
 #include "common/recipe.h"
+#include "common/unit_convertion.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
