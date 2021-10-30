@@ -4,7 +4,7 @@
 #include "biz/argument_parser.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
-#include "common/log_on_console.h"
+#include "biz/log_on_console.h"
 #include "interface/i_logger.h"
 
 static constexpr std::string_view locDefaultUrl =

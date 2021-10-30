@@ -20,7 +20,7 @@ public:
 	[[nodiscard]] std::string GetDescription() const;
 
 	void AddIngredient(const Unit& aIngredient);
-	void RemoveIngredient(const Unit& aIngredient);
+	bool RemoveIngredient(const Unit& aIngredient);
 	[[nodiscard]] std::vector<Unit> GetIngredients() const;
 
 	void SetName(std::string_view aName);

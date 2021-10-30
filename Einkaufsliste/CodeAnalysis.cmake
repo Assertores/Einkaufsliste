@@ -11,7 +11,7 @@ if(NOT DEFINED CMAKE_CXX_CLANG_TIDY)
 	if(CLANG_TIDY_EXECUTABLE)
 		message(STATUS "Found clang-tidy executable: ${CLANG_TIDY_EXECUTABLE}")
 		set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-		set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXECUTABLE}" -p "${CMAKE_BINARY_DIR}" "--extra-arg=/EHsc"
+		set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXECUTABLE}" -p "${CMAKE_BINARY_DIR}"
 			CACHE INTERNAL "Command line for the clang-tidy tool.")
 	else()
 		message(WARNING "clang-tidy not found")

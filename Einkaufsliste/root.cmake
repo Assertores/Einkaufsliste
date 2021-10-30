@@ -15,33 +15,36 @@ target_compile_features(biz
 
 target_link_libraries(biz
 	PRIVATE
-		cpr::cpr
-		rapidjson
+		# cpr::cpr
+		# rapidjson
 )
 
 target_include_directories(biz
 	PUBLIC
 		"includes"
-		"extern/cpr/include"
+		# "extern/cpr/include"
 )
 
 target_sources(biz
 	PUBLIC
+		"includes/biz/add_recipe_unit.h"
 		"includes/biz/application.h"
-		"includes/biz/entry.h"
-		"includes/biz/patcher.h"
 		"includes/biz/argument_parser.h"
+		"includes/biz/change_recipe_description.h"
+		"includes/biz/change_recipe_name.h"
 		"includes/biz/command_line_interface.h"
+		"includes/biz/entry.h"
+		"includes/biz/log_on_console.h"
+		"includes/biz/open_convertion_files.h"
+		"includes/biz/open_recipe.h"
+		"includes/biz/patcher.h"
+		"includes/biz/print_current_file.h"
+		"includes/biz/remove_recipe_unit.h"
 		"includes/biz/updater.h"
-		"includes/common/change_recipe_name.h"
 		"includes/common/command_chain.h"
 		"includes/common/json_parser.h"
-		"includes/common/log_on_console.h"
 		"includes/common/md_parser.h"
 		"includes/common/observable.h"
-		"includes/common/open_convertion_files.h"
-		"includes/common/open_recipe.h"
-		"includes/common/print_current_file.h"
 		"includes/common/recipe.h"
 		"includes/common/unit.h"
 		"includes/common/unit_convertion.h"
@@ -53,8 +56,10 @@ target_sources(biz
 		"includes/interface/i_logger.h"
 		"includes/interface/i_observer.h"
 	PRIVATE
+		"src/add_recipe_unit.cpp"
 		"src/application.cpp"
 		"src/argument_parser.cpp"
+		"src/change_recipe_description.cpp"
 		"src/change_recipe_name.cpp"
 		"src/command_line_interface.cpp"
 		"src/entry.cpp"
@@ -69,7 +74,8 @@ target_sources(biz
 		"src/patcher.cpp"
 		"src/print_current_file.cpp"
 		"src/recipe.cpp"
-		"src/unit.cpp"
+		"src/remove_recipe_unit.cpp"
 		"src/unit_convertion.cpp"
+		"src/unit.cpp"
 		"src/updater.cpp"
 )

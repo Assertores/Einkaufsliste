@@ -1,9 +1,12 @@
 #include "biz/application.h"
 
+#include "biz/add_recipe_unit.h"
+#include "biz/change_recipe_description.h"
+#include "biz/change_recipe_name.h"
 #include "biz/command_line_interface.h"
-#include "common/change_recipe_name.h"
-#include "common/open_recipe.h"
-#include "common/print_current_file.h"
+#include "biz/open_recipe.h"
+#include "biz/print_current_file.h"
+#include "biz/remove_recipe_unit.h"
 #include "interface/i_logger.h"
 
 namespace biz {
@@ -15,34 +18,24 @@ Application::Application(const AppSettings& aSettings)
 		auto openRecipe = common::OpenRecipe::Create();
 		auto printFile = common::PrintCurrentFile::Create();
 		auto changeRecipeName = common::ChangeRecipeName::Create();
-		auto changeRecipeDescription =
-			common::PrintCurrentFile::Create(); // TODO(andreas): impliment
-		auto addRecipeIngrediant = common::PrintCurrentFile::Create(); // TODO(andreas): impliment
-		auto removeRecipeIngrediant =
-			common::PrintCurrentFile::Create(); // TODO(andreas): impliment
+		auto changeRecipeDescription = common::ChangeRecipeDescription::Create();
+		auto addRecipeIngrediant = common::AddRecipeUnit::Create();
+		auto removeRecipeIngrediant = common::RemoveRecipeUnit::Create();
+		CliCommands commands { .myOpenRecipeCommand = openRecipe,
+							   .myPrintCurrentFileCommand = printFile,
+							   .myChangeNameOfRecipeCommand = changeRecipeName,
+							   .myChangeDescriptionOfRecipeCommand = changeRecipeDescription,
+							   .myAddIngredientToRecipeCommand = addRecipeIngrediant,
+							   .myRemoveIngredientToRecipeCommand = removeRecipeIngrediant };
 
-		myFrontend = std::make_shared<CommandLineInterface>(
-			aSettings.input,
-			aSettings.output,
-			openRecipe,
-			printFile,
-			changeRecipeName,
-			changeRecipeDescription,
-			addRecipeIngrediant,
-			removeRecipeIngrediant);
+		myFrontend = std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, commands);
 
 		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		printFile->SetReferences(&aSettings.output, myCurrentRecipe);
 		changeRecipeName->SetReferences(myFrontend, myCurrentRecipe);
-		changeRecipeDescription->SetReferences(
-			&aSettings.output,
-			myCurrentRecipe); // TODO(andreas): impliment
-		addRecipeIngrediant->SetReferences(
-			&aSettings.output,
-			myCurrentRecipe); // TODO(andreas): impliment
-		removeRecipeIngrediant->SetReferences(
-			&aSettings.output,
-			myCurrentRecipe); // TODO(andreas): impliment
+		changeRecipeDescription->SetReferences(myFrontend, myCurrentRecipe);
+		addRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
+		removeRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
 		break;
 	}
 	default:
