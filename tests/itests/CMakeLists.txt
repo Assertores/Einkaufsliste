@@ -18,4 +18,4 @@ target_sources(IntegrationTests
 		"src/recipe_test.cpp"
 )
 
-add_test(NAME UnitTests COMMAND UnitTests)
+add_test(NAME IntegrationTests COMMAND IntegrationTests)
