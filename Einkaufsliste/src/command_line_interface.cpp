@@ -1,6 +1,5 @@
 #include "biz/command_line_interface.h"
 
-#include "common/open_recipe.h"
 #include "interface/i_file_impl.h"
 #include "interface/i_logger.h"
 
@@ -30,11 +29,10 @@ CommandLineInterface::AskForUnit()
 		interface::LogLevel::Fatal,
 		interface::LogType::Commands,
 		"not implimented");
-	return common::Unit(
-		3,
-		"fake",
-		"kg",
-		common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()));
+	return { 3,
+			 "kg",
+			 "fake",
+			 common::UnitConvertion(std::make_shared<interface::fake::FileImpl>()) };
 }
 
 std::string
@@ -69,32 +67,57 @@ CommandLineInterface::Poll()
 	}
 	if (command == "open-recipe")
 	{
-		myCommandChain.AddCommand(myOpenRecipeCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myOpenRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "change-recipe-name")
 	{
-		myCommandChain.AddCommand(myChangeNameOfRecipeCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myChangeNameOfRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "change-recipe-description")
 	{
-		myCommandChain.AddCommand(myChangeDescriptionOfRecipeCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myChangeDescriptionOfRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "add-recipe-ingredient")
 	{
-		myCommandChain.AddCommand(myAddIngredientToRecipeCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myAddIngredientToRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "remove-recipe-ingredient")
 	{
-		myCommandChain.AddCommand(myRemoveIngredientToRecipeCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myRemoveIngredientToRecipeCommand->Execute());
 		return false;
 	}
 	if (command == "print")
 	{
-		myCommandChain.AddCommand(myPrintCurrentFileCommand->Execute());
+		myCommandChain.AddCommand(myCommands.myPrintCurrentFileCommand->Execute());
+		return false;
+	}
+	if (command == "open-convertion")
+	{
+		myCommandChain.AddCommand(myCommands.myOpenConvertionCommand->Execute());
+		return false;
+	}
+	if (command == "open-week")
+	{
+		myCommandChain.AddCommand(myCommands.myOpenWeekCommand->Execute());
+		return false;
+	}
+	if (command == "compile")
+	{
+		myCommandChain.AddCommand(myCommands.myCompileListCommand->Execute());
+		return false;
+	}
+	if (command == "add-recipe-to-week")
+	{
+		myCommandChain.AddCommand(myCommands.myAddRecipeToWeekCommand->Execute());
+		return false;
+	}
+	if (command == "remove-recipe-from-week")
+	{
+		myCommandChain.AddCommand(myCommands.myRemoveRecipeFromWeekCommand->Execute());
 		return false;
 	}
 	// TODO: add funktionality here

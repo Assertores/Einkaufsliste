@@ -8,26 +8,29 @@
 #include "interface/i_frontend.h"
 
 namespace biz {
+struct CliCommands
+{
+	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
+	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
+	std::shared_ptr<interface::ICommand> myChangeNameOfRecipeCommand;
+	std::shared_ptr<interface::ICommand> myChangeDescriptionOfRecipeCommand;
+	std::shared_ptr<interface::ICommand> myAddIngredientToRecipeCommand;
+	std::shared_ptr<interface::ICommand> myRemoveIngredientToRecipeCommand;
+	std::shared_ptr<interface::ICommand> myOpenConvertionCommand;
+	std::shared_ptr<interface::ICommand> myOpenWeekCommand;
+	std::shared_ptr<interface::ICommand> myCompileListCommand;
+	std::shared_ptr<interface::ICommand> myAddRecipeToWeekCommand;
+	std::shared_ptr<interface::ICommand> myRemoveRecipeFromWeekCommand;
+};
+
 class CommandLineInterface : public interface::IFrontend
 {
 public:
-	CommandLineInterface(
-		std::istream& aInput,
-		std::ostream& aOutput,
-		std::shared_ptr<interface::ICommand> aOpenRecipeCommand,
-		std::shared_ptr<interface::ICommand> aPrintCurrentFileCommand,
-		std::shared_ptr<interface::ICommand> aChangeNameOfRecipeCommand,
-		std::shared_ptr<interface::ICommand> aChangeDescriptionOfRecipeCommand,
-		std::shared_ptr<interface::ICommand> aAddIngredientToRecipeCommand,
-		std::shared_ptr<interface::ICommand> aRemoveIngredientToRecipeCommand)
+	CommandLineInterface(std::istream& aInput, std::ostream& aOutput)
 		: myInput(aInput)
-		, myOutput(aOutput)
-		, myOpenRecipeCommand(std::move(aOpenRecipeCommand))
-		, myPrintCurrentFileCommand(std::move(aPrintCurrentFileCommand))
-		, myChangeNameOfRecipeCommand(std::move(aChangeNameOfRecipeCommand))
-		, myChangeDescriptionOfRecipeCommand(std::move(aChangeDescriptionOfRecipeCommand))
-		, myAddIngredientToRecipeCommand(std::move(aAddIngredientToRecipeCommand))
-		, myRemoveIngredientToRecipeCommand(std::move(aRemoveIngredientToRecipeCommand)) {};
+		, myOutput(aOutput) {};
+
+	void SetCommands(CliCommands aCommands) { myCommands = std::move(aCommands); }
 
 	std::filesystem::path AskForFile() override;
 	std::filesystem::path AskForFolder() override;
@@ -40,12 +43,6 @@ private:
 	std::istream& myInput;
 	std::ostream& myOutput;
 	common::CommandChain myCommandChain;
-
-	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
-	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
-	std::shared_ptr<interface::ICommand> myChangeNameOfRecipeCommand;
-	std::shared_ptr<interface::ICommand> myChangeDescriptionOfRecipeCommand;
-	std::shared_ptr<interface::ICommand> myAddIngredientToRecipeCommand;
-	std::shared_ptr<interface::ICommand> myRemoveIngredientToRecipeCommand;
+	CliCommands myCommands;
 };
 } // namespace biz

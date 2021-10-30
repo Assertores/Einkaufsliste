@@ -64,7 +64,7 @@ JsonParser::GetField(std::filesystem::path aKey) const
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
 		"not implimented");
-	return std::vector<std::string>();
+	return {};
 }
 
 std::vector<std::filesystem::path>
@@ -74,6 +74,6 @@ JsonParser::GetKeys(std::filesystem::path aKey) const
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
 		"not implimented");
-	return std::vector<std::filesystem::path>();
+	return {};
 }
 } // namespace common

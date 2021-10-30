@@ -2,12 +2,14 @@
 												// "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
 #include "biz/updater.h"
 
+#if fix_external_dependencys
 #include <filesystem>
 
 #include <cpr/cpr.h>
 #undef max
 #undef min
 #include <rapidjson/document.h>
+#endif
 
 namespace biz {
 
@@ -20,6 +22,7 @@ Update(const UpdaterSettings& aSettings)
 	{
 		return false;
 	}
+#if fix_external_dependencys
 	// NOTE(andreas): (https://docs.github.com/en/rest/reference/repos#get-the-latest-release)
 	auto responce =
 		cpr::Get(cpr::Url("https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest"));
@@ -80,5 +83,8 @@ Update(const UpdaterSettings& aSettings)
 	// TODO(andreas): unzip
 	// TODO(andreas): save new version number or something
 	return true;
+#else
+	return false;
+#endif
 }
 } // namespace biz

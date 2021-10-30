@@ -74,7 +74,7 @@ Recipe::AddIngredient(const Unit& aIngredient)
 	AddToField(locIngredientsKey, { Unit::ToString(units) });
 }
 
-void
+bool
 Recipe::RemoveIngredient(const Unit& aIngredient)
 {
 	auto ingrediants = ReadAllFromField(locIngredientsKey);
@@ -87,7 +87,7 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 
 	if (element == ingrediants.end())
 	{
-		return;
+		return false;
 	}
 
 	auto units = Unit::FromString(*element);
@@ -97,9 +97,10 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 		{
 			RemoveFromField(locIngredientsKey, { *element });
 			AddToField(locIngredientsKey, { Unit::ToString(units) });
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 
 std::vector<Unit>
