@@ -6,7 +6,7 @@
 int
 main(int argc, char** argv) // NOLINT
 {
-	std::vector<std::string_view> args;
+	std::vector<std::string_view> args {};
 	args.reserve(argc);
 	for (int i = 0; i < argc; i++)
 	{

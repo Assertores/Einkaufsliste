@@ -8,16 +8,20 @@
 namespace common {
 std::vector<UnitConvertion> Unit::myConvertionFiles {};
 
-Unit::Unit(
-	float aAmount,
-	std::string_view aUnit,
-	std::string aType,
-	const UnitConvertion& aConvertionFile)
+Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 	: myType(std::move(aType))
-	, myConvertionFile(aConvertionFile)
 {
+	for (const auto& it : myConvertionFiles)
+	{
+		if (it.CanConvertUnit(aUnit))
+		{
+			myConvertionFile = it;
+			break;
+		}
+	}
+
 	float rate = std::numeric_limits<float>::quiet_NaN();
-	if (!aConvertionFile.GetConvertionRate(aUnit, rate))
+	if (!myConvertionFile->GetConvertionRate(aUnit, rate))
 	{
 		interface::ILogger::Log(
 			interface::LogLevel::Error,
@@ -34,6 +38,10 @@ bool
 Unit::Add(const Unit& aOther)
 {
 	if (aOther.myType != myType)
+	{
+		return false;
+	}
+	if (aOther.myConvertionFile != myConvertionFile)
 	{
 		return false;
 	}
@@ -93,14 +101,7 @@ Unit::FromString(std::string_view aString)
 		value = std::strtof(element.data(), &ptr);
 		auto unit = element.substr(ptr - element.data());
 #endif
-		for (const auto& it : myConvertionFiles)
-		{
-			if (it.CanConvertUnit(unit))
-			{
-				result.emplace_back(value, unit, type, it);
-				break;
-			}
-		}
+		result.emplace_back(value, unit, type);
 	}
 
 	return result; // TODO(andreas): where do i get the ConvertionFile
@@ -127,7 +128,7 @@ Unit::ToString(const std::vector<Unit>& aUnits)
 			return "";
 		}
 		float amount = std::numeric_limits<float>::quiet_NaN();
-		auto unit = it.myConvertionFile.GetBestUnit(it.myAmount, amount);
+		auto unit = it.myConvertionFile->GetBestUnit(it.myAmount, amount);
 		strBuilder << amount << unit << " & ";
 	}
 	auto result = strBuilder.str();

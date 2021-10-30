@@ -14,6 +14,8 @@ public:
 
 	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
+	void SetReferences(std::weak_ptr<interface::IFrontend> aFrontend);
+
 	// protected:
 	// OpenConvertionFile() = default;
 
