@@ -23,4 +23,4 @@ add_custom_command(
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/assets $<TARGET_FILE_DIR:EndToEndTests>/assets
 )
 
-add_test(NAME UnitTests COMMAND UnitTests)
+add_test(NAME EndToEndTests COMMAND EndToEndTests)

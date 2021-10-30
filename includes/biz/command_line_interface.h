@@ -26,11 +26,10 @@ struct CliCommands
 class CommandLineInterface : public interface::IFrontend
 {
 public:
-	CommandLineInterface(std::istream& aInput, std::ostream& aOutput)
+	CommandLineInterface(std::istream& aInput, std::ostream& aOutput, CliCommands aCommands)
 		: myInput(aInput)
-		, myOutput(aOutput) {};
-
-	void SetCommands(CliCommands aCommands) { myCommands = std::move(aCommands); }
+		, myOutput(aOutput)
+		, myCommands(std::move(aCommands)) {};
 
 	std::filesystem::path AskForFile() override;
 	std::filesystem::path AskForFolder() override;
