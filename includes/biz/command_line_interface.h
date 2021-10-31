@@ -18,6 +18,9 @@ struct CliCommands
 	std::shared_ptr<interface::ICommand> myRemoveIngredientToRecipeCommand;
 	std::shared_ptr<interface::ICommand> myOpenConvertionCommand;
 	std::shared_ptr<interface::ICommand> myOpenWeekCommand;
+	std::shared_ptr<interface::ICommand> myStartList;
+	std::shared_ptr<interface::ICommand> myAddWeekToListCommand;
+	std::shared_ptr<interface::ICommand> myAddRecipeToListCommand;
 	std::shared_ptr<interface::ICommand> myCompileListCommand;
 	std::shared_ptr<interface::ICommand> myAddRecipeToWeekCommand;
 	std::shared_ptr<interface::ICommand> myRemoveRecipeFromWeekCommand;
@@ -31,10 +34,12 @@ public:
 		, myOutput(aOutput)
 		, myCommands(std::move(aCommands)) {};
 
-	std::filesystem::path AskForFile() override;
-	std::filesystem::path AskForFolder() override;
-	common::Unit AskForUnit() override;
-	std::string AskForText() override;
+	[[nodiscard]] std::filesystem::path AskForFile() override;
+	[[nodiscard]] std::filesystem::path AskForFolder() override;
+	[[nodiscard]] common::Unit AskForUnit() override;
+	[[nodiscard]] std::string AskForText() override;
+	[[nodiscard]] common::WeekDay AskForWeekDay() override;
+	[[nodiscard]] common::DayTime AskForDayTime() override;
 
 	bool Poll() override;
 

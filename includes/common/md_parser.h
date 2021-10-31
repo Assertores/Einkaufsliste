@@ -13,6 +13,7 @@ public:
 	void Open(const std::filesystem::path& aPath) override;
 	void Save() override;
 	void Refresh() override;
+	[[nodiscard]] std::filesystem::path GetPath() const override;
 
 	void AddToKey(std::filesystem::path aKey, std::string_view aValue) override;
 	void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) override;

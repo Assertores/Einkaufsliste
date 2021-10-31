@@ -29,6 +29,6 @@ OpenRecipe::Execute()
 	auto file = frontend->AskForFile();
 	recipeObservable->Set(Recipe(std::filesystem::current_path() / file));
 
-	return nullptr; // TODO(andreas): memento?
+	return nullptr;
 }
 } // namespace common

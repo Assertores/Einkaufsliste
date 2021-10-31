@@ -4,10 +4,12 @@ namespace common {
 void
 PrintCurrentFile::SetReferences(
 	std::ostream* aOut,
-	std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)
+	std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe,
+	std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek)
 {
 	myOut = aOut;
 	myCurrentRecipe = std::move(aCurrentRecipe);
+	myCurrentWeek = std::move(aCurrentWeek);
 
 	auto recipe = myCurrentRecipe.lock();
 	if (!recipe)
@@ -15,6 +17,13 @@ PrintCurrentFile::SetReferences(
 		return;
 	}
 	recipe->Subscribe(weak_from_this());
+
+	auto week = myCurrentWeek.lock();
+	if (!week)
+	{
+		return;
+	}
+	week->Subscribe(weak_from_this());
 };
 
 PrintCurrentFile::~PrintCurrentFile()
@@ -23,6 +32,11 @@ PrintCurrentFile::~PrintCurrentFile()
 	if (recipe)
 	{
 		recipe->Remove(weak_from_this());
+	}
+	auto week = myCurrentWeek.lock();
+	if (week)
+	{
+		week->Remove(weak_from_this());
 	}
 }
 
@@ -46,5 +60,15 @@ PrintCurrentFile::OnChange(std::optional<Recipe> aElement)
 		return;
 	}
 	myCurrentFile = std::make_shared<Recipe>(std::move(aElement.value()));
+}
+
+void
+PrintCurrentFile::OnChange(std::optional<Week> aElement)
+{
+	if (!aElement.has_value())
+	{
+		return;
+	}
+	myCurrentFile = std::make_shared<Week>(std::move(aElement.value()));
 }
 } // namespace common

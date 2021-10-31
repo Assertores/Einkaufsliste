@@ -15,6 +15,7 @@ public:
 		: IFile(std::move(aFileImpl)) {};
 
 	[[nodiscard]] std::string Print() const override;
+	
 
 	void SetDescription(std::string_view aText);
 	[[nodiscard]] std::string GetDescription() const;

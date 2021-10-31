@@ -6,6 +6,7 @@
 
 #include "common/observable.h"
 #include "common/recipe.h"
+#include "common/week.h"
 #include "common/unit_convertion.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
@@ -35,5 +36,7 @@ private:
 
 	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> myCurrentRecipe =
 		std::make_shared<common::Observable<std::optional<common::Recipe>>>();
+	std::shared_ptr<common::Observable<std::optional<common::Week>>> myCurrentWeek =
+		std::make_shared<common::Observable<std::optional<common::Week>>>();
 };
 } // namespace biz

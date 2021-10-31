@@ -30,8 +30,13 @@ public:
 	{
 		return aLhs.myFileImplimentation != aRhs.myFileImplimentation;
 	}
+	friend bool operator<(const IFile& aLhs, const IFile& aRhs)
+	{
+		return aLhs.myFileImplimentation < aRhs.myFileImplimentation;
+	}
 
 	[[nodiscard]] virtual std::string Print() const = 0;
+	[[nodiscard]] std::string GetFile() const;
 
 protected:
 	[[nodiscard]] bool FieldIsArray(const std::filesystem::path& aKey) const;

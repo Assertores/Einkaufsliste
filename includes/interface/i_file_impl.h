@@ -20,6 +20,7 @@ public:
 	virtual void Open(const std::filesystem::path& aPath) = 0;
 	virtual void Save() = 0;
 	virtual void Refresh() = 0;
+	[[nodiscard]] virtual std::filesystem::path GetPath() const = 0;
 
 	virtual void AddToKey(std::filesystem::path aKey, std::string_view aValue) = 0;
 	virtual void RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) = 0;
@@ -46,6 +47,10 @@ public:
 	std::function<void()> refresh = [this]() {
 		refreshCount++;
 	};
+	std::function<std::filesystem::path()> getPath = [this]() {
+		getPathCount++;
+		return std::filesystem::path();
+	};
 	std::function<void(std::filesystem::path, std::string_view)> addToKey =
 		[this](auto /*unused*/, auto /*unused*/) {
 			addToKeyCount++;
@@ -71,6 +76,7 @@ public:
 	void Open(const std::filesystem::path& aPath) override { open(aPath); }
 	void Save() override { save(); }
 	void Refresh() override { refresh(); }
+	[[nodiscard]] std::filesystem::path GetPath() const override { return getPath();}
 	void AddToKey(std::filesystem::path aKey, std::string_view aValue) override
 	{
 		addToKey(aKey, aValue);
@@ -93,6 +99,7 @@ public:
 	int openCount = 0;
 	int saveCount = 0;
 	int refreshCount = 0;
+	int getPathCount = 0;
 	int addToKeyCount = 0;
 	int removeFromKeyCount = 0;
 	int clearFieldCount = 0;

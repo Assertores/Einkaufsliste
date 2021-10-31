@@ -30,6 +30,16 @@ JsonParser::Refresh()
 		"not implimented");
 }
 
+std::filesystem::path
+JsonParser::GetPath() const
+{
+	interface::ILogger::Log(
+		interface::LogLevel::Fatal,
+		interface::LogType::File,
+		"not implimented");
+		return {};
+}
+
 void
 JsonParser::AddToKey(std::filesystem::path aKey, std::string_view aValue)
 {

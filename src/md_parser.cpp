@@ -29,6 +29,12 @@ MdParser::Refresh()
 	Parse(file);
 }
 
+std::filesystem::path
+MdParser::GetPath() const
+{
+	return myFile;
+}
+
 void
 MdParser::AddToKey(std::filesystem::path aKey, std::string_view aValue)
 {

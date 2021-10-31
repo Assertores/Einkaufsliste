@@ -8,8 +8,11 @@ std::filesystem::path
 CommandLineInterface::AskForFile()
 {
 	std::filesystem::path path;
-	myOutput << "please enter a file path: ";
-	myInput >> path;
+	do
+	{
+		myOutput << "please enter a file path: ";
+		myInput >> path;
+	} while (!std::filesystem::is_regular_file(path));
 	return path;
 }
 
@@ -17,8 +20,11 @@ std::filesystem::path
 CommandLineInterface::AskForFolder()
 {
 	std::filesystem::path path;
-	myOutput << "please enter a folder path: ";
-	myInput >> path;
+	do
+	{
+		myOutput << "please enter a folder path: ";
+		myInput >> path;
+	} while (!std::filesystem::is_directory(path));
 	return path;
 }
 
@@ -43,6 +49,32 @@ CommandLineInterface::AskForText()
 	std::string result;
 	myOutput << "please enter your text (without white space characters): ";
 	myInput >> result;
+	return result;
+}
+
+common::WeekDay
+CommandLineInterface::AskForWeekDay()
+{
+	common::WeekDay result {};
+	std::string day;
+	do
+	{
+		myOutput << "please enter a weekday: ";
+		myInput >> day;
+	} while (!FromString(day, result));
+	return result;
+}
+
+common::DayTime
+CommandLineInterface::AskForDayTime()
+{
+	common::DayTime result {};
+	std::string day;
+	do
+	{
+		myOutput << "please enter a weekday: ";
+		myInput >> day;
+	} while (!FromString(day, result));
 	return result;
 }
 
