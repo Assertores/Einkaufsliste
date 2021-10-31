@@ -9,10 +9,8 @@ static constexpr const char* locNameKey = "Name";
 
 namespace common {
 std::string
-ToString(WeekDay aWeekDay)
-{
-	switch (aWeekDay)
-	{
+ToString(WeekDay aWeekDay) {
+	switch (aWeekDay) {
 	case WeekDay::Monday:
 		return "Monday";
 	case WeekDay::Tuesday:
@@ -34,46 +32,37 @@ ToString(WeekDay aWeekDay)
 }
 
 std::string
-ToString(DayTime aDayTime)
-{
+ToString(DayTime aDayTime) {
 	return std::to_string(aDayTime.myHours) + ":" + std::to_string(aDayTime.myMinutes);
 }
 
 bool
-FromString(std::string_view aString, WeekDay& aOutWeekDay)
-{
-	if (aString == "Monday" || aString == "Mo")
-	{
+FromString(std::string_view aString, WeekDay& aOutWeekDay) {
+	if (aString == "Monday" || aString == "Mo") {
 		aOutWeekDay = WeekDay::Monday;
 		return true;
 	}
-	if (aString == "Tuesday" || aString == "Tu")
-	{
+	if (aString == "Tuesday" || aString == "Tu") {
 		aOutWeekDay = WeekDay::Tuesday;
 		return true;
 	}
-	if (aString == "Wednesday" || aString == "We")
-	{
+	if (aString == "Wednesday" || aString == "We") {
 		aOutWeekDay = WeekDay::Wednesday;
 		return true;
 	}
-	if (aString == "Thursday" || aString == "Th")
-	{
+	if (aString == "Thursday" || aString == "Th") {
 		aOutWeekDay = WeekDay::Thursday;
 		return true;
 	}
-	if (aString == "Friday" || aString == "Fr")
-	{
+	if (aString == "Friday" || aString == "Fr") {
 		aOutWeekDay = WeekDay::Friday;
 		return true;
 	}
-	if (aString == "Saturday" || aString == "Sa")
-	{
+	if (aString == "Saturday" || aString == "Sa") {
 		aOutWeekDay = WeekDay::Saturday;
 		return true;
 	}
-	if (aString == "Sunday" || aString == "Su")
-	{
+	if (aString == "Sunday" || aString == "Su") {
 		aOutWeekDay = WeekDay::Sunday;
 		return true;
 	}
@@ -81,13 +70,10 @@ FromString(std::string_view aString, WeekDay& aOutWeekDay)
 }
 
 bool
-FromString(std::string_view aString, DayTime& aOutWeekDay)
-{
-	DayTime result {};
-	 // NOLINTNEXTLINE
-	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes)
-		== 2)
-	{
+FromString(std::string_view aString, DayTime& aOutWeekDay) {
+	DayTime result{};
+	// NOLINTNEXTLINE
+	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes) == 2) {
 		aOutWeekDay = result;
 		return true;
 	}
@@ -95,19 +81,20 @@ FromString(std::string_view aString, DayTime& aOutWeekDay)
 }
 
 std::string
-Week::Print() const
-{
+Week::Print() const {
 	std::stringstream result;
-	std::vector<std::string> days { ToString(WeekDay::Monday),	  ToString(WeekDay::Tuesday),
-									ToString(WeekDay::Wednesday), ToString(WeekDay::Thursday),
-									ToString(WeekDay::Friday),	  ToString(WeekDay::Saturday),
-									ToString(WeekDay::Sunday) };
+	std::vector<std::string> days{
+		ToString(WeekDay::Monday),
+		ToString(WeekDay::Tuesday),
+		ToString(WeekDay::Wednesday),
+		ToString(WeekDay::Thursday),
+		ToString(WeekDay::Friday),
+		ToString(WeekDay::Saturday),
+		ToString(WeekDay::Sunday)};
 
-	for (const auto& day : days)
-	{
+	for (const auto& day : days) {
 		result << day << '\n';
-		for (const auto& it : GetSubKeys(day))
-		{
+		for (const auto& it : GetSubKeys(day)) {
 			result << it.filename().string() << " | " << ReadFromField(it) << '\n';
 		}
 	}
@@ -116,39 +103,34 @@ Week::Print() const
 }
 
 void
-Week::AddRecipe(const Recipe& aRecipe, WeekDay aWeekDay, DayTime aDayTime)
-{
+Week::AddRecipe(const Recipe& aRecipe, WeekDay aWeekDay, DayTime aDayTime) {
 	std::filesystem::path key(ToString(aWeekDay));
 	key /= ToString(aDayTime);
 	WriteField(key, aRecipe.GetFile());
 }
 
 Recipe
-Week::GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const
-{
+Week::GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const {
 	std::filesystem::path key(ToString(aWeekDay));
 	key /= ToString(aDayTime);
 	return Recipe(ReadFromField(key));
 }
 
 void
-Week::RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime)
-{
+Week::RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime) {
 	std::filesystem::path key(ToString(aWeekDay));
 	key /= ToString(aDayTime);
 	WriteField(key, "");
 }
 
 std::vector<Recipe>
-Week::GetAllRecipes() const
-{
+Week::GetAllRecipes() const {
 	std::vector<Recipe> result;
 	auto keys = GetSubKeys("");
 	result.reserve(keys.size());
-	for (const auto& it : keys)
-	{
+	for (const auto& it : keys) {
 		result.emplace_back(ReadFromField(it));
 	}
 	return result;
 }
-} // namespace common
+}  // namespace common

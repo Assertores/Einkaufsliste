@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "interface/i_logger.h"
 
-TEST(Logger, logs_get_replayed) // NOLINT
+#include <gtest/gtest.h>
+
+TEST(Logger, logs_get_replayed)	 // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
@@ -18,7 +18,7 @@ TEST(Logger, logs_get_replayed) // NOLINT
 	interface::ILogger::Clear();
 }
 
-TEST(Logger, replay_data_is_same) // NOLINT
+TEST(Logger, replay_data_is_same)  // NOLINT
 {
 	auto logLevel = interface::LogLevel::Error;
 	auto logType = interface::LogType::Generic;
@@ -46,7 +46,7 @@ TEST(Logger, replay_data_is_same) // NOLINT
 	interface::ILogger::Clear();
 }
 
-TEST(Logger, only_higher_or_equal_log_level_is_loged) // NOLINT
+TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Error);
@@ -63,7 +63,7 @@ TEST(Logger, only_higher_or_equal_log_level_is_loged) // NOLINT
 	interface::ILogger::Clear();
 }
 
-TEST(Logger, only_logs_Type_in_mask) // NOLINT
+TEST(Logger, only_logs_Type_in_mask)  // NOLINT
 {
 	interface::fake::Logger subject;
 	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);

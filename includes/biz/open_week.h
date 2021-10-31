@@ -1,16 +1,15 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-
 #include "common/observable.h"
 #include "common/week.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
+#include <memory>
+#include <optional>
+
 namespace common {
-class OpenWeek : public interface::ICommand
-{
+class OpenWeek : public interface::ICommand {
 public:
 	static std::shared_ptr<OpenWeek> Create() { return std::make_shared<OpenWeek>(); }
 
@@ -27,4 +26,4 @@ private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<Week>>> myWeekObservable;
 };
-} // namespace common
+}  // namespace common

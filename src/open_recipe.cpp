@@ -6,23 +6,19 @@ namespace common {
 void
 OpenRecipe::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable)
-{
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable) {
 	myFrontend = std::move(aFrontend);
 	myRecipeObservable = std::move(aRecipeObservable);
 }
 
 std::unique_ptr<interface::ICommandMemento>
-OpenRecipe::Execute()
-{
+OpenRecipe::Execute() {
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	auto recipeObservable = myRecipeObservable.lock();
-	if (!recipeObservable)
-	{
+	if (!recipeObservable) {
 		return nullptr;
 	}
 
@@ -31,4 +27,4 @@ OpenRecipe::Execute()
 
 	return nullptr;
 }
-} // namespace common
+}  // namespace common

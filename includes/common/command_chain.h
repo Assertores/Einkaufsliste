@@ -8,8 +8,7 @@ class ICommandMemento;
 };
 
 namespace common {
-class CommandChain
-{
+class CommandChain {
 public:
 	bool Undo();
 	bool Redo();
@@ -19,4 +18,4 @@ private:
 	std::vector<std::unique_ptr<interface::ICommandMemento>> myCommandHistory;
 	size_t myBackOffset = 0;
 };
-} // namespace common
+}  // namespace common

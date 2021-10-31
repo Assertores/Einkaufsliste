@@ -5,10 +5,8 @@
 namespace common {
 
 void
-CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand)
-{
-	if (aCommand == nullptr)
-	{
+CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand) {
+	if (aCommand == nullptr) {
 		return;
 	}
 	myCommandHistory.resize(myCommandHistory.size() - myBackOffset);
@@ -17,10 +15,8 @@ CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand)
 }
 
 bool
-CommandChain::Undo()
-{
-	if (myBackOffset == myCommandHistory.size())
-	{
+CommandChain::Undo() {
+	if (myBackOffset == myCommandHistory.size()) {
 		return false;
 	}
 	myCommandHistory[myCommandHistory.size() - 1 - myBackOffset]->Revert();
@@ -29,14 +25,12 @@ CommandChain::Undo()
 }
 
 bool
-CommandChain::Redo()
-{
-	if (myBackOffset == 0)
-	{
+CommandChain::Redo() {
+	if (myBackOffset == 0) {
 		return false;
 	}
 	myCommandHistory[myCommandHistory.size() - myBackOffset]->ReExecute();
 	myBackOffset--;
 	return true;
 }
-} // namespace common
+}  // namespace common

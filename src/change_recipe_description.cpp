@@ -2,13 +2,13 @@
 
 namespace common {
 
-class ChangeRecipeDescriptionMemento : public interface::ICommandMemento
-{
+class ChangeRecipeDescriptionMemento : public interface::ICommandMemento {
 public:
-	ChangeRecipeDescriptionMemento(Recipe aRecipe, std::string aNewDescription, std::string aPrevDescription)
+	ChangeRecipeDescriptionMemento(
+		Recipe aRecipe, std::string aNewDescription, std::string aPrevDescription)
 		: myRecipe(std::move(aRecipe))
 		, myNewDescription(std::move(aNewDescription))
-		, myPrevDescription(std::move(aPrevDescription)) {};
+		, myPrevDescription(std::move(aPrevDescription)){};
 
 	void ReExecute() override { myRecipe.SetDescription(myNewDescription); }
 
@@ -21,25 +21,21 @@ private:
 };
 
 std::unique_ptr<interface::ICommandMemento>
-ChangeRecipeDescription::Execute()
-{
+ChangeRecipeDescription::Execute() {
 	auto sub = myRecipe.lock();
-	if (!sub)
-	{
+	if (!sub) {
 		// TODO(andreas): connection to observable lost
 		return nullptr;
 	}
 	auto recipe = sub->Get();
-	if (!recipe.has_value())
-	{
+	if (!recipe.has_value()) {
 		// TODO(andreas): not recipe
 		return nullptr;
 	}
 	const auto privDesc = recipe.value().GetDescription();
 
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	const auto desc = frontend->AskForText();
@@ -50,9 +46,9 @@ ChangeRecipeDescription::Execute()
 void
 ChangeRecipeDescription::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe) // NOLINT
+	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)	// NOLINT
 {
 	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
 }
-} // namespace common
+}  // namespace common

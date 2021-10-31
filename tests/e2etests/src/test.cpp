@@ -1,70 +1,68 @@
-#include <thread>
-
-#include <gtest/gtest.h>
-
 #include "biz/entry.h"
 #include "common/md_parser.h"
 #include "common/recipe.h"
+
+#include <gtest/gtest.h>
+
+#include <thread>
 
 using namespace std::chrono_literals;
 
 static constexpr auto locSleepTime = 5ms;
 
-TEST(application, complains_if_command_is_unrecogniced) // NOLINT
+TEST(application, complains_if_command_is_unrecogniced)	 // NOLINT
 {
 	std::stringstream out;
 	biz::Entry(
-		std::vector<std::string_view> { "exe",
-										"--no-patch",
-										"--no-update",
-										"--shut-down",
-										"--log-level",
-										"verbose",
-										"-something" },
+		std::vector<std::string_view>{
+			"exe",
+			"--no-patch",
+			"--no-update",
+			"--shut-down",
+			"--log-level",
+			"verbose",
+			"-something"},
 		out);
 
 	EXPECT_FALSE(out.str().empty());
 }
 
-TEST(application, reacts_to_exit_commands) // NOLINT
+TEST(application, reacts_to_exit_commands)	// NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	EXPECT_TRUE(thread.joinable());
 	thread.join();
 }
 
-TEST(application, reacts_to_quit_commands) // NOLINT
+TEST(application, reacts_to_quit_commands)	// NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
 	in << "quit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	EXPECT_TRUE(thread.joinable());
 	thread.join();
 }
 
-TEST(application, can_undo) // NOLINT
+TEST(application, can_undo)	 // NOLINT
 {
 	const auto* const name = "dfzjzejdsaf";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -75,11 +73,8 @@ TEST(application, can_undo) // NOLINT
 	in << "undo\n";
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -93,11 +88,14 @@ TEST(application, can_undo) // NOLINT
 	EXPECT_EQ(result.GetName(), prevName);
 }
 
-TEST(application, can_redo) // NOLINT
+TEST(application, can_redo)	 // NOLINT
 {
 	const auto* const name = "ezzsjzsdaf";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -109,11 +107,8 @@ TEST(application, can_redo) // NOLINT
 	in << "redo\n";
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -125,10 +120,13 @@ TEST(application, can_redo) // NOLINT
 	EXPECT_EQ(result.GetName(), name);
 }
 
-TEST(application, can_open_recipe) // NOLINT
+TEST(application, can_open_recipe)	// NOLINT
 {
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -136,22 +134,22 @@ TEST(application, can_open_recipe) // NOLINT
 	in << fileName << '\n';
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	// TODO(andreas): how to test this?
 	thread.join();
 }
 
-TEST(application, can_name_recipe) // NOLINT
+TEST(application, can_name_recipe)	// NOLINT
 {
 	const auto* const name = "hsaudfhak";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -161,11 +159,8 @@ TEST(application, can_name_recipe) // NOLINT
 	in << name << '\n';
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -177,11 +172,14 @@ TEST(application, can_name_recipe) // NOLINT
 	EXPECT_EQ(result.GetName(), name);
 }
 
-TEST(application, can_add_description_to_recipe) // NOLINT
+TEST(application, can_add_description_to_recipe)  // NOLINT
 {
 	const auto* const description = "bsdgse";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -191,11 +189,8 @@ TEST(application, can_add_description_to_recipe) // NOLINT
 	in << description << '\n';
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -208,7 +203,7 @@ TEST(application, can_add_description_to_recipe) // NOLINT
 }
 
 #if not_tesable
-TEST(application, can-open-convertion-file) // NOLINT
+TEST(application, can - open - convertion - file)  // NOLINT
 {
 	const auto* const convertionFileName = "assets/exampleConvertion.md";
 
@@ -219,11 +214,8 @@ TEST(application, can-open-convertion-file) // NOLINT
 	in << "print\n";
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -234,15 +226,21 @@ TEST(application, can-open-convertion-file) // NOLINT
 }
 #endif
 
-TEST(application, can_add_ingrediance_to_recipe) // NOLINT
+TEST(application, can_add_ingrediance_to_recipe)  // NOLINT
 {
 	const auto* const type = "bsdgse";
 	const auto amount = 3;
 	const auto* const unit = "kg";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 	const auto* const convertionFileName = "assets/convertionLive";
-	std::filesystem::copy("assets/convertion", convertionFileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy(
+		"assets/convertion",
+		convertionFileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -256,11 +254,8 @@ TEST(application, can_add_ingrediance_to_recipe) // NOLINT
 	in << unit << '\n';
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();
@@ -275,15 +270,21 @@ TEST(application, can_add_ingrediance_to_recipe) // NOLINT
 	EXPECT_EQ(ingrediance[0], common::Unit(amount, unit, type));
 }
 
-TEST(application, can_remove_ingrediance_from_recipe) // NOLINT
+TEST(application, can_remove_ingrediance_from_recipe)  // NOLINT
 {
 	const auto* const type = "bsdgse";
 	const auto amount = 3;
 	const auto* const unit = "kg";
 	const auto* const fileName = "assets/exampleRecipeLive.md";
-	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy_file(
+		"assets/exampleRecipe.md",
+		fileName,
+		std::filesystem::copy_options::overwrite_existing);
 	const auto* const convertionFileName = "assets/convertionLive";
-	std::filesystem::copy("assets/convertion", convertionFileName, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::copy(
+		"assets/convertion",
+		convertionFileName,
+		std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
@@ -301,11 +302,8 @@ TEST(application, can_remove_ingrediance_from_recipe) // NOLINT
 	in << unit << '\n';
 	in << "exit\n";
 
-	std::vector<std::string_view> args = { "exe",
-										   "--no-patch",
-										   "--no-update",
-										   "--log-level",
-										   "verbose" };
+	std::vector<std::string_view> args =
+		{"exe", "--no-patch", "--no-update", "--log-level", "verbose"};
 	std::thread thread(biz::Entry, args, std::ref(out), std::ref(in));
 
 	thread.join();

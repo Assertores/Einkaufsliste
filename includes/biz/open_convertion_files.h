@@ -4,11 +4,9 @@
 #include "interface/i_frontend.h"
 
 namespace common {
-class OpenConvertionFile : public interface::ICommand
-{
+class OpenConvertionFile : public interface::ICommand {
 public:
-	static std::shared_ptr<OpenConvertionFile> Create()
-	{
+	static std::shared_ptr<OpenConvertionFile> Create() {
 		return std::make_shared<OpenConvertionFile>();
 	}
 
@@ -22,4 +20,4 @@ public:
 private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
 };
-} // namespace common
+}  // namespace common

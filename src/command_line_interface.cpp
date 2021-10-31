@@ -5,19 +5,12 @@
 
 namespace biz {
 CommandLineInterface::CommandLineInterface(
-	std::istream& aInput,
-	std::ostream& aOutput,
-	CliCommands aCommands)
+	std::istream& aInput, std::ostream& aOutput, CliCommands aCommands)
 	: myInput(aInput)
 	, myOutput(aOutput)
-	, myCommands(std::move(aCommands))
-{
-	myInterpreter["undo"] = [this]() {
-		myCommandChain.Undo();
-	};
-	myInterpreter["redo"] = [this]() {
-		myCommandChain.Redo();
-	};
+	, myCommands(std::move(aCommands)) {
+	myInterpreter["undo"] = [this]() { myCommandChain.Undo(); };
+	myInterpreter["redo"] = [this]() { myCommandChain.Redo(); };
 	myInterpreter["open recipe"] = [this]() {
 		myCommandChain.AddCommand(myCommands.myOpenRecipeCommand->Execute());
 	};
@@ -61,8 +54,7 @@ CommandLineInterface::CommandLineInterface(
 		myCommandChain.AddCommand(myCommands.myRemoveRecipeFromWeekCommand->Execute());
 	};
 	myInterpreter["help"] = [this]() {
-		for (const auto& it : myInterpreter)
-		{
+		for (const auto& it : myInterpreter) {
 			myOutput << it.first << '\n';
 		}
 	};
@@ -70,11 +62,9 @@ CommandLineInterface::CommandLineInterface(
 };
 
 std::filesystem::path
-CommandLineInterface::AskForFile()
-{
+CommandLineInterface::AskForFile() {
 	std::filesystem::path path;
-	do
-	{
+	do {
 		myOutput << "please enter a file path: ";
 		std::string pathBuffer;
 		std::getline(myInput, pathBuffer);
@@ -84,11 +74,9 @@ CommandLineInterface::AskForFile()
 }
 
 std::filesystem::path
-CommandLineInterface::AskForFolder()
-{
+CommandLineInterface::AskForFolder() {
 	std::filesystem::path path;
-	do
-	{
+	do {
 		myOutput << "please enter a folder path: ";
 		std::string pathBuffer;
 		std::getline(myInput, pathBuffer);
@@ -98,8 +86,7 @@ CommandLineInterface::AskForFolder()
 }
 
 common::Unit
-CommandLineInterface::AskForUnit()
-{
+CommandLineInterface::AskForUnit() {
 	std::string type;
 	float amount = std::numeric_limits<float>::quiet_NaN();
 	std::string unit;
@@ -109,12 +96,11 @@ CommandLineInterface::AskForUnit()
 	myInput >> amount;
 	myOutput << "please enter the unit: ";
 	myInput >> unit;
-	return { amount, unit, type };
+	return {amount, unit, type};
 }
 
 std::string
-CommandLineInterface::AskForText()
-{
+CommandLineInterface::AskForText() {
 	std::string result;
 	myOutput << "please enter your text: ";
 	std::getline(myInput, result);
@@ -122,12 +108,10 @@ CommandLineInterface::AskForText()
 }
 
 common::WeekDay
-CommandLineInterface::AskForWeekDay()
-{
-	common::WeekDay result {};
+CommandLineInterface::AskForWeekDay() {
+	common::WeekDay result{};
 	std::string day;
-	do
-	{
+	do {
 		myOutput << "please enter a weekday: ";
 		myInput >> day;
 	} while (!FromString(day, result));
@@ -135,12 +119,10 @@ CommandLineInterface::AskForWeekDay()
 }
 
 common::DayTime
-CommandLineInterface::AskForDayTime()
-{
-	common::DayTime result {};
+CommandLineInterface::AskForDayTime() {
+	common::DayTime result{};
 	std::string time;
-	do
-	{
+	do {
 		myOutput << "please enter a time: ";
 		std::getline(myInput, time);
 	} while (!FromString(time, result));
@@ -148,19 +130,16 @@ CommandLineInterface::AskForDayTime()
 }
 
 bool
-CommandLineInterface::Poll()
-{
+CommandLineInterface::Poll() {
 	myOutput << "write command: ";
 	std::string command;
 	std::getline(myInput, command);
-	if (command == "exit" || command == "quit")
-	{
+	if (command == "exit" || command == "quit") {
 		return true;
 	}
 
 	auto it = myInterpreter.find(command);
-	if (it == myInterpreter.end())
-	{
+	if (it == myInterpreter.end()) {
 		interface::ILogger::Log(
 			interface::LogLevel::Error,
 			interface::LogType::Commands,
@@ -171,4 +150,4 @@ CommandLineInterface::Poll()
 	it->second();
 	return false;
 }
-} // namespace biz
+}  // namespace biz

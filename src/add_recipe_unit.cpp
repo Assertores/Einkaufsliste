@@ -4,12 +4,11 @@
 
 namespace common {
 
-class AddRecipeUnitMemento : public interface::ICommandMemento
-{
+class AddRecipeUnitMemento : public interface::ICommandMemento {
 public:
 	AddRecipeUnitMemento(Recipe aRecipe, Unit aNewUnit)
 		: myRecipe(std::move(aRecipe))
-		, myNewUnit(std::move(aNewUnit)) {};
+		, myNewUnit(std::move(aNewUnit)){};
 
 	void ReExecute() override { myRecipe.AddIngredient(myNewUnit); }
 
@@ -21,23 +20,19 @@ private:
 };
 
 std::unique_ptr<interface::ICommandMemento>
-AddRecipeUnit::Execute()
-{
+AddRecipeUnit::Execute() {
 	auto sub = myRecipe.lock();
-	if (!sub)
-	{
+	if (!sub) {
 		// TODO(andreas): connection to observable lost
 		return nullptr;
 	}
 	auto recipe = sub->Get();
-	if (!recipe.has_value())
-	{
+	if (!recipe.has_value()) {
 		// TODO(andreas): not recipe
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	const auto unit = frontend->AskForUnit();
@@ -48,9 +43,9 @@ AddRecipeUnit::Execute()
 void
 AddRecipeUnit::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe) // NOLINT
+	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)	// NOLINT
 {
 	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
 }
-} // namespace common
+}  // namespace common

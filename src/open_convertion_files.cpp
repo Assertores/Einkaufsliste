@@ -4,17 +4,14 @@
 
 namespace common {
 std::unique_ptr<interface::ICommandMemento>
-OpenConvertionFile::Execute()
-{
+OpenConvertionFile::Execute() {
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	auto folder = frontend->AskForFolder();
-	std::vector<UnitConvertion> files {};
-	for (const auto& it : std::filesystem::directory_iterator(folder))
-	{
+	std::vector<UnitConvertion> files{};
+	for (const auto& it : std::filesystem::directory_iterator(folder)) {
 		files.emplace_back(it);
 	}
 	Unit::SetConvertionFiles(files);
@@ -23,8 +20,7 @@ OpenConvertionFile::Execute()
 }
 
 void
-OpenConvertionFile::SetReferences(std::weak_ptr<interface::IFrontend> aFrontend)
-{
+OpenConvertionFile::SetReferences(std::weak_ptr<interface::IFrontend> aFrontend) {
 	myFrontend = std::move(aFrontend);
 }
-} // namespace common
+}  // namespace common

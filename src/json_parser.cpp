@@ -4,8 +4,7 @@
 
 namespace common {
 void
-JsonParser::Open(const std::filesystem::path& aPath)
-{
+JsonParser::Open(const std::filesystem::path& aPath) {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -13,8 +12,7 @@ JsonParser::Open(const std::filesystem::path& aPath)
 }
 
 void
-JsonParser::Save()
-{
+JsonParser::Save() {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -22,8 +20,7 @@ JsonParser::Save()
 }
 
 void
-JsonParser::Refresh()
-{
+JsonParser::Refresh() {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -31,27 +28,16 @@ JsonParser::Refresh()
 }
 
 std::filesystem::path
-JsonParser::GetPath() const
-{
+JsonParser::GetPath() const {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
 		"not implimented");
-		return {};
+	return {};
 }
 
 void
-JsonParser::AddToKey(std::filesystem::path aKey, std::string_view aValue)
-{
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
-}
-
-void
-JsonParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue)
-{
+JsonParser::AddToKey(std::filesystem::path aKey, std::string_view aValue) {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -59,8 +45,15 @@ JsonParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue)
 }
 
 void
-JsonParser::ClearField(std::filesystem::path aKey)
-{
+JsonParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) {
+	interface::ILogger::Log(
+		interface::LogLevel::Fatal,
+		interface::LogType::File,
+		"not implimented");
+}
+
+void
+JsonParser::ClearField(std::filesystem::path aKey) {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -68,8 +61,7 @@ JsonParser::ClearField(std::filesystem::path aKey)
 }
 
 std::vector<std::string>
-JsonParser::GetField(std::filesystem::path aKey) const
-{
+JsonParser::GetField(std::filesystem::path aKey) const {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
@@ -78,12 +70,11 @@ JsonParser::GetField(std::filesystem::path aKey) const
 }
 
 std::vector<std::filesystem::path>
-JsonParser::GetKeys(std::filesystem::path aKey) const
-{
+JsonParser::GetKeys(std::filesystem::path aKey) const {
 	interface::ILogger::Log(
 		interface::LogLevel::Fatal,
 		interface::LogType::File,
 		"not implimented");
 	return {};
 }
-} // namespace common
+}  // namespace common

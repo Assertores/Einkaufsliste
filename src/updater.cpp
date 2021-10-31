@@ -1,11 +1,11 @@
-#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS // NOLINT
-												// "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS	 // NOLINT
+												 // "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
 #include "biz/updater.h"
 
 #if fix_external_dependencys
-#include <filesystem>
-
 #include <cpr/cpr.h>
+
+#include <filesystem>
 #undef max
 #undef min
 #include <rapidjson/document.h>
@@ -16,39 +16,32 @@ namespace biz {
 static constexpr auto locHttpOk = 200;
 
 bool
-Update(const UpdaterSettings& aSettings)
-{
-	if (!aSettings.doUpdate)
-	{
+Update(const UpdaterSettings& aSettings) {
+	if (!aSettings.doUpdate) {
 		return false;
 	}
 #if fix_external_dependencys
 	// NOTE(andreas): (https://docs.github.com/en/rest/reference/repos#get-the-latest-release)
 	auto responce =
 		cpr::Get(cpr::Url("https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest"));
-	if (responce.status_code != locHttpOk)
-	{
+	if (responce.status_code != locHttpOk) {
 		// TODO(andreas): log error
 		return false;
 	}
-	rapidjson::Document jsonDocument {};
+	rapidjson::Document jsonDocument{};
 	jsonDocument.Parse(responce.text.c_str());
-	if (jsonDocument.HasMember("prerelease") && jsonDocument["prerelease"].IsBool())
-	{
-		if (jsonDocument["prerelease"].GetBool() && !aSettings.getPrerelease)
-		{
+	if (jsonDocument.HasMember("prerelease") && jsonDocument["prerelease"].IsBool()) {
+		if (jsonDocument["prerelease"].GetBool() && !aSettings.getPrerelease) {
 			// TODO(andreas): get next one?
 			return false;
 		}
 	}
-	if (!jsonDocument.HasMember("published_at") || !jsonDocument["published_at"].IsString())
-	{
+	if (!jsonDocument.HasMember("published_at") || !jsonDocument["published_at"].IsString()) {
 		// TODO(andreas): handle error.
 		return false;
 	}
 	// TODO(andreas): check if version is newer than current version
-	if (!jsonDocument.HasMember("assets") || !jsonDocument["assets"].IsArray())
-	{
+	if (!jsonDocument.HasMember("assets") || !jsonDocument["assets"].IsArray()) {
 		// TODO(andreas): handle error.
 		return false;
 	}
@@ -59,25 +52,22 @@ Update(const UpdaterSettings& aSettings)
 	// TODO(andreas): weard random magic string also now is win10 specific
 	auto* build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
 		return aElement.HasMember("name") && aElement["name"].IsString()
-			&& std::string(assets[0]["name"].GetString()).find("win10") != std::string::npos;
+			   && std::string(assets[0]["name"].GetString()).find("win10") != std::string::npos;
 	});
-	if (build == assets.end())
-	{
+	if (build == assets.end()) {
 		// TODO(andreas): handle error.
 		return false;
 	}
-	if (!build->HasMember("browser_download_url") || !(*build)["browser_download_url"].IsString())
-	{
+	if (!build->HasMember("browser_download_url") || !(*build)["browser_download_url"].IsString()) {
 		// TODO(andreas): handle error.
 		return false;
 	}
 	std::ofstream zip(std::filesystem::current_path() / "patch.zip");
 	cpr::Session().SetUrl(cpr::Url((*build)["browser_download_url"].GetString()));
 	auto resp = cpr::Download(zip);
-	if (resp.error)
-	{
+	if (resp.error) {
 		// TODO(andreas): handle error.
-		return false; // NOLINT // TODO(andreas): remove this noce i know how to handle errors
+		return false;  // NOLINT // TODO(andreas): remove this noce i know how to handle errors
 	}
 	// TODO(andreas): rename stuff to .old
 	// TODO(andreas): unzip
@@ -87,4 +77,4 @@ Update(const UpdaterSettings& aSettings)
 	return false;
 #endif
 }
-} // namespace biz
+}  // namespace biz

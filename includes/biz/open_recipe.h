@@ -1,16 +1,15 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-
 #include "common/observable.h"
 #include "common/recipe.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
+#include <memory>
+#include <optional>
+
 namespace common {
-class OpenRecipe : public interface::ICommand
-{
+class OpenRecipe : public interface::ICommand {
 public:
 	static std::shared_ptr<OpenRecipe> Create() { return std::make_shared<OpenRecipe>(); }
 
@@ -27,4 +26,4 @@ private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipeObservable;
 };
-} // namespace common
+}  // namespace common

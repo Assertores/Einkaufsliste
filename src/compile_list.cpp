@@ -5,11 +5,9 @@
 
 namespace common {
 std::unique_ptr<interface::ICommandMemento>
-CompileList::Execute()
-{
+CompileList::Execute() {
 	auto sub = myList.lock();
-	if (!sub)
-	{
+	if (!sub) {
 		// TODO(andreas): connection to observable lost
 		return nullptr;
 	}
@@ -20,8 +18,7 @@ CompileList::Execute()
 }
 
 void
-CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<List>>> aList)
-{
+CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<List>>> aList) {
 	myList = std::move(aList);
 }
-} // namespace common
+}  // namespace common

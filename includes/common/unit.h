@@ -1,15 +1,14 @@
 #pragma once
 
+#include "common/unit_convertion.h"
+
 #include <optional>
 #include <string>
 #include <string_view>
 #include <vector>
 
-#include "common/unit_convertion.h"
-
 namespace common {
-class Unit
-{
+class Unit {
 public:
 	Unit(float aAmount, std::string_view aUnit, std::string aType);
 
@@ -17,8 +16,7 @@ public:
 	static std::string ResultsInUnitsOfType(std::string_view aString);
 	static std::vector<Unit> FromString(std::string_view aString);
 	static std::string ToString(const std::vector<Unit>& aUnits);
-	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles)
-	{
+	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles) {
 		myConvertionFiles = std::move(aConvertionFiles);
 	}
 
@@ -27,8 +25,7 @@ public:
 	bool Subtract(const Unit& aOther);
 
 	[[nodiscard]] std::string GetType() const { return myType; }
-	[[nodiscard]] bool Equals(const Unit& aOther) const
-	{
+	[[nodiscard]] bool Equals(const Unit& aOther) const {
 		return myType == aOther.myType && myAmount == aOther.myAmount;
 	}
 
@@ -40,4 +37,4 @@ private:
 	std::optional<UnitConvertion> myConvertionFile;
 	static std::vector<UnitConvertion> myConvertionFiles;
 };
-} // namespace common
+}  // namespace common
