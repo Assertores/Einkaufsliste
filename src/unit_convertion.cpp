@@ -69,6 +69,11 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 std::string
 UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const
 {
+	if(aBaseUnitAmount == 0){
+		aOutConvertedAmount = 0;
+		return "NAN";
+	}
+
 	auto allUnits = GetSubKeys("");
 
 	std::string currentUnit;

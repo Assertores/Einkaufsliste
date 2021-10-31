@@ -15,6 +15,7 @@
 #include "biz/print_current_file.h"
 #include "biz/remove_recipe_unit.h"
 #include "biz/remove_week_recipe.h"
+#include "interface/i_file_impl.h"
 #include "interface/i_logger.h"
 
 namespace biz {
@@ -90,5 +91,8 @@ Application::Run(const AppSettings& aSettings)
 	while (!myFrontend->Poll())
 	{
 	}
+
+	interface::IFileImpl::Clear();
+	interface::ILogger::Clear();
 }
 } // namespace biz

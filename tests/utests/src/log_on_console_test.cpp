@@ -17,4 +17,6 @@ TEST(LogOnConsole, log_message_is_containt_in_output) // NOLINT
 	subject.DoLog(interface::LogLevel::Debug, interface::LogType::Generic, stringToLog);
 
 	EXPECT_THAT(output.str(), HasSubstr(stringToLog));
+
+	interface::ILogger::Clear();
 }

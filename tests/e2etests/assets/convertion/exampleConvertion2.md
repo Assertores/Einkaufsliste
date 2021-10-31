@@ -1,9 +1,9 @@
 dozen
-- 12
+- 1
 
 hundreds
-- 100
+- 0.12
 
 pieces
-- 1
+- 12
 
