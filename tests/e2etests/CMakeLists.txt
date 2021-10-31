@@ -23,4 +23,6 @@ add_custom_command(
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/assets $<TARGET_FILE_DIR:EndToEndTests>/assets
 )
 
+target_compile_definitions(EndToEndTests PRIVATE ASSETS_DIR="$<TARGET_FILE_DIR:EndToEndTests>/assets")
+
 add_test(NAME EndToEndTests COMMAND EndToEndTests)
