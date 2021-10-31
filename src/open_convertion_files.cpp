@@ -12,10 +12,6 @@ OpenConvertionFile::Execute()
 		return nullptr;
 	}
 	auto folder = frontend->AskForFolder();
-	if(!std::filesystem::is_directory(folder)){
-		// TODO(andreas): log error
-		return nullptr;
-	}
 	std::vector<UnitConvertion> files {};
 	for (const auto& it : std::filesystem::directory_iterator(folder))
 	{

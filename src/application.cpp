@@ -1,11 +1,15 @@
 #include "biz/application.h"
 
+#include "biz/add_list_recipe.h"
+#include "biz/add_list_week.h"
 #include "biz/add_recipe_unit.h"
 #include "biz/add_week_recipe.h"
 #include "biz/change_recipe_description.h"
 #include "biz/change_recipe_name.h"
 #include "biz/command_line_interface.h"
+#include "biz/compile_list.h"
 #include "biz/open_convertion_files.h"
+#include "biz/open_list.h"
 #include "biz/open_recipe.h"
 #include "biz/open_week.h"
 #include "biz/print_current_file.h"
@@ -27,10 +31,10 @@ Application::Application(const AppSettings& aSettings)
 		auto removeRecipeIngrediant = common::RemoveRecipeUnit::Create();
 		auto openConvertion = common::OpenConvertionFile::Create();
 		auto openWeek = common::OpenWeek::Create();
-		auto startNewList = common::RemoveRecipeUnit::Create();
-		auto addListWeek = common::RemoveRecipeUnit::Create();
-		auto addListRecipe = common::RemoveRecipeUnit::Create();
-		auto compileList = common::RemoveRecipeUnit::Create();
+		auto startNewList = common::OpenList::Create();
+		auto addListWeek = common::AddListWeek::Create();
+		auto addListRecipe = common::AddListRecipe::Create();
+		auto compileList = common::CompileList::Create();
 		auto addWeekRecipe = common::AddWeekRecipe::Create();
 		auto removeWeekRecipe = common::RemoveWeekRecipe::Create();
 		CliCommands commands { .myOpenRecipeCommand = openRecipe,
@@ -59,10 +63,10 @@ Application::Application(const AppSettings& aSettings)
 		removeRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
 		openConvertion->SetReferences(myFrontend);
 		openWeek->SetReferences(myFrontend, myCurrentWeek);
-		startNewList->SetReferences(myFrontend, myCurrentRecipe);
-		addListWeek->SetReferences(myFrontend, myCurrentRecipe);
-		addListRecipe->SetReferences(myFrontend, myCurrentRecipe);
-		compileList->SetReferences(myFrontend, myCurrentRecipe);
+		startNewList->SetReferences(myFrontend, myCurrentList);
+		addListWeek->SetReferences(myFrontend, myCurrentList);
+		addListRecipe->SetReferences(myFrontend, myCurrentList);
+		compileList->SetReferences(myCurrentList);
 		addWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 		removeWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 		break;
