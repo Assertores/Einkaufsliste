@@ -63,19 +63,14 @@ TEST(application, reacts_to_quit_commands) // NOLINT
 TEST(application, can_undo) // NOLINT
 {
 	const auto* const name = "dfzjzejdsaf";
-	const auto* const fileName = "assets/exampleRecipe.md";
-	auto parser = std::make_shared<common::MdParser>();
-	auto file = std::ifstream(fileName);
-	parser->Parse(file);
-	common::Recipe result(parser);
-
-	const auto prevName = result.GetName();
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "change-recipe-name\n";
+	in << "change recipe name\n";
 	in << name << '\n';
 	in << "undo\n";
 	in << "exit\n";
@@ -89,19 +84,26 @@ TEST(application, can_undo) // NOLINT
 
 	thread.join();
 
+	auto parser = std::make_shared<common::MdParser>();
+	auto file = std::ifstream(fileName);
+	parser->Parse(file);
+	common::Recipe result(parser);
+	const auto prevName = result.GetName();
+
 	EXPECT_EQ(result.GetName(), prevName);
 }
 
 TEST(application, can_redo) // NOLINT
 {
 	const auto* const name = "ezzsjzsdaf";
-	const auto* const fileName = "assets/exampleRecipe.md";
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "change-recipe-name\n";
+	in << "change recipe name\n";
 	in << name << '\n';
 	in << "undo\n";
 	in << "redo\n";
@@ -125,10 +127,13 @@ TEST(application, can_redo) // NOLINT
 
 TEST(application, can_open_recipe) // NOLINT
 {
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-recipe\n";
-	in << "assets/exampleRecipe.md\n";
+	in << "open recipe\n";
+	in << fileName << '\n';
 	in << "exit\n";
 
 	std::vector<std::string_view> args = { "exe",
@@ -145,13 +150,14 @@ TEST(application, can_open_recipe) // NOLINT
 TEST(application, can_name_recipe) // NOLINT
 {
 	const auto* const name = "hsaudfhak";
-	const auto* const fileName = "assets/exampleRecipe.md";
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "change-recipe-name\n";
+	in << "change recipe name\n";
 	in << name << '\n';
 	in << "exit\n";
 
@@ -174,13 +180,14 @@ TEST(application, can_name_recipe) // NOLINT
 TEST(application, can_add_description_to_recipe) // NOLINT
 {
 	const auto* const description = "bsdgse";
-	const auto* const fileName = "assets/exampleRecipe.md";
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "change-recipe-description\n";
+	in << "change recipe description\n";
 	in << description << '\n';
 	in << "exit\n";
 
@@ -232,16 +239,18 @@ TEST(application, can_add_ingrediance_to_recipe) // NOLINT
 	const auto* const type = "bsdgse";
 	const auto amount = 3;
 	const auto* const unit = "kg";
-	const auto* const fileName = "assets/exampleRecipe.md";
-	const auto* const convertionFileName = "assets/exampleConvertion.md";
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	const auto* const convertionFileName = "assets/convertionLive";
+	std::filesystem::copy("assets/convertion", convertionFileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-convertion\n";
+	in << "open convertion\n";
 	in << convertionFileName << '\n';
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "add-recipe-ingredient\n";
+	in << "add recipe ingredient\n";
 	in << type << '\n';
 	in << amount << '\n';
 	in << unit << '\n';
@@ -271,20 +280,22 @@ TEST(application, can_remove_ingrediance_from_recipe) // NOLINT
 	const auto* const type = "bsdgse";
 	const auto amount = 3;
 	const auto* const unit = "kg";
-	const auto* const fileName = "assets/exampleRecipe.md";
-	const auto* const convertionFileName = "assets/exampleConvertion.md";
+	const auto* const fileName = "assets/exampleRecipeLive.md";
+	std::filesystem::copy_file("assets/exampleRecipe.md", fileName, std::filesystem::copy_options::overwrite_existing);
+	const auto* const convertionFileName = "assets/convertionLive";
+	std::filesystem::copy("assets/convertion", convertionFileName, std::filesystem::copy_options::overwrite_existing);
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-convertion\n";
+	in << "open convertion\n";
 	in << convertionFileName << '\n';
-	in << "open-recipe\n";
+	in << "open recipe\n";
 	in << fileName << '\n';
-	in << "add-recipe-ingredient\n";
+	in << "add recipe ingredient\n";
 	in << type << '\n';
 	in << amount << '\n';
 	in << unit << '\n';
-	in << "remove-recipe-ingredient\n";
+	in << "remove recipe ingredient\n";
 	in << type << '\n';
 	in << amount << '\n';
 	in << unit << '\n';

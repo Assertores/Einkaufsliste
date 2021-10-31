@@ -128,6 +128,7 @@ Unit::ToString(const std::vector<Unit>& aUnits)
 	{
 		return "";
 	}
+	bool valid = false;
 	std::stringstream strBuilder;
 	strBuilder << aUnits[0].myType << ' ';
 	for (const auto& it : aUnits)
@@ -143,9 +144,13 @@ Unit::ToString(const std::vector<Unit>& aUnits)
 		}
 		float amount = std::numeric_limits<float>::quiet_NaN();
 		auto unit = it.myConvertionFile->GetBestUnit(it.myAmount, amount);
-		strBuilder << amount << unit << " & ";
+		if (amount > 0)
+		{
+			valid = true;
+			strBuilder << amount << unit << " & ";
+		}
 	}
 	auto result = strBuilder.str();
-	return result.substr(0, result.size() - 3);
+	return valid ? result.substr(0, result.size() - 3) : "";
 }
 } // namespace common
