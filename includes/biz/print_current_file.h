@@ -7,6 +7,7 @@
 #include "common/observable.h"
 #include "common/recipe.h"
 #include "common/week.h"
+#include "common/list.h"
 #include "interface/i_command.h"
 #include "interface/i_observer.h"
 
@@ -15,6 +16,7 @@ class PrintCurrentFile final
 	: public interface::ICommand
 	, public interface::IObserver<std::optional<Recipe>>
 	, public interface::IObserver<std::optional<Week>>
+	, public interface::IObserver<std::optional<List>>
 	, public std::enable_shared_from_this<PrintCurrentFile>
 {
 public:
@@ -27,12 +29,14 @@ public:
 	void SetReferences(
 		std::ostream* aOut,
 		std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe,
-		std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek);
+		std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek,
+		std::weak_ptr<Observable<std::optional<List>>> aCurrentList);
 
 	std::unique_ptr<interface::ICommandMemento> Execute() override;
 
 	void OnChange(std::optional<Recipe> aElement) override;
 	void OnChange(std::optional<Week> aElement) override;
+	void OnChange(std::optional<List> aElement) override;
 
 	// protected:
 	PrintCurrentFile() = default;
@@ -44,6 +48,7 @@ public:
 private:
 	std::weak_ptr<Observable<std::optional<Recipe>>> myCurrentRecipe;
 	std::weak_ptr<Observable<std::optional<Week>>> myCurrentWeek;
+	std::weak_ptr<Observable<std::optional<List>>> myCurrentList;
 	std::ostream* myOut = nullptr;
 
 	std::shared_ptr<interface::IFile> myCurrentFile;
