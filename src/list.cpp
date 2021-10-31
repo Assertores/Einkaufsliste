@@ -10,6 +10,19 @@ static constexpr auto locRecipeListKey = "Recipes";
 static constexpr auto locIngreadianceKey = "List";
 
 namespace common {
+std::string
+List::Print() const
+{
+	std::stringstream result;
+	auto units = ReadAllFromField(locIngreadianceKey);
+	result << "Current List\n";
+	for (const auto& it : units)
+	{
+		result << it << '\n';
+	}
+	return result.str();
+}
+
 void
 List::AddWeek(const Week& aWeek)
 {
