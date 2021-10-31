@@ -1,7 +1,10 @@
 #pragma once
 
+#include <functional>
 #include <iostream>
+#include <map>
 #include <memory>
+#include <string_view>
 
 #include "common/command_chain.h"
 #include "interface/i_command.h"
@@ -29,10 +32,7 @@ struct CliCommands
 class CommandLineInterface : public interface::IFrontend
 {
 public:
-	CommandLineInterface(std::istream& aInput, std::ostream& aOutput, CliCommands aCommands)
-		: myInput(aInput)
-		, myOutput(aOutput)
-		, myCommands(std::move(aCommands)) {};
+	CommandLineInterface(std::istream& aInput, std::ostream& aOutput, CliCommands aCommands);
 
 	[[nodiscard]] std::filesystem::path AskForFile() override;
 	[[nodiscard]] std::filesystem::path AskForFolder() override;
@@ -48,5 +48,6 @@ private:
 	std::ostream& myOutput;
 	common::CommandChain myCommandChain;
 	CliCommands myCommands;
+	std::map<std::string_view, std::function<void()>> myInterpreter;
 };
 } // namespace biz

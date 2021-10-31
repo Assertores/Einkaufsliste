@@ -78,6 +78,12 @@ CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings&
 			interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
 		}
 	};
+	interpreter["--help"] = [=](auto& /*unused*/) {
+		for (const auto& it : interpreter)
+		{
+			aApp.output << it.first << '\n';
+		}
+	};
 	return std::move(interpreter);
 }
 
