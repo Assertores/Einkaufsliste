@@ -10,6 +10,7 @@
 #include "biz/open_week.h"
 #include "biz/print_current_file.h"
 #include "biz/remove_recipe_unit.h"
+#include "biz/remove_week_recipe.h"
 #include "interface/i_logger.h"
 
 namespace biz {
@@ -31,7 +32,7 @@ Application::Application(const AppSettings& aSettings)
 		auto addListRecipe = common::RemoveRecipeUnit::Create();
 		auto compileList = common::RemoveRecipeUnit::Create();
 		auto addWeekRecipe = common::AddWeekRecipe::Create();
-		auto removeWeekRecipe = common::RemoveRecipeUnit::Create();
+		auto removeWeekRecipe = common::RemoveWeekRecipe::Create();
 		CliCommands commands { .myOpenRecipeCommand = openRecipe,
 							   .myPrintCurrentFileCommand = printFile,
 							   .myChangeNameOfRecipeCommand = changeRecipeName,
@@ -51,7 +52,7 @@ Application::Application(const AppSettings& aSettings)
 			std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, commands);
 
 		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
-		printFile->SetReferences(&aSettings.output, myCurrentRecipe, myCurrentWeek);
+		printFile->SetReferences(&aSettings.output, myCurrentRecipe, myCurrentWeek, myCurrentList);
 		changeRecipeName->SetReferences(myFrontend, myCurrentRecipe);
 		changeRecipeDescription->SetReferences(myFrontend, myCurrentRecipe);
 		addRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
@@ -63,7 +64,7 @@ Application::Application(const AppSettings& aSettings)
 		addListRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		compileList->SetReferences(myFrontend, myCurrentRecipe);
 		addWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
-		removeWeekRecipe->SetReferences(myFrontend, myCurrentRecipe);
+		removeWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 		break;
 	}
 	default:

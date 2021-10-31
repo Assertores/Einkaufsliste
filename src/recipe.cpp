@@ -62,15 +62,19 @@ Recipe::AddIngredient(const Unit& aIngredient)
 
 	RemoveFromField(locIngredientsKey, { *element });
 	auto units = Unit::FromString(*element);
+	bool wasInjected = false;
 	for (auto& it : units)
 	{
 		if (it.Add(aIngredient))
 		{
+			wasInjected = true;
 			break;
 		}
 	}
-
-	units.emplace_back(aIngredient);
+	if (!wasInjected)
+	{
+		units.emplace_back(aIngredient);
+	}
 	AddToField(locIngredientsKey, { Unit::ToString(units) });
 }
 

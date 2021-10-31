@@ -81,7 +81,9 @@ bool
 FromString(std::string_view aString, DayTime& aOutWeekDay)
 {
 	DayTime result {};
-	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes) == 2) // NOLINT
+	 // NOLINTNEXTLINE
+	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes)
+		== 2)
 	{
 		aOutWeekDay = result;
 		return true;
@@ -116,6 +118,14 @@ Week::AddRecipe(const Recipe& aRecipe, WeekDay aWeekDay, DayTime aDayTime)
 	std::filesystem::path key(ToString(aWeekDay));
 	key /= ToString(aDayTime);
 	WriteField(key, aRecipe.GetFile());
+}
+
+Recipe
+Week::GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const
+{
+	std::filesystem::path key(ToString(aWeekDay));
+	key /= ToString(aDayTime);
+	return Recipe(ReadFromField(key));
 }
 
 void
