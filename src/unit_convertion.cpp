@@ -62,7 +62,7 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 		return false;
 	}
 #endif
-	aOutConvertionRate = value;
+	aOutConvertionRate = 1 / value;
 	return true;
 }
 
@@ -77,7 +77,7 @@ UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) c
 	{
 		float rate = std::numeric_limits<float>::quiet_NaN();
 		GetConvertionRate(it.string(), rate);
-		rate *= aBaseUnitAmount;
+		rate = aBaseUnitAmount / rate;
 
 		if (rate >= 1 && rate < currentConvertedAmount)
 		{
