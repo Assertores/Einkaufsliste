@@ -43,6 +43,6 @@ public:
 	void RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime);
 
 	[[nodiscard]] Recipe GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const;
-	[[nodiscard]] std::set<Recipe> GetAllRecipes() const;
+	[[nodiscard]] std::vector<Recipe> GetAllRecipes() const;
 };
 } // namespace common

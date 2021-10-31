@@ -28,6 +28,9 @@ ToString(WeekDay aWeekDay)
 	case WeekDay::Sunday:
 		return "Sunday";
 	}
+
+	// TODO(andreas): Log
+	return "";
 }
 
 std::string
@@ -136,14 +139,15 @@ Week::RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime)
 	WriteField(key, "");
 }
 
-std::set<Recipe>
+std::vector<Recipe>
 Week::GetAllRecipes() const
 {
-	std::set<Recipe> result;
+	std::vector<Recipe> result;
 	auto keys = GetSubKeys("");
+	result.reserve(keys.size());
 	for (const auto& it : keys)
 	{
-		result.insert(Recipe(ReadFromField(it)));
+		result.emplace_back(ReadFromField(it));
 	}
 	return result;
 }

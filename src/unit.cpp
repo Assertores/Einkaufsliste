@@ -19,7 +19,8 @@ Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 			break;
 		}
 	}
-	if(!myConvertionFile){
+	if (!myConvertionFile)
+	{
 		interface::ILogger::Log(
 			interface::LogLevel::Error,
 			interface::LogType::Units,
@@ -62,6 +63,10 @@ bool
 Unit::Subtract(const Unit& aOther)
 {
 	if (aOther.myType != myType)
+	{
+		return false;
+	}
+	if (aOther.myConvertionFile != myConvertionFile)
 	{
 		return false;
 	}

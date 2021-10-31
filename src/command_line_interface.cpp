@@ -11,7 +11,9 @@ CommandLineInterface::AskForFile()
 	do
 	{
 		myOutput << "please enter a file path: ";
-		myInput >> path;
+		std::string pathBuffer;
+		std::getline(myInput, pathBuffer);
+		path = std::filesystem::path(pathBuffer);
 	} while (!std::filesystem::is_regular_file(path));
 	return path;
 }
@@ -23,7 +25,9 @@ CommandLineInterface::AskForFolder()
 	do
 	{
 		myOutput << "please enter a folder path: ";
-		myInput >> path;
+		std::string pathBuffer;
+		std::getline(myInput, pathBuffer);
+		path = std::filesystem::path(pathBuffer);
 	} while (!std::filesystem::is_directory(path));
 	return path;
 }
@@ -47,8 +51,8 @@ std::string
 CommandLineInterface::AskForText()
 {
 	std::string result;
-	myOutput << "please enter your text (without white space characters): ";
-	myInput >> result;
+	myOutput << "please enter your text: ";
+	std::getline(myInput, result);
 	return result;
 }
 
@@ -69,12 +73,12 @@ common::DayTime
 CommandLineInterface::AskForDayTime()
 {
 	common::DayTime result {};
-	std::string day;
+	std::string time;
 	do
 	{
 		myOutput << "please enter a time: ";
-		myInput >> day;
-	} while (!FromString(day, result));
+		std::getline(myInput, time);
+	} while (!FromString(time, result));
 	return result;
 }
 
@@ -83,7 +87,7 @@ CommandLineInterface::Poll()
 {
 	myOutput << "write command: ";
 	std::string command;
-	myInput >> command;
+	std::getline(myInput, command);
 	if (command == "exit" || command == "quit")
 	{
 		return true;
@@ -99,27 +103,27 @@ CommandLineInterface::Poll()
 		myCommandChain.Redo();
 		return false;
 	}
-	if (command == "open-recipe")
+	if (command == "open recipe")
 	{
 		myCommandChain.AddCommand(myCommands.myOpenRecipeCommand->Execute());
 		return false;
 	}
-	if (command == "change-recipe-name")
+	if (command == "change recipe name")
 	{
 		myCommandChain.AddCommand(myCommands.myChangeNameOfRecipeCommand->Execute());
 		return false;
 	}
-	if (command == "change-recipe-description")
+	if (command == "change recipe description")
 	{
 		myCommandChain.AddCommand(myCommands.myChangeDescriptionOfRecipeCommand->Execute());
 		return false;
 	}
-	if (command == "add-recipe-ingredient")
+	if (command == "add recipe ingredient")
 	{
 		myCommandChain.AddCommand(myCommands.myAddIngredientToRecipeCommand->Execute());
 		return false;
 	}
-	if (command == "remove-recipe-ingredient")
+	if (command == "remove recipe ingredient")
 	{
 		myCommandChain.AddCommand(myCommands.myRemoveIngredientToRecipeCommand->Execute());
 		return false;
@@ -129,27 +133,27 @@ CommandLineInterface::Poll()
 		myCommandChain.AddCommand(myCommands.myPrintCurrentFileCommand->Execute());
 		return false;
 	}
-	if (command == "open-convertion")
+	if (command == "open convertion")
 	{
 		myCommandChain.AddCommand(myCommands.myOpenConvertionCommand->Execute());
 		return false;
 	}
-	if (command == "open-week")
+	if (command == "open week")
 	{
 		myCommandChain.AddCommand(myCommands.myOpenWeekCommand->Execute());
 		return false;
 	}
-	if (command == "start-list")
+	if (command == "start list")
 	{
 		myCommandChain.AddCommand(myCommands.myStartList->Execute());
 		return false;
 	}
-	if (command == "add-week-to-list")
+	if (command == "add week to list")
 	{
 		myCommandChain.AddCommand(myCommands.myAddWeekToListCommand->Execute());
 		return false;
 	}
-	if (command == "add-recipe-to-list")
+	if (command == "add recipe to list")
 	{
 		myCommandChain.AddCommand(myCommands.myAddRecipeToListCommand->Execute());
 		return false;
@@ -159,12 +163,12 @@ CommandLineInterface::Poll()
 		myCommandChain.AddCommand(myCommands.myCompileListCommand->Execute());
 		return false;
 	}
-	if (command == "add-recipe-to-week")
+	if (command == "add recipe to week")
 	{
 		myCommandChain.AddCommand(myCommands.myAddRecipeToWeekCommand->Execute());
 		return false;
 	}
-	if (command == "remove-recipe-from-week")
+	if (command == "remove recipe from week")
 	{
 		myCommandChain.AddCommand(myCommands.myRemoveRecipeFromWeekCommand->Execute());
 		return false;
