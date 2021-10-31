@@ -19,6 +19,15 @@ Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 			break;
 		}
 	}
+	if(!myConvertionFile){
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Units,
+			std::string("tryed to create unit ot type ") + aType
+				+ " but the convertion file was not able to convert it ");
+		myAmount = aAmount;
+		return;
+	}
 
 	float rate = std::numeric_limits<float>::quiet_NaN();
 	if (!myConvertionFile->GetConvertionRate(aUnit, rate))

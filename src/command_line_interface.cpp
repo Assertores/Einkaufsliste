@@ -72,7 +72,7 @@ CommandLineInterface::AskForDayTime()
 	std::string day;
 	do
 	{
-		myOutput << "please enter a weekday: ";
+		myOutput << "please enter a time: ";
 		myInput >> day;
 	} while (!FromString(day, result));
 	return result;
@@ -137,6 +137,21 @@ CommandLineInterface::Poll()
 	if (command == "open-week")
 	{
 		myCommandChain.AddCommand(myCommands.myOpenWeekCommand->Execute());
+		return false;
+	}
+	if (command == "start-list")
+	{
+		myCommandChain.AddCommand(myCommands.myStartList->Execute());
+		return false;
+	}
+	if (command == "add-week-to-list")
+	{
+		myCommandChain.AddCommand(myCommands.myAddWeekToListCommand->Execute());
+		return false;
+	}
+	if (command == "add-recipe-to-list")
+	{
+		myCommandChain.AddCommand(myCommands.myAddRecipeToListCommand->Execute());
 		return false;
 	}
 	if (command == "compile")
