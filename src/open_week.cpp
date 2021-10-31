@@ -6,23 +6,19 @@ namespace common {
 void
 OpenWeek::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::weak_ptr<common::Observable<std::optional<Week>>> aWeekObservable)
-{
+	std::weak_ptr<common::Observable<std::optional<Week>>> aWeekObservable) {
 	myFrontend = std::move(aFrontend);
 	myWeekObservable = std::move(aWeekObservable);
 }
 
 std::unique_ptr<interface::ICommandMemento>
-OpenWeek::Execute()
-{
+OpenWeek::Execute() {
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	auto weekObservable = myWeekObservable.lock();
-	if (!weekObservable)
-	{
+	if (!weekObservable) {
 		return nullptr;
 	}
 
@@ -31,4 +27,4 @@ OpenWeek::Execute()
 
 	return nullptr;
 }
-} // namespace common
+}  // namespace common

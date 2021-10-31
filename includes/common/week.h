@@ -1,14 +1,13 @@
 #pragma once
 
-#include <set>
-#include <string_view>
-
 #include "common/recipe.h"
 #include "interface/i_file.h"
 
+#include <set>
+#include <string_view>
+
 namespace common {
-enum class WeekDay
-{
+enum class WeekDay {
 	Monday,
 	Tuesday,
 	Wednesday,
@@ -18,8 +17,7 @@ enum class WeekDay
 	Sunday,
 };
 
-struct DayTime
-{
+struct DayTime {
 	int myHours;
 	int myMinutes;
 };
@@ -29,13 +27,12 @@ std::string ToString(DayTime aDayTime);
 bool FromString(std::string_view aString, WeekDay& aOutWeekDay);
 bool FromString(std::string_view aString, DayTime& aOutWeekDay);
 
-class Week : public interface::IFile
-{
+class Week : public interface::IFile {
 public:
 	explicit Week(const std::filesystem::path& aPath)
-		: IFile(aPath) {};
+		: IFile(aPath){};
 	explicit Week(std::shared_ptr<interface::IFileImpl> aFileImpl)
-		: IFile(std::move(aFileImpl)) {};
+		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;
 
@@ -45,4 +42,4 @@ public:
 	[[nodiscard]] Recipe GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const;
 	[[nodiscard]] std::vector<Recipe> GetAllRecipes() const;
 };
-} // namespace common
+}  // namespace common

@@ -1,15 +1,15 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-#include <ostream>
-
+#include "common/list.h"
 #include "common/observable.h"
 #include "common/recipe.h"
 #include "common/week.h"
-#include "common/list.h"
 #include "interface/i_command.h"
 #include "interface/i_observer.h"
+
+#include <memory>
+#include <optional>
+#include <ostream>
 
 namespace common {
 class PrintCurrentFile final
@@ -17,11 +17,9 @@ class PrintCurrentFile final
 	, public interface::IObserver<std::optional<Recipe>>
 	, public interface::IObserver<std::optional<Week>>
 	, public interface::IObserver<std::optional<List>>
-	, public std::enable_shared_from_this<PrintCurrentFile>
-{
+	, public std::enable_shared_from_this<PrintCurrentFile> {
 public:
-	static std::shared_ptr<PrintCurrentFile> Create()
-	{
+	static std::shared_ptr<PrintCurrentFile> Create() {
 		return std::make_shared<PrintCurrentFile>();
 	}
 
@@ -53,4 +51,4 @@ private:
 
 	std::shared_ptr<interface::IFile> myCurrentFile;
 };
-} // namespace common
+}  // namespace common

@@ -1,22 +1,18 @@
 #include "interface/i_logger.h"
 
 namespace interface {
-std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue {};
+std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue{};
 std::shared_ptr<ILogger> ILogger::myLoggerImplimentation = nullptr;
 LogLevel ILogger::myLogLevel = LogLevel::Verbose;
 LogMask ILogger::myLogMask = locLogMaskAll;
 
 void
-ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)
-{
-	if (aLevel > myLogLevel)
-	{
+ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog) {
+	if (aLevel > myLogLevel) {
 		return;
 	}
-	if ((myLogMask & static_cast<LogMask>(aType)) != 0)
-	{
-		if (!myLoggerImplimentation)
-		{
+	if ((myLogMask & static_cast<LogMask>(aType)) != 0) {
+		if (!myLoggerImplimentation) {
 			myReplayQueue.emplace(aLevel, aType, aLog);
 			return;
 		}
@@ -25,14 +21,12 @@ ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog)
 }
 
 void
-ILogger::SetLogLevel(LogLevel aLevel)
-{
+ILogger::SetLogLevel(LogLevel aLevel) {
 	myLogLevel = aLevel;
 }
 
 void
-ILogger::SetLogMask(LogMask aTypeMask)
-{
+ILogger::SetLogMask(LogMask aTypeMask) {
 	myLogMask = aTypeMask;
 }
-}; // namespace interface
+};	// namespace interface

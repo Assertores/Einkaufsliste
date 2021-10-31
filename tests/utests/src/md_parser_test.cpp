@@ -1,10 +1,10 @@
 #include "common/md_parser.h"
 
-#include <sstream>
-
 #include <gtest/gtest.h>
 
-TEST(MdParser, markdown_file_is_parset) // NOLINT
+#include <sstream>
+
+TEST(MdParser, markdown_file_is_parset)	 // NOLINT
 {
 	std::stringstream input;
 	input << "# a\n## b\n### c\nd\n- e\n## x\ny\n- u\n- v\n- w\n";
@@ -22,7 +22,7 @@ TEST(MdParser, markdown_file_is_parset) // NOLINT
 	EXPECT_EQ(subject.GetField("a/x/y")[2], "w");
 }
 
-TEST(MdParser, markdown_is_correctly_serialised) // NOLINT
+TEST(MdParser, markdown_is_correctly_serialised)  // NOLINT
 {
 	std::stringstream output;
 	common::MdParser subject;
@@ -37,7 +37,7 @@ TEST(MdParser, markdown_is_correctly_serialised) // NOLINT
 	EXPECT_EQ(output.str(), "# a\n## b\n### c\nd\n- e\n\n## x\ny\n- u\n- v\n- w\n\n");
 }
 
-TEST(MdParser, getting_a_nonexistent_field_wont_result_in_death) // NOLINT
+TEST(MdParser, getting_a_nonexistent_field_wont_result_in_death)  // NOLINT
 {
 	common::MdParser subject;
 

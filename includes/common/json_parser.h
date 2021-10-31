@@ -3,8 +3,7 @@
 #include "interface/i_file_impl.h"
 
 namespace common {
-class JsonParser final : public interface::IFileImpl
-{
+class JsonParser final : public interface::IFileImpl {
 public:
 	void Open(const std::filesystem::path& aPath) override;
 	void Save() override;
@@ -16,7 +15,7 @@ public:
 	void ClearField(std::filesystem::path aKey) override;
 
 	[[nodiscard]] std::vector<std::string> GetField(std::filesystem::path aKey) const override;
-	[[nodiscard]] std::vector<std::filesystem::path>
-	GetKeys(std::filesystem::path aKey) const override;
+	[[nodiscard]] std::vector<std::filesystem::path> GetKeys(
+		std::filesystem::path aKey) const override;
 };
-} // namespace common
+}  // namespace common

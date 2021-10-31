@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
-
 #include "interface/i_file_impl.h"
 
-TEST(FileImpl, opening_same_file_twice_returns_cashed_instance) // NOLINT
+#include <gtest/gtest.h>
+
+TEST(FileImpl, opening_same_file_twice_returns_cashed_instance)	 // NOLINT
 {
 	auto subject1 = interface::IFileImpl::Open<interface::fake::FileImpl>("some/path");
 	auto subject2 = interface::IFileImpl::Open<interface::fake::FileImpl>("some/path");
@@ -12,7 +12,7 @@ TEST(FileImpl, opening_same_file_twice_returns_cashed_instance) // NOLINT
 	interface::IFileImpl::Clear();
 }
 
-TEST(FileImpl, opening_different_file_returns_different_instance) // NOLINT
+TEST(FileImpl, opening_different_file_returns_different_instance)  // NOLINT
 {
 	auto subject1 = interface::IFileImpl::Open<interface::fake::FileImpl>("some/path");
 	auto subject2 = interface::IFileImpl::Open<interface::fake::FileImpl>("some/different/path");
@@ -22,7 +22,7 @@ TEST(FileImpl, opening_different_file_returns_different_instance) // NOLINT
 	interface::IFileImpl::Clear();
 }
 
-TEST(FileImpl, opening_calls_open_funktion_on_instance) // NOLINT
+TEST(FileImpl, opening_calls_open_funktion_on_instance)	 // NOLINT
 {
 	auto subject = interface::IFileImpl::Open<interface::fake::FileImpl>("some/path");
 

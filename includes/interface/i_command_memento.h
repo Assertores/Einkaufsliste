@@ -3,8 +3,7 @@
 #include <functional>
 
 namespace interface {
-class ICommandMemento
-{
+class ICommandMemento {
 public:
 	virtual ~ICommandMemento() = default;
 
@@ -13,15 +12,10 @@ public:
 };
 
 namespace fake {
-class CommandMemento : public ICommandMemento
-{
+class CommandMemento : public ICommandMemento {
 public:
-	std::function<void()> reExecute = [this]() {
-		reExecuteCount++;
-	};
-	std::function<void()> revert = [this]() {
-		revertCount++;
-	};
+	std::function<void()> reExecute = [this]() { reExecuteCount++; };
+	std::function<void()> revert = [this]() { revertCount++; };
 
 	void ReExecute() override { return reExecute(); }
 	void Revert() override { revert(); };
@@ -29,5 +23,5 @@ public:
 	int reExecuteCount = 0;
 	int revertCount = 0;
 };
-} // namespace fake
-} // namespace interface
+}  // namespace fake
+}  // namespace interface

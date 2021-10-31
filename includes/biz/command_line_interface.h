@@ -1,18 +1,17 @@
 #pragma once
 
+#include "common/command_chain.h"
+#include "interface/i_command.h"
+#include "interface/i_frontend.h"
+
 #include <functional>
 #include <iostream>
 #include <map>
 #include <memory>
 #include <string_view>
 
-#include "common/command_chain.h"
-#include "interface/i_command.h"
-#include "interface/i_frontend.h"
-
 namespace biz {
-struct CliCommands
-{
+struct CliCommands {
 	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
 	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
 	std::shared_ptr<interface::ICommand> myChangeNameOfRecipeCommand;
@@ -29,8 +28,7 @@ struct CliCommands
 	std::shared_ptr<interface::ICommand> myRemoveRecipeFromWeekCommand;
 };
 
-class CommandLineInterface : public interface::IFrontend
-{
+class CommandLineInterface : public interface::IFrontend {
 public:
 	CommandLineInterface(std::istream& aInput, std::ostream& aOutput, CliCommands aCommands);
 
@@ -50,4 +48,4 @@ private:
 	CliCommands myCommands;
 	std::map<std::string_view, std::function<void()>> myInterpreter;
 };
-} // namespace biz
+}  // namespace biz

@@ -1,116 +1,37 @@
+# See following document for information about .clang-format
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
 Language: Cpp
 ColumnLimit: 100
 DisableFormat: false
 
+BasedOnStyle: Google
+
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^<[^.]+>'
-    Priority: 10
-  - Regex: '^<.+>'
-    Priority: 20
   - Regex: '^".+"'
+    Priority: 10
+  - Regex: "^<[^.]+>"
     Priority: 30
-IncludeIsMainRegex: '' # NOTE(andreas): maybe interesting for test files as well
+  - Regex: "^<.+>"
+    Priority: 20
 SortIncludes: true
 
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
-AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlines: Left
-AlignOperands: false
-AlignTrailingComments: false
 AllowAllArgumentsOnNextLine: false
-AllowAllConstructorInitializersOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: Never
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Inline
-AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: Inline
-AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterReturnType: TopLevelDefinitions
-AlwaysBreakBeforeMultilineStrings: true
-AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
-# Brance Wrapping is defined further down
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
-BreakStringLiterals: true
-CommentPragmas: ''
-CompactNamespaces : false
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
-Cpp11BracedListStyle: false
-DeriveLineEnding: false
-DerivePointerAlignment: false
-FixNamespaceComments: true
 IndentCaseLabels: false
-IndentPPDirectives: AfterHash
 IndentWidth: 4
-IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: false
-MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
-# PenaltyBreakAssignment is defind further down
-PointerAlignment: Left
-RawStringFormats : []
-ReflowComments: true
-SortUsingDeclarations: true
-SpaceAfterCStyleCast: false
-SpaceAfterLogicalNot: false
-SpaceAfterTemplateKeyword: true
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeCpp11BracedList: true
-SpaceBeforeCtorInitializerColon: true
-SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
-SpaceBeforeSquareBrackets: false
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInCStyleCastParentheses: false
-SpacesInConditionalStatement: false
-SpacesInContainerLiterals: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
 Standard: c++17
 TabWidth: 4
 UseCRLF: false
 UseTab: Always
-
-BreakBeforeBraces: Custom
-BraceWrapping:
-    AfterClass: true
-    AfterControlStatement: true
-    AfterEnum: true
-    AfterFunction: true
-    AfterNamespace: false
-    AfterObjCDeclaration: true
-    AfterStruct: true
-    AfterUnion: true
-    AfterExternBlock: false
-    BeforeCatch: true
-    BeforeElse: true
-    IndentBraces: false
-    SplitEmptyFunction: true
-    SplitEmptyRecord: true
-    SplitEmptyNamespace: true
-
-ForEachMacros: []
-MacroBlockBegin: ''
-MacroBlockEnd: ''
-StatementMacros: []
-
-# PenaltyBreakAssignment: 0
-# PenaltyBreakBeforeFirstCallParameter: 0
-# PenaltyBreakComment: 0
-# PenaltyBreakFirstLessLess: 0
-# PenaltyBreakString: 0
-# PenaltyBreakTemplateDeclaration: 0
-# PenaltyExcessCharacter : 0
-# PenaltyReturnTypeOnItsOwnLine: 0

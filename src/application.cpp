@@ -19,10 +19,8 @@
 #include "interface/i_logger.h"
 
 namespace biz {
-Application::Application(const AppSettings& aSettings)
-{
-	switch (aSettings.frontendType)
-	{
+Application::Application(const AppSettings& aSettings) {
+	switch (aSettings.frontendType) {
 	case FrontendType::Cli: {
 		auto openRecipe = common::OpenRecipe::Create();
 		auto printFile = common::PrintCurrentFile::Create();
@@ -38,20 +36,21 @@ Application::Application(const AppSettings& aSettings)
 		auto compileList = common::CompileList::Create();
 		auto addWeekRecipe = common::AddWeekRecipe::Create();
 		auto removeWeekRecipe = common::RemoveWeekRecipe::Create();
-		CliCommands commands { .myOpenRecipeCommand = openRecipe,
-							   .myPrintCurrentFileCommand = printFile,
-							   .myChangeNameOfRecipeCommand = changeRecipeName,
-							   .myChangeDescriptionOfRecipeCommand = changeRecipeDescription,
-							   .myAddIngredientToRecipeCommand = addRecipeIngrediant,
-							   .myRemoveIngredientToRecipeCommand = removeRecipeIngrediant,
-							   .myOpenConvertionCommand = openConvertion,
-							   .myOpenWeekCommand = openWeek,
-							   .myStartList = startNewList,
-							   .myAddWeekToListCommand = addListWeek,
-							   .myAddRecipeToListCommand = addListRecipe,
-							   .myCompileListCommand = compileList,
-							   .myAddRecipeToWeekCommand = addWeekRecipe,
-							   .myRemoveRecipeFromWeekCommand = removeWeekRecipe };
+		CliCommands commands{
+			.myOpenRecipeCommand = openRecipe,
+			.myPrintCurrentFileCommand = printFile,
+			.myChangeNameOfRecipeCommand = changeRecipeName,
+			.myChangeDescriptionOfRecipeCommand = changeRecipeDescription,
+			.myAddIngredientToRecipeCommand = addRecipeIngrediant,
+			.myRemoveIngredientToRecipeCommand = removeRecipeIngrediant,
+			.myOpenConvertionCommand = openConvertion,
+			.myOpenWeekCommand = openWeek,
+			.myStartList = startNewList,
+			.myAddWeekToListCommand = addListWeek,
+			.myAddRecipeToListCommand = addListRecipe,
+			.myCompileListCommand = compileList,
+			.myAddRecipeToWeekCommand = addWeekRecipe,
+			.myRemoveRecipeFromWeekCommand = removeWeekRecipe};
 
 		myFrontend =
 			std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, commands);
@@ -82,17 +81,14 @@ Application::Application(const AppSettings& aSettings)
 }
 
 void
-Application::Run(const AppSettings& aSettings)
-{
-	if (!aSettings.doRun)
-	{
+Application::Run(const AppSettings& aSettings) {
+	if (!aSettings.doRun) {
 		return;
 	}
-	while (!myFrontend->Poll())
-	{
+	while (!myFrontend->Poll()) {
 	}
 
 	interface::IFileImpl::Clear();
 	interface::ILogger::Clear();
 }
-} // namespace biz
+}  // namespace biz

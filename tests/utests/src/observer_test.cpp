@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
-
 #include "common/observable.h"
 #include "interface/i_observer.h"
 
-TEST(Observer, observer_object_gets_notifyed) // NOLINT
+#include <gtest/gtest.h>
+
+TEST(Observer, observer_object_gets_notifyed)  // NOLINT
 {
 	auto observer = std::make_shared<interface::fake::Observer<int>>();
 	common::Observable<int> subject;
@@ -15,13 +15,11 @@ TEST(Observer, observer_object_gets_notifyed) // NOLINT
 	EXPECT_EQ(observer->onChangeCount, 1);
 }
 
-TEST(Observer, observer_is_pased_the_correct_element) // NOLINT
+TEST(Observer, observer_is_pased_the_correct_element)  // NOLINT
 {
 	auto observer = std::make_shared<interface::fake::Observer<int>>();
 	int number = 0;
-	observer->onChange = [&](auto aElement) {
-		number = aElement;
-	};
+	observer->onChange = [&](auto aElement) { number = aElement; };
 	common::Observable<int> subject;
 
 	subject.Subscribe(observer);
@@ -31,13 +29,11 @@ TEST(Observer, observer_is_pased_the_correct_element) // NOLINT
 	EXPECT_EQ(number, 2);
 }
 
-TEST(Observer, observer_is_pased_a_copy) // NOLINT
+TEST(Observer, observer_is_pased_a_copy)  // NOLINT
 {
 	auto observer = std::make_shared<interface::fake::Observer<int>>();
 	int* number = nullptr;
-	observer->onChange = [&](auto aElement) {
-		number = &aElement;
-	};
+	observer->onChange = [&](auto aElement) { number = &aElement; };
 	common::Observable<int> subject;
 
 	subject.Subscribe(observer);
@@ -48,13 +44,13 @@ TEST(Observer, observer_is_pased_a_copy) // NOLINT
 	EXPECT_NE(&realNumber, number);
 }
 
-TEST(Observer, notify_empty_observable_does_not_crash) // NOLINT
+TEST(Observer, notify_empty_observable_does_not_crash)	// NOLINT
 {
 	common::Observable<int> subject;
-	EXPECT_NO_THROW(subject.Set(2)); // NOLINT
+	EXPECT_NO_THROW(subject.Set(2));  // NOLINT
 }
 
-TEST(Observer, unsubscribed_observer_is_not_called) // NOLINT
+TEST(Observer, unsubscribed_observer_is_not_called)	 // NOLINT
 {
 	auto observer = std::make_shared<interface::fake::Observer<int>>();
 	common::Observable<int> subject;

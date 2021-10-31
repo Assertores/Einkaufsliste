@@ -1,23 +1,21 @@
 #pragma once
 
+#include "interface/i_logger.h"
+#include "interface/i_observer.h"
+
 #include <memory>
 #include <set>
 #include <type_traits>
 
-#include "interface/i_logger.h"
-#include "interface/i_observer.h"
-
 namespace common {
 template <typename T>
-class Observable
-{
+class Observable {
 public:
 	Observable() = default;
 	explicit Observable(T aValue)
-		: myBackingValue(std::move(aValue)) {};
+		: myBackingValue(std::move(aValue)){};
 
-	void Subscribe(std::weak_ptr<interface::IObserver<T>> aObserver)
-	{
+	void Subscribe(std::weak_ptr<interface::IObserver<T>> aObserver) {
 		myObservers.emplace(aObserver);
 	}
 	void Remove(std::weak_ptr<interface::IObserver<T>> aObserver) { myObservers.erase(aObserver); }
@@ -35,10 +33,8 @@ private:
 
 template <typename T>
 void
-Observable<T>::Set(T aValue) noexcept
-{
-	if (myBackingValue == aValue)
-	{
+Observable<T>::Set(T aValue) noexcept {
+	if (myBackingValue == aValue) {
 		return;
 	}
 	myBackingValue = aValue;
@@ -46,11 +42,9 @@ Observable<T>::Set(T aValue) noexcept
 		std::weak_ptr<interface::IObserver<T>>,
 		std::owner_less<std::weak_ptr<interface::IObserver<T>>>>
 		removedObservers;
-	for (const auto& it : myObservers)
-	{
+	for (const auto& it : myObservers) {
 		auto ptr = it.lock();
-		if (!ptr)
-		{
+		if (!ptr) {
 			removedObservers.insert(it);
 
 			interface::ILogger::Log(
@@ -61,9 +55,8 @@ Observable<T>::Set(T aValue) noexcept
 		}
 		ptr->OnChange(aValue);
 	}
-	for (const auto& it : removedObservers)
-	{
+	for (const auto& it : removedObservers) {
 		myObservers.erase(it);
 	}
 }
-} // namespace common
+}  // namespace common

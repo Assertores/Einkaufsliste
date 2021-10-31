@@ -1,13 +1,12 @@
 #pragma once
 
-#include <filesystem>
-
 #include "common/unit.h"
 #include "common/week.h"
 
+#include <filesystem>
+
 namespace interface {
-class IFrontend
-{
+class IFrontend {
 public:
 	virtual ~IFrontend() = default;
 
@@ -21,4 +20,4 @@ public:
 	[[nodiscard]] virtual common::WeekDay AskForWeekDay() = 0;
 	[[nodiscard]] virtual common::DayTime AskForDayTime() = 0;
 };
-}; // namespace interface
+};	// namespace interface

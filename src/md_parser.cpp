@@ -7,8 +7,7 @@
 
 namespace common {
 void
-MdParser::Open(const std::filesystem::path& aPath)
-{
+MdParser::Open(const std::filesystem::path& aPath) {
 	std::filesystem::create_directories(aPath.parent_path());
 	myFile = aPath;
 	auto file = std::ifstream(aPath);
@@ -16,49 +15,41 @@ MdParser::Open(const std::filesystem::path& aPath)
 }
 
 void
-MdParser::Save()
-{
+MdParser::Save() {
 	auto file = std::ofstream(myFile);
 	Serialize(file);
 }
 
 void
-MdParser::Refresh()
-{
+MdParser::Refresh() {
 	auto file = std::ifstream(myFile);
 	Parse(file);
 }
 
 std::filesystem::path
-MdParser::GetPath() const
-{
+MdParser::GetPath() const {
 	return myFile;
 }
 
 void
-MdParser::AddToKey(std::filesystem::path aKey, std::string_view aValue)
-{
+MdParser::AddToKey(std::filesystem::path aKey, std::string_view aValue) {
 	myContent[aKey].emplace_back(aValue);
 }
 
 void
-MdParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue)
-{
+MdParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) {
 	myContent[aKey].erase(std::find(myContent[aKey].begin(), myContent[aKey].end(), aValue));
 }
 
 void
-MdParser::ClearField(std::filesystem::path aKey)
-{
+MdParser::ClearField(std::filesystem::path aKey) {
 	myContent[aKey] = std::vector<std::string>();
 }
 
 std::vector<std::string>
-MdParser::GetField(std::filesystem::path aKey) const
-{
+MdParser::GetField(std::filesystem::path aKey) const {
 	auto const it = myContent.find(aKey);
-	if (it == myContent.end())
-	{
+	if (it == myContent.end()) {
 		return {};
 	}
 
@@ -66,14 +57,12 @@ MdParser::GetField(std::filesystem::path aKey) const
 }
 
 std::vector<std::filesystem::path>
-MdParser::GetKeys(std::filesystem::path aKey) const
-{
+MdParser::GetKeys(std::filesystem::path aKey) const {
 	std::vector<std::filesystem::path> result;
-	for (const auto& it : myContent)
-	{
+	for (const auto& it : myContent) {
 		auto relPath = it.first.lexically_relative(aKey);
 		if (relPath != "."
-			&& *relPath.begin() != "..") // NOLINT TODO(andreas): check if key is a parent path
+			&& *relPath.begin() != "..")  // NOLINT TODO(andreas): check if key is a parent path
 		{
 			result.push_back(it.first);
 		}
@@ -82,26 +71,20 @@ MdParser::GetKeys(std::filesystem::path aKey) const
 }
 
 void
-MdParser::Parse(std::istream& aIn)
-{
+MdParser::Parse(std::istream& aIn) {
 	myContent = {};
 
 	std::string line;
 	std::vector<std::string> keyBuilder;
 	std::filesystem::path currentKey;
-	while (std::getline(aIn, line))
-	{
-		if (line.empty())
-		{
+	while (std::getline(aIn, line)) {
+		if (line.empty()) {
 			continue;
 		}
-		if (line[0] == '#')
-		{
+		if (line[0] == '#') {
 			int headerDepth = 0;
-			for (const auto& it : line)
-			{
-				if (it != '#')
-				{
+			for (const auto& it : line) {
+				if (it != '#') {
 					break;
 				}
 				headerDepth++;
@@ -110,14 +93,12 @@ MdParser::Parse(std::istream& aIn)
 			keyBuilder.emplace_back(line.substr(headerDepth + 1));
 			continue;
 		}
-		if (line[0] == '-')
-		{
+		if (line[0] == '-') {
 			myContent[currentKey].emplace_back(line.substr(2));
 			continue;
 		}
 		currentKey = "";
-		for (const auto& it : keyBuilder)
-		{
+		for (const auto& it : keyBuilder) {
 			currentKey /= it;
 		}
 		currentKey /= line;
@@ -126,29 +107,23 @@ MdParser::Parse(std::istream& aIn)
 }
 
 void
-MdParser::Serialize(std::ostream& aOut)
-{
-	std::vector<std::filesystem::path> keys {};
-	for (const auto& it : myContent)
-	{
+MdParser::Serialize(std::ostream& aOut) {
+	std::vector<std::filesystem::path> keys{};
+	for (const auto& it : myContent) {
 		keys.emplace_back(it.first);
 	}
 	std::sort(keys.begin(), keys.end());
 
 	int headerCounterDepth = 1;
 	auto currentPath = std::filesystem::path();
-	for (const auto& element : keys)
-	{
+	for (const auto& element : keys) {
 		currentPath = element.lexically_relative(currentPath.parent_path());
-		for (const auto& it : currentPath.parent_path())
-		{
-			if (it == "..")
-			{
+		for (const auto& it : currentPath.parent_path()) {
+			if (it == "..") {
 				headerCounterDepth--;
 				continue;
 			}
-			for (int i = 0; i < headerCounterDepth; i++)
-			{
+			for (int i = 0; i < headerCounterDepth; i++) {
 				aOut << '#';
 			}
 			aOut << ' ' << it.string() << '\n';
@@ -156,11 +131,10 @@ MdParser::Serialize(std::ostream& aOut)
 			headerCounterDepth++;
 		}
 		aOut << currentPath.filename().string() << '\n';
-		for (auto& it : myContent[element])
-		{
+		for (auto& it : myContent[element]) {
 			aOut << "- " << it << '\n';
 		}
 		aOut << '\n';
 	}
 }
-} // namespace common
+}  // namespace common

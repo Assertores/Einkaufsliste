@@ -3,14 +3,13 @@
 #include "common/unit.h"
 
 namespace common {
-class RemoveWeekRecipeMemento : public interface::ICommandMemento
-{
+class RemoveWeekRecipeMemento : public interface::ICommandMemento {
 public:
 	RemoveWeekRecipeMemento(Week aWeek, Recipe aNewRecipe, WeekDay aWeekDay, DayTime aDayTime)
 		: myWeek(std::move(aWeek))
 		, myNewRecipe(std::move(aNewRecipe))
 		, myWeekDay(aWeekDay)
-		, myDayTime(aDayTime) {};
+		, myDayTime(aDayTime){};
 
 	void ReExecute() override { myWeek.RemoveRecipe(myWeekDay, myDayTime); }
 
@@ -24,23 +23,19 @@ private:
 };
 
 std::unique_ptr<interface::ICommandMemento>
-RemoveWeekRecipe::Execute()
-{
+RemoveWeekRecipe::Execute() {
 	auto sub = myWeek.lock();
-	if (!sub)
-	{
+	if (!sub) {
 		// TODO(andreas): connection to observable lost
 		return nullptr;
 	}
 	auto week = sub->Get();
-	if (!week.has_value())
-	{
+	if (!week.has_value()) {
 		// TODO(andreas): not week
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	auto day = frontend->AskForWeekDay();
@@ -55,9 +50,9 @@ RemoveWeekRecipe::Execute()
 void
 RemoveWeekRecipe::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Week>>> aCurrentWeek) // NOLINT
+	std::shared_ptr<Observable<std::optional<Week>>> aCurrentWeek)	// NOLINT
 {
 	myWeek = aCurrentWeek;
 	myFrontend = std::move(aFrontend);
 }
-} // namespace common
+}  // namespace common

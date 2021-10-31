@@ -6,8 +6,7 @@
 #include "interface/i_frontend.h"
 
 namespace common {
-class OpenList : public interface::ICommand
-{
+class OpenList : public interface::ICommand {
 public:
 	static std::shared_ptr<OpenList> Create() { return std::make_shared<OpenList>(); }
 
@@ -24,4 +23,4 @@ private:
 	std::weak_ptr<interface::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<List>>> myListObservable;
 };
-} // namespace common
+}  // namespace common

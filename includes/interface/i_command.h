@@ -1,13 +1,12 @@
 #pragma once
 
+#include "interface/i_command_memento.h"
+
 #include <functional>
 #include <memory>
 
-#include "interface/i_command_memento.h"
-
 namespace interface {
-class ICommand
-{
+class ICommand {
 public:
 	virtual ~ICommand() = default;
 
@@ -15,8 +14,7 @@ public:
 };
 
 namespace fake {
-class Command : public ICommand
-{
+class Command : public ICommand {
 public:
 	std::function<std::unique_ptr<ICommandMemento>()> execute = [this]() {
 		executeCount++;
@@ -26,5 +24,5 @@ public:
 
 	int executeCount = 0;
 };
-} // namespace fake
-} // namespace interface
+}  // namespace fake
+}  // namespace interface

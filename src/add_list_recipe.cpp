@@ -4,14 +4,13 @@
 
 namespace common {
 #if not_implimented
-class AddListRecipeMemento : public interface::ICommandMemento
-{
+class AddListRecipeMemento : public interface::ICommandMemento {
 public:
 	AddListRecipeMemento(Week aWeek, Recipe aNewRecipe, WeekDay aWeekDay, DayTime aDayTime)
 		: myWeek(std::move(aWeek))
 		, myNewRecipe(std::move(aNewRecipe))
 		, myWeekDay(aWeekDay)
-		, myDayTime(aDayTime) {};
+		, myDayTime(aDayTime){};
 
 	void ReExecute() override { myWeek.AddRecipe(myNewRecipe, myWeekDay, myDayTime); }
 
@@ -26,23 +25,19 @@ private:
 #endif
 
 std::unique_ptr<interface::ICommandMemento>
-AddListRecipe::Execute()
-{
+AddListRecipe::Execute() {
 	auto sub = myList.lock();
-	if (!sub)
-	{
+	if (!sub) {
 		// TODO(andreas): connection to observable lost
 		return nullptr;
 	}
 	auto list = sub->Get();
-	if (!list.has_value())
-	{
+	if (!list.has_value()) {
 		// TODO(andreas): not list
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
-	if (!frontend)
-	{
+	if (!frontend) {
 		return nullptr;
 	}
 	list->AddRecipe(Recipe(frontend->AskForFile()));
@@ -53,9 +48,9 @@ AddListRecipe::Execute()
 void
 AddListRecipe::SetReferences(
 	std::weak_ptr<interface::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<List>>> aCurrentList) // NOLINT
+	std::shared_ptr<Observable<std::optional<List>>> aCurrentList)	// NOLINT
 {
 	myList = aCurrentList;
 	myFrontend = std::move(aFrontend);
 }
-} // namespace common
+}  // namespace common

@@ -1,18 +1,17 @@
 #pragma once
 
+#include "interface/i_file.h"
+
 #include <string>
 #include <string_view>
 
-#include "interface/i_file.h"
-
 namespace common {
-class UnitConvertion : public interface::IFile
-{
+class UnitConvertion : public interface::IFile {
 public:
 	explicit UnitConvertion(const std::filesystem::path& aPath)
-		: IFile(aPath) {};
+		: IFile(aPath){};
 	explicit UnitConvertion(std::shared_ptr<interface::IFileImpl> aFileImpl)
-		: IFile(std::move(aFileImpl)) {};
+		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;
 
@@ -22,4 +21,4 @@ public:
 	void SetConvertionRate(std::string_view aUnit, float aConvertionRate);
 	std::string GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const;
 };
-} // namespace common
+}  // namespace common

@@ -22,9 +22,9 @@ void InterpreteStartArguments(
 
 void ReadArgumentsFromFile(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
 
-Interpreter
-CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
+Interpreter CreateInterpreter(
+	AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
 
-std::vector<std::pair<int, std::string_view>>
-RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& aInterpreter);
-} // namespace biz
+std::vector<std::pair<int, std::string_view>> RunInterpretion(
+	const std::vector<std::string_view>& aArgs, const Interpreter& aInterpreter);
+}  // namespace biz

@@ -7,16 +7,14 @@
 #include <utility>
 
 namespace interface {
-enum class LogLevel
-{
+enum class LogLevel {
 	Silent,
 	Fatal,
 	Error,
 	Debug,
 	Verbose,
 };
-enum class LogType : uint8_t
-{
+enum class LogType : uint8_t {
 	Generic = 1 << 0,
 	StartUp = 1 << 1,
 	Network = 1 << 2,
@@ -29,14 +27,12 @@ enum class LogType : uint8_t
 using LogMask = std::underlying_type_t<LogType>;
 
 constexpr LogMask
-operator|(const LogType& aLhs, const LogType& aRhs)
-{
+operator|(const LogType& aLhs, const LogType& aRhs) {
 	return static_cast<LogMask>(aLhs) | static_cast<LogMask>(aRhs);
 }
 
 constexpr LogMask
-operator|(const LogMask& aLhs, const LogType& aRhs)
-{
+operator|(const LogMask& aLhs, const LogType& aRhs) {
 	return aLhs | static_cast<LogMask>(aRhs);
 }
 
@@ -45,10 +41,10 @@ static constexpr LogMask locLogMaskApplication =
 	LogType::Generic | LogType::StartUp | LogType::Units;
 static constexpr LogMask locLogMaskIO = LogType::Network | LogType::File;
 static constexpr LogMask locLogMaskAll = LogType::Generic | LogType::StartUp | LogType::Network
-	| LogType::File | LogType::Commands | LogType::Units | LogType::Observer;
+										 | LogType::File | LogType::Commands | LogType::Units
+										 | LogType::Observer;
 
-class ILogger
-{
+class ILogger {
 	friend class ReplayableLogger;
 
 public:
@@ -60,8 +56,7 @@ public:
 	static void SetLogLevel(LogLevel aLevel);
 	static void SetLogMask(LogMask aTypeMask);
 
-	static void Clear()
-	{
+	static void Clear() {
 		myLoggerImplimentation = nullptr;
 		myReplayQueue = {};
 		myLogLevel = LogLevel::Verbose;
@@ -82,30 +77,24 @@ private:
 };
 
 namespace fake {
-class Logger : public ILogger
-{
+class Logger : public ILogger {
 public:
 	std::function<void(LogLevel, LogType, std::string_view)> doLog =
-		[this](auto /*unused*/, auto /*unused*/, auto /*unused*/) {
-			doLogCount++;
-		};
+		[this](auto /*unused*/, auto /*unused*/, auto /*unused*/) { doLogCount++; };
 
-	void DoLog(LogLevel aLevel, LogType aType, std::string_view aLog) override
-	{
+	void DoLog(LogLevel aLevel, LogType aType, std::string_view aLog) override {
 		doLog(aLevel, aType, aLog);
 	}
 
 	int doLogCount = 0;
 };
-} // namespace fake
+}  // namespace fake
 
 template <typename LogT, typename>
 void
-ILogger::SetImplimentation(LogT aLogger)
-{
+ILogger::SetImplimentation(LogT aLogger) {
 	myLoggerImplimentation = std::make_shared<LogT>(std::move(aLogger));
-	while (!myReplayQueue.empty())
-	{
+	while (!myReplayQueue.empty()) {
 		myLoggerImplimentation->DoLog(
 			std::get<0>(myReplayQueue.front()),
 			std::get<1>(myReplayQueue.front()),
@@ -115,10 +104,8 @@ ILogger::SetImplimentation(LogT aLogger)
 }
 
 constexpr std::string_view
-ToString(const LogLevel& aLevel)
-{
-	switch (aLevel)
-	{
+ToString(const LogLevel& aLevel) {
+	switch (aLevel) {
 	case LogLevel::Silent:
 		return "[Silent]";
 	case LogLevel::Fatal:
@@ -135,10 +122,8 @@ ToString(const LogLevel& aLevel)
 }
 
 constexpr std::string_view
-ToString(const LogType& aLevel)
-{
-	switch (aLevel)
-	{
+ToString(const LogType& aLevel) {
+	switch (aLevel) {
 	case LogType::Generic:
 		return "Generic";
 	case LogType::StartUp:
@@ -157,4 +142,4 @@ ToString(const LogType& aLevel)
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
 	return "";
 }
-}; // namespace interface
+};	// namespace interface

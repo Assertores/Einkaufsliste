@@ -2,9 +2,9 @@
 
 #include "biz/application.h"
 #include "biz/argument_parser.h"
+#include "biz/log_on_console.h"
 #include "biz/patcher.h"
 #include "biz/updater.h"
-#include "biz/log_on_console.h"
 #include "interface/i_logger.h"
 
 static constexpr std::string_view locDefaultUrl =
@@ -12,8 +12,7 @@ static constexpr std::string_view locDefaultUrl =
 
 namespace biz {
 int
-Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput)
-{
+Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput) {
 	{
 		common::LogOnConsole logger(aOutput);
 		interface::ILogger::SetLogLevel(interface::LogLevel::Error);
@@ -21,14 +20,13 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		interface::ILogger::SetImplimentation(std::move(logger));
 	}
 
-	AppSettings appSettings { true, FrontendType::Cli, aOutput, aInput };
-	UpdaterSettings updaterSettings { true, false, locDefaultUrl.data() };
-	PatcherSettings patcherSettings { true };
+	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
+	UpdaterSettings updaterSettings{true, false, locDefaultUrl.data()};
+	PatcherSettings patcherSettings{true};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 	aOutput << "checking for updates ...\n";
-	if (Update(updaterSettings))
-	{
+	if (Update(updaterSettings)) {
 		// TODO(andreas): restart application
 		return 1;
 	}
@@ -38,4 +36,4 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	app.Run(appSettings);
 	return 0;
 }
-} // namespace biz
+}  // namespace biz

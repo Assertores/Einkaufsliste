@@ -9,8 +9,7 @@ static constexpr const char* locNameKey = "Name";
 
 namespace common {
 std::string
-Recipe::Print() const
-{
+Recipe::Print() const {
 	std::stringstream result;
 	result << "Name: " << GetName() << '\n';
 	result << "Ingrediance:\n";
@@ -19,12 +18,11 @@ Recipe::Print() const
 
 	auto first = ingredients.begin();
 	const auto last = ingredients.end();
-	while (first != last)
-	{
+	while (first != last) {
 		auto middle = std::partition(first, last, [type = first->GetType()](const auto& aOther) {
 			return aOther.GetType() == type;
 		});
-		result << "- " << Unit::ToString({ first, middle }) << '\n';
+		result << "- " << Unit::ToString({first, middle}) << '\n';
 		first = middle;
 	}
 	result << "Description:\n" << GetDescription() << '\n';
@@ -32,20 +30,17 @@ Recipe::Print() const
 }
 
 void
-Recipe::SetDescription(std::string_view aText)
-{
+Recipe::SetDescription(std::string_view aText) {
 	WriteField(locDescriptionKey, aText);
 }
 
 std::string
-Recipe::GetDescription() const
-{
+Recipe::GetDescription() const {
 	return ReadFromField(locDescriptionKey);
 }
 
 void
-Recipe::AddIngredient(const Unit& aIngredient)
-{
+Recipe::AddIngredient(const Unit& aIngredient) {
 	auto ingrediants = ReadAllFromField(locIngredientsKey);
 	auto element = std::find_if(
 		ingrediants.begin(),
@@ -54,33 +49,28 @@ Recipe::AddIngredient(const Unit& aIngredient)
 			return Unit::ResultsInUnitsOfType(aElement) == type;
 		});
 
-	if (element == ingrediants.end())
-	{
-		AddToField(locIngredientsKey, { Unit::ToString({ aIngredient }) });
+	if (element == ingrediants.end()) {
+		AddToField(locIngredientsKey, {Unit::ToString({aIngredient})});
 		return;
 	}
 
-	RemoveFromField(locIngredientsKey, { *element });
+	RemoveFromField(locIngredientsKey, {*element});
 	auto units = Unit::FromString(*element);
 	bool wasInjected = false;
-	for (auto& it : units)
-	{
-		if (it.Add(aIngredient))
-		{
+	for (auto& it : units) {
+		if (it.Add(aIngredient)) {
 			wasInjected = true;
 			break;
 		}
 	}
-	if (!wasInjected)
-	{
+	if (!wasInjected) {
 		units.emplace_back(aIngredient);
 	}
-	AddToField(locIngredientsKey, { Unit::ToString(units) });
+	AddToField(locIngredientsKey, {Unit::ToString(units)});
 }
 
 bool
-Recipe::RemoveIngredient(const Unit& aIngredient)
-{
+Recipe::RemoveIngredient(const Unit& aIngredient) {
 	auto ingrediants = ReadAllFromField(locIngredientsKey);
 	auto element = std::find_if(
 		ingrediants.begin(),
@@ -89,18 +79,15 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 			return Unit::ResultsInUnitsOfType(aElement) == type;
 		});
 
-	if (element == ingrediants.end())
-	{
+	if (element == ingrediants.end()) {
 		return false;
 	}
 
 	auto units = Unit::FromString(*element);
-	for (auto& it : units)
-	{
-		if (it.Subtract(aIngredient))
-		{
-			RemoveFromField(locIngredientsKey, { *element });
-			AddToField(locIngredientsKey, { Unit::ToString(units) });
+	for (auto& it : units) {
+		if (it.Subtract(aIngredient)) {
+			RemoveFromField(locIngredientsKey, {*element});
+			AddToField(locIngredientsKey, {Unit::ToString(units)});
 			return true;
 		}
 	}
@@ -108,16 +95,13 @@ Recipe::RemoveIngredient(const Unit& aIngredient)
 }
 
 std::vector<Unit>
-Recipe::GetIngredients() const
-{
+Recipe::GetIngredients() const {
 	const auto ingrediansAsString = ReadAllFromField(locIngredientsKey);
-	if (ingrediansAsString.empty())
-	{
+	if (ingrediansAsString.empty()) {
 		return {};
 	}
 	std::vector<Unit> result;
-	for (const auto& it : ingrediansAsString)
-	{
+	for (const auto& it : ingrediansAsString) {
 		auto units = Unit::FromString(it);
 		result.insert(result.end(), units.begin(), units.end());
 	}
@@ -125,14 +109,12 @@ Recipe::GetIngredients() const
 }
 
 void
-Recipe::SetName(std::string_view aName)
-{
+Recipe::SetName(std::string_view aName) {
 	WriteField(locNameKey, aName);
 }
 
 std::string
-Recipe::GetName() const
-{
+Recipe::GetName() const {
 	return ReadFromField(locNameKey);
 }
-} // namespace common
+}  // namespace common
