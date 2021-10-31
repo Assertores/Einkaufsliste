@@ -39,6 +39,12 @@ IFile::~IFile()
 	}
 }
 
+std::string
+IFile::GetFile() const
+{
+	return myFileImplimentation->GetPath().string();
+}
+
 bool
 IFile::FieldIsArray(const std::filesystem::path& aKey) const
 {

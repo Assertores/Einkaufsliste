@@ -30,6 +30,7 @@ Recipe::Print() const
 	result << "Description:\n" << GetDescription() << '\n';
 	return result.str();
 }
+
 void
 Recipe::SetDescription(std::string_view aText)
 {

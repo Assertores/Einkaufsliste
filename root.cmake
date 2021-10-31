@@ -28,6 +28,7 @@ target_include_directories(biz
 target_sources(biz
 	PUBLIC
 		"includes/biz/add_recipe_unit.h"
+		"includes/biz/add_week_recipe.h"
 		"includes/biz/application.h"
 		"includes/biz/argument_parser.h"
 		"includes/biz/change_recipe_description.h"
@@ -37,6 +38,7 @@ target_sources(biz
 		"includes/biz/log_on_console.h"
 		"includes/biz/open_convertion_files.h"
 		"includes/biz/open_recipe.h"
+		"includes/biz/open_week.h"
 		"includes/biz/patcher.h"
 		"includes/biz/print_current_file.h"
 		"includes/biz/remove_recipe_unit.h"
@@ -48,6 +50,7 @@ target_sources(biz
 		"includes/common/recipe.h"
 		"includes/common/unit.h"
 		"includes/common/unit_convertion.h"
+		"includes/common/week.h"
 		"includes/interface/i_command.h"
 		"includes/interface/i_command_memento.h"
 		"includes/interface/i_file.h"
@@ -57,6 +60,7 @@ target_sources(biz
 		"includes/interface/i_observer.h"
 	PRIVATE
 		"src/add_recipe_unit.cpp"
+		"src/add_week_recipe.cpp"
 		"src/application.cpp"
 		"src/argument_parser.cpp"
 		"src/change_recipe_description.cpp"
@@ -71,6 +75,7 @@ target_sources(biz
 		"src/md_parser.cpp"
 		"src/open_convertion_files.cpp"
 		"src/open_recipe.cpp"
+		"src/open_week.cpp"
 		"src/patcher.cpp"
 		"src/print_current_file.cpp"
 		"src/recipe.cpp"
@@ -78,4 +83,5 @@ target_sources(biz
 		"src/unit_convertion.cpp"
 		"src/unit.cpp"
 		"src/updater.cpp"
+		"src/week.cpp"
 )
