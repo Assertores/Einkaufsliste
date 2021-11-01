@@ -26,20 +26,40 @@ std::unique_ptr<interface::ICommandMemento>
 RemoveWeekRecipe::Execute() {
 	auto sub = myWeek.lock();
 	if (!sub) {
-		// TODO(andreas): connection to observable lost
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"lost connection to observable");
 		return nullptr;
 	}
 	auto week = sub->Get();
 	if (!week.has_value()) {
-		// TODO(andreas): not week
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"tryed to access current file but it is not set");
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
 		return nullptr;
 	}
-	auto day = frontend->AskForWeekDay();
-	auto time = frontend->AskForDayTime();
+	WeekDay day {};
+	while(!frontend->AskForWeekDay(day)){
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		// TODO(andreas): handle error
+	}
+	DayTime time {};
+	while(!frontend->AskForDayTime(time)){
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		// TODO(andreas): handle error
+	}
 
 	auto file = week->GetRecipe(day, time);
 	week->RemoveRecipe(day, time);

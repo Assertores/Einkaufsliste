@@ -21,9 +21,15 @@ OpenWeek::Execute() {
 	if (!weekObservable) {
 		return nullptr;
 	}
-
-	auto file = frontend->AskForFile();
-	weekObservable->Set(Week(std::filesystem::current_path() / file));
+	std::filesystem::path file = frontend->AskForFile();
+	while (file.extension().empty()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		file = frontend->AskForFile();
+	}
+	weekObservable->Set(Week(file));
 
 	return nullptr;
 }

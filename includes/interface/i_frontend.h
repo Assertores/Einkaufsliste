@@ -17,7 +17,7 @@ public:
 	[[nodiscard]] virtual std::filesystem::path AskForFolder() = 0;
 	[[nodiscard]] virtual common::Unit AskForUnit() = 0;
 	[[nodiscard]] virtual std::string AskForText() = 0;
-	[[nodiscard]] virtual common::WeekDay AskForWeekDay() = 0;
-	[[nodiscard]] virtual common::DayTime AskForDayTime() = 0;
+	[[nodiscard]] virtual bool AskForWeekDay(common::WeekDay& aOutWeekDay) = 0;
+	[[nodiscard]] virtual bool AskForDayTime(common::DayTime& aOutDayTime) = 0;
 };
 };	// namespace interface

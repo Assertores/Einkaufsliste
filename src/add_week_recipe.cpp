@@ -26,21 +26,49 @@ std::unique_ptr<interface::ICommandMemento>
 AddWeekRecipe::Execute() {
 	auto sub = myWeek.lock();
 	if (!sub) {
-		// TODO(andreas): connection to observable lost
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"lost connection to observable");
 		return nullptr;
 	}
 	auto week = sub->Get();
 	if (!week.has_value()) {
-		// TODO(andreas): not week
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"tryed to access current file but it is not set");
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
 		return nullptr;
 	}
-	auto file = Recipe(frontend->AskForFile());
-	auto day = frontend->AskForWeekDay();
-	auto time = frontend->AskForDayTime();
+	std::filesystem::path filePath = frontend->AskForFile();
+	while (filePath.extension().empty()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		filePath = frontend->AskForFile();
+	}
+	auto file = Recipe(filePath);
+	WeekDay day{};
+	while (!frontend->AskForWeekDay(day)) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		// TODO(andreas): invalide input
+	}
+	DayTime time{};
+	while (!frontend->AskForDayTime(time)) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		// TODO(andreas): invalide input
+	}
 	week->AddRecipe(file, day, time);
 
 	return std::make_unique<AddWeekRecipeMemento>(week.value(), file, day, time);

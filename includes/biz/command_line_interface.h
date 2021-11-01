@@ -36,8 +36,8 @@ public:
 	[[nodiscard]] std::filesystem::path AskForFolder() override;
 	[[nodiscard]] common::Unit AskForUnit() override;
 	[[nodiscard]] std::string AskForText() override;
-	[[nodiscard]] common::WeekDay AskForWeekDay() override;
-	[[nodiscard]] common::DayTime AskForDayTime() override;
+	[[nodiscard]] bool AskForWeekDay(common::WeekDay& aOutWeekDay) override;
+	[[nodiscard]] bool AskForDayTime(common::DayTime& aOutDayTime) override;
 
 	bool Poll() override;
 

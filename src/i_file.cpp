@@ -19,7 +19,7 @@ IFile::IFile(const std::filesystem::path& aPath) {
 		myFileImplimentation = IFileImpl::Open<common::MdParser>(aPath);
 		return;
 	}
-	// TODO(andreas): add all parsers here
+	// NOTE(andreas): add all parsers here
 
 	interface::ILogger::Log(
 		interface::LogLevel::Debug,

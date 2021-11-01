@@ -23,12 +23,18 @@ std::unique_ptr<interface::ICommandMemento>
 RemoveRecipeUnit::Execute() {
 	auto sub = myRecipe.lock();
 	if (!sub) {
-		// TODO(andreas): connection to observable lost
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"lost connection to observable");
 		return nullptr;
 	}
 	auto recipe = sub->Get();
 	if (!recipe.has_value()) {
-		// TODO(andreas): not recipe
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"tryed to access current file but it is not set");
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();

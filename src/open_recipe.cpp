@@ -21,9 +21,15 @@ OpenRecipe::Execute() {
 	if (!recipeObservable) {
 		return nullptr;
 	}
-
-	auto file = frontend->AskForFile();
-	recipeObservable->Set(Recipe(std::filesystem::current_path() / file));
+	std::filesystem::path file = frontend->AskForFile();
+	while (file.extension().empty()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		file = frontend->AskForFile();
+	}
+	recipeObservable->Set(Recipe(file));
 
 	return nullptr;
 }

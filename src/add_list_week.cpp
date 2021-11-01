@@ -28,19 +28,34 @@ std::unique_ptr<interface::ICommandMemento>
 AddListWeek::Execute() {
 	auto sub = myList.lock();
 	if (!sub) {
-		// TODO(andreas): connection to observable lost
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"lost connection to observable");
 		return nullptr;
 	}
 	auto list = sub->Get();
 	if (!list.has_value()) {
-		// TODO(andreas): not list
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"tryed to access current file but it is not set");
 		return nullptr;
 	}
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
 		return nullptr;
 	}
-	list->AddWeek(Week(frontend->AskForFile()));
+	std::filesystem::path file = frontend->AskForFile();
+	while (file.extension().empty()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		file = frontend->AskForFile();
+	}
+
+	list->AddWeek(Week(file));
 
 	return nullptr;
 }
