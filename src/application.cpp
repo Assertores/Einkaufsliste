@@ -20,6 +20,10 @@
 
 namespace biz {
 Application::Application(const AppSettings& aSettings) {
+	interface::ILogger::Log(
+		interface::LogLevel::Verbose,
+		interface::LogType::StartUp,
+		"application creation started");
 	switch (aSettings.frontendType) {
 	case FrontendType::Cli: {
 		auto openRecipe = common::OpenRecipe::Create();
@@ -52,8 +56,18 @@ Application::Application(const AppSettings& aSettings) {
 			.myAddRecipeToWeekCommand = addWeekRecipe,
 			.myRemoveRecipeFromWeekCommand = removeWeekRecipe};
 
+		interface::ILogger::Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::StartUp,
+			"commands created");
+
 		myFrontend =
 			std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, commands);
+
+		interface::ILogger::Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::StartUp,
+			"frontend created");
 
 		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		printFile->SetReferences(&aSettings.output, myCurrentRecipe, myCurrentWeek, myCurrentList);
@@ -69,6 +83,11 @@ Application::Application(const AppSettings& aSettings) {
 		compileList->SetReferences(myCurrentList);
 		addWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 		removeWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
+
+		interface::ILogger::Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::StartUp,
+			"commands set up");
 		break;
 	}
 	default:
@@ -83,11 +102,23 @@ Application::Application(const AppSettings& aSettings) {
 void
 Application::Run(const AppSettings& aSettings) {
 	if (!aSettings.doRun) {
+		interface::ILogger::Log(
+			interface::LogLevel::Debug,
+			interface::LogType::Generic,
+			"asked to imediatley shut down");
 		return;
 	}
 	while (!myFrontend->Poll()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Verbose,
+			interface::LogType::Generic,
+			"poll again");
 	}
 
+	interface::ILogger::Log(
+		interface::LogLevel::Debug,
+		interface::LogType::Generic,
+		"shutting down");
 	interface::IFileImpl::Clear();
 	interface::ILogger::Clear();
 }

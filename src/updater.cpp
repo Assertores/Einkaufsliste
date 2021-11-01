@@ -2,6 +2,8 @@
 												 // "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
 #include "biz/updater.h"
 
+#include "interface/i_logger.h"
+
 #if fix_external_dependencys
 #include <cpr/cpr.h>
 
@@ -18,6 +20,10 @@ static constexpr auto locHttpOk = 200;
 bool
 Update(const UpdaterSettings& aSettings) {
 	if (!aSettings.doUpdate) {
+		interface::ILogger::Log(
+			interface::LogLevel::Debug,
+			interface::LogType::StartUp,
+			"asked to not updater");
 		return false;
 	}
 #if fix_external_dependencys
@@ -74,6 +80,10 @@ Update(const UpdaterSettings& aSettings) {
 	// TODO(andreas): save new version number or something
 	return true;
 #else
+	interface::ILogger::Log(
+		interface::LogLevel::Fatal,
+		interface::LogType::StartUp,
+		"updater not implimented");
 	return false;
 #endif
 }
