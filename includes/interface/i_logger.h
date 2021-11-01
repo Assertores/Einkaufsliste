@@ -15,14 +15,14 @@ enum class LogLevel {
 	Verbose,
 };
 enum class LogType : uint8_t {
-	Generic = 1 << 0,
-	StartUp = 1 << 1,
-	Network = 1 << 2,
-	File = 1 << 3,
-	Commands = 1 << 4,
-	Units = 1 << 5,
-	Observer = 1 << 6,
-	Frontend = 1 << 7,
+	Generic = 1U << 0U,
+	StartUp = 1U << 1U,
+	Network = 1U << 2U,
+	File = 1U << 3U,
+	Commands = 1U << 4U,
+	Units = 1U << 5U,
+	Observer = 1U << 6U,
+	Frontend = 1U << 7U,
 };
 
 using LogMask = std::underlying_type_t<LogType>;
