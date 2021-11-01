@@ -27,7 +27,10 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 	aOutput << "checking for updates ...\n";
 	if (Update(updaterSettings)) {
-		// TODO(andreas): restart application
+		interface::ILogger::Log(
+			interface::LogLevel::Debug,
+			interface::LogType::StartUp,
+			"update available, need to restart.");
 		return 1;
 	}
 	Patch(patcherSettings);

@@ -22,6 +22,7 @@ enum class LogType : uint8_t {
 	Commands = 1 << 4,
 	Units = 1 << 5,
 	Observer = 1 << 6,
+	Frontend = 1 << 7,
 };
 
 using LogMask = std::underlying_type_t<LogType>;
@@ -38,11 +39,11 @@ operator|(const LogMask& aLhs, const LogType& aRhs) {
 
 static constexpr LogMask locLogMaskNone = 0;
 static constexpr LogMask locLogMaskApplication =
-	LogType::Generic | LogType::StartUp | LogType::Units;
+	LogType::Generic | LogType::StartUp | LogType::Frontend;
 static constexpr LogMask locLogMaskIO = LogType::Network | LogType::File;
 static constexpr LogMask locLogMaskAll = LogType::Generic | LogType::StartUp | LogType::Network
 										 | LogType::File | LogType::Commands | LogType::Units
-										 | LogType::Observer;
+										 | LogType::Observer | LogType::Frontend;
 
 class ILogger {
 	friend class ReplayableLogger;
@@ -138,6 +139,8 @@ ToString(const LogType& aLevel) {
 		return "Units";
 	case LogType::Observer:
 		return "Observer";
+	case LogType::Frontend:
+		return "Frontend";
 	}
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
 	return "";
