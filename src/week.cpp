@@ -74,8 +74,9 @@ FromString(std::string_view aString, WeekDay& aOutWeekDay) {
 bool
 FromString(std::string_view aString, DayTime& aOutWeekDay) {
 	DayTime result{};
+	std::string string(aString);
 	// NOLINTNEXTLINE
-	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes) == 2) {
+	if (sscanf(string.c_str(), "%d:%d", &result.myHours, &result.myMinutes) == 2) {
 		constexpr auto maxHours = 24;
 		constexpr auto maxMinutes = 60;
 		if (result.myHours < maxHours && result.myMinutes < maxMinutes) {
