@@ -8,7 +8,10 @@ std::unique_ptr<interface::ICommandMemento>
 CompileList::Execute() {
 	auto sub = myList.lock();
 	if (!sub) {
-		// TODO(andreas): connection to observable lost
+		interface::ILogger::Log(
+			interface::LogLevel::Fatal,
+			interface::LogType::Commands,
+			"lost connection to observable");
 		return nullptr;
 	}
 	auto list = sub->Get();

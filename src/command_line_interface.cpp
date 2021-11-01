@@ -63,40 +63,32 @@ CommandLineInterface::CommandLineInterface(
 
 std::filesystem::path
 CommandLineInterface::AskForFile() {
-	std::filesystem::path path;
-	do {
-		myOutput << "please enter a file path: ";
-		std::string pathBuffer;
-		std::getline(myInput, pathBuffer);
-		path = std::filesystem::path(pathBuffer);
-	} while (!std::filesystem::is_regular_file(path));
-	return path;
+	myOutput << "please enter a file path: ";
+	std::string pathBuffer;
+	std::getline(myInput, pathBuffer);
+	return {pathBuffer};
 }
 
 std::filesystem::path
 CommandLineInterface::AskForFolder() {
-	std::filesystem::path path;
-	do {
-		myOutput << "please enter a folder path: ";
-		std::string pathBuffer;
-		std::getline(myInput, pathBuffer);
-		path = std::filesystem::path(pathBuffer);
-	} while (!std::filesystem::is_directory(path));
-	return path;
+	myOutput << "please enter a folder path: ";
+	std::string pathBuffer;
+	std::getline(myInput, pathBuffer);
+	return {pathBuffer};
 }
 
 common::Unit
 CommandLineInterface::AskForUnit() {
 	std::string type;
-	float amount = std::numeric_limits<float>::quiet_NaN();
+	std::string amount;
 	std::string unit;
 	myOutput << "please enter the type of ingredient: ";
-	myInput >> type;
+	std::getline(myInput, type);
 	myOutput << "please enter the amount (without unit): ";
-	myInput >> amount;
+	std::getline(myInput, amount);
 	myOutput << "please enter the unit: ";
-	myInput >> unit;
-	return {amount, unit, type};
+	std::getline(myInput, unit);
+	return {std::stof(amount), unit, type};
 }
 
 std::string
@@ -107,26 +99,20 @@ CommandLineInterface::AskForText() {
 	return result;
 }
 
-common::WeekDay
-CommandLineInterface::AskForWeekDay() {
-	common::WeekDay result{};
+bool
+CommandLineInterface::AskForWeekDay(common::WeekDay& aOutWeekDay) {
 	std::string day;
-	do {
-		myOutput << "please enter a weekday: ";
-		myInput >> day;
-	} while (!FromString(day, result));
-	return result;
+	myOutput << "please enter a weekday: ";
+	std::getline(myInput, day);
+	return FromString(day, aOutWeekDay);
 }
 
-common::DayTime
-CommandLineInterface::AskForDayTime() {
-	common::DayTime result{};
+bool
+CommandLineInterface::AskForDayTime(common::DayTime& aOutDayTime) {
 	std::string time;
-	do {
-		myOutput << "please enter a time: ";
-		std::getline(myInput, time);
-	} while (!FromString(time, result));
-	return result;
+	myOutput << "please enter a time: ";
+	std::getline(myInput, time);
+	return FromString(time, aOutDayTime);
 }
 
 bool

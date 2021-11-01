@@ -14,9 +14,15 @@ OpenList::Execute() {
 	if (!listObservable) {
 		return nullptr;
 	}
-
-	auto file = frontend->AskForFile();
-	listObservable->Set(List(std::filesystem::current_path() / file));
+	std::filesystem::path file = frontend->AskForFile();
+	while (file.extension().empty()) {
+		interface::ILogger::Log(
+			interface::LogLevel::Error,
+			interface::LogType::Commands,
+			"invalide input");
+		file = frontend->AskForFile();
+	}
+	listObservable->Set(List(file));
 
 	return nullptr;
 }

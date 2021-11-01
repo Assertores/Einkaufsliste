@@ -1,5 +1,7 @@
 #include "common/week.h"
 
+#include "interface/i_logger.h"
+
 #include <algorithm>
 #include <sstream>
 
@@ -27,7 +29,7 @@ ToString(WeekDay aWeekDay) {
 		return "Sunday";
 	}
 
-	// TODO(andreas): Log
+	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::File, "unhandled enum");
 	return "";
 }
 
@@ -74,8 +76,12 @@ FromString(std::string_view aString, DayTime& aOutWeekDay) {
 	DayTime result{};
 	// NOLINTNEXTLINE
 	if (sscanf(std::string(aString).c_str(), "%d:%d", &result.myHours, &result.myMinutes) == 2) {
-		aOutWeekDay = result;
-		return true;
+		constexpr auto maxHours = 24;
+		constexpr auto maxMinutes = 60;
+		if (result.myHours < maxHours && result.myMinutes < maxMinutes) {
+			aOutWeekDay = result;
+			return true;
+		}
 	}
 	return false;
 }

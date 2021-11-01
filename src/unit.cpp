@@ -65,7 +65,7 @@ Unit::Subtract(const Unit& aOther) {
 
 std::string
 Unit::ResultsInUnitsOfType(std::string_view aString) {
-	return std::string(aString.substr(0, aString.find_first_of(' ')));	// TODO(andreas): impliment
+	return std::string(aString.substr(0, aString.find_first_of(' ')));
 }
 
 std::vector<Unit>

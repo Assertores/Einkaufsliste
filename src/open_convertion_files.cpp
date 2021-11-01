@@ -9,7 +9,11 @@ OpenConvertionFile::Execute() {
 	if (!frontend) {
 		return nullptr;
 	}
-	auto folder = frontend->AskForFolder();
+	std::filesystem::path folder;
+	do {
+		folder = frontend->AskForFolder();
+	} while (!std::filesystem::is_directory(folder));
+	
 	std::vector<UnitConvertion> files{};
 	for (const auto& it : std::filesystem::directory_iterator(folder)) {
 		files.emplace_back(it);
