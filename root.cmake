@@ -16,7 +16,7 @@ target_compile_features(biz
 target_link_libraries(biz
 	PRIVATE
 		cpr::cpr
-		# rapidjson
+		nlohmann_json::nlohmann_json
 )
 
 target_include_directories(biz

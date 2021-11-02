@@ -4,3 +4,6 @@
 [submodule "extern/cpr"]
 	path = extern/cpr
 	url = https://github.com/libcpr/cpr.git
+[submodule "extern/json"]
+	path = extern/json
+	url = https://github.com/nlohmann/json.git
