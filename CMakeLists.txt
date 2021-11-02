@@ -7,9 +7,9 @@ set(CPR_BUILD_TESTS OFF)
 set(CPR_BUILD_TESTS_SSL OFF)
 set(BUILD_SHARED_LIBS OFF)
 
-add_subdirectory("extern/googletest")
-# add_subdirectory("extern/rapidjson")
 add_subdirectory("extern/cpr")
+add_subdirectory("extern/googletest")
+add_subdirectory("extern/json")
 
 include("CodeAnalysis.cmake")
 include(CTest)
