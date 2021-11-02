@@ -15,14 +15,14 @@ target_compile_features(biz
 
 target_link_libraries(biz
 	PRIVATE
-		# cpr::cpr
+		cpr::cpr
 		# rapidjson
 )
 
 target_include_directories(biz
 	PUBLIC
 		"includes"
-		# "extern/cpr/include"
+		"extern/cpr/include"
 )
 
 target_sources(biz

@@ -17,9 +17,9 @@ Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 		}
 	}
 	if (!myConvertionFile) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Units,
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::Units,
 			std::string("tryed to create unit ot type ") + aType
 				+ " but the convertion file was not able to convert it ");
 		myAmount = aAmount;
@@ -28,9 +28,9 @@ Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 
 	float rate = std::numeric_limits<float>::quiet_NaN();
 	if (!myConvertionFile->GetConvertionRate(aUnit, rate)) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Units,
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::Units,
 			std::string("tryed to create unit ot type ") + aType
 				+ " but the convertion file was not able to convert it ");
 		myAmount = aAmount;
@@ -114,9 +114,9 @@ Unit::ToString(const std::vector<Unit>& aUnits) {
 	strBuilder << aUnits[0].myType << ' ';
 	for (const auto& it : aUnits) {
 		if (it.myType != aUnits[0].myType) {
-			interface::ILogger::Log(
-				interface::LogLevel::Debug,
-				interface::LogType::Units,
+			infas::ILogger::Log(
+				infas::LogLevel::Debug,
+				infas::LogType::Units,
 				std::string("units ") + aUnits[0].myType + " array contained unit of type "
 					+ it.myType);
 			return "";

@@ -5,76 +5,49 @@
 namespace common {
 void
 JsonParser::Open(const std::filesystem::path& aPath) {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 void
 JsonParser::Save() {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 void
 JsonParser::Refresh() {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 std::filesystem::path
 JsonParser::GetPath() const {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 	return {};
 }
 
 void
 JsonParser::AddToKey(std::filesystem::path aKey, std::string_view aValue) {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 void
 JsonParser::RemoveFromKey(std::filesystem::path aKey, std::string_view aValue) {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 void
 JsonParser::ClearField(std::filesystem::path aKey) {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 }
 
 std::vector<std::string>
 JsonParser::GetField(std::filesystem::path aKey) const {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 	return {};
 }
 
 std::vector<std::filesystem::path>
 JsonParser::GetKeys(std::filesystem::path aKey) const {
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::File,
-		"not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implimented");
 	return {};
 }
 }  // namespace common

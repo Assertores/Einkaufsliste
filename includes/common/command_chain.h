@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-namespace interface {
+namespace infas {
 class ICommandMemento;
 };
 
@@ -12,10 +12,10 @@ class CommandChain {
 public:
 	bool Undo();
 	bool Redo();
-	void AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand);
+	void AddCommand(std::unique_ptr<infas::ICommandMemento> aCommand);
 
 private:
-	std::vector<std::unique_ptr<interface::ICommandMemento>> myCommandHistory;
+	std::vector<std::unique_ptr<infas::ICommandMemento>> myCommandHistory;
 	size_t myBackOffset = 0;
 };
 }  // namespace common

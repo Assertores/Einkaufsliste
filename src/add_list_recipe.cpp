@@ -24,21 +24,21 @@ private:
 };
 #endif
 
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 AddListRecipe::Execute() {
 	auto sub = myList.lock();
 	if (!sub) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"lost connection to observable");
 		return nullptr;
 	}
 	auto list = sub->Get();
 	if (!list.has_value()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"tryed to access current file but it is not set");
 		return nullptr;
 	}
@@ -48,10 +48,7 @@ AddListRecipe::Execute() {
 	}
 	std::filesystem::path file = frontend->AskForFile();
 	while (file.extension().empty()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		file = frontend->AskForFile();
 	}
 
@@ -62,7 +59,7 @@ AddListRecipe::Execute() {
 
 void
 AddListRecipe::SetReferences(
-	std::weak_ptr<interface::IFrontend> aFrontend,
+	std::weak_ptr<infas::IFrontend> aFrontend,
 	std::shared_ptr<Observable<std::optional<List>>> aCurrentList)	// NOLINT
 {
 	myList = aCurrentList;

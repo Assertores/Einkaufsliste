@@ -4,7 +4,7 @@
 
 namespace common {
 
-class AddRecipeUnitMemento : public interface::ICommandMemento {
+class AddRecipeUnitMemento : public infas::ICommandMemento {
 public:
 	AddRecipeUnitMemento(Recipe aRecipe, Unit aNewUnit)
 		: myRecipe(std::move(aRecipe))
@@ -19,21 +19,21 @@ private:
 	Unit myNewUnit;
 };
 
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 AddRecipeUnit::Execute() {
 	auto sub = myRecipe.lock();
 	if (!sub) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"lost connection to observable");
 		return nullptr;
 	}
 	auto recipe = sub->Get();
 	if (!recipe.has_value()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"tryed to access current file but it is not set");
 		return nullptr;
 	}
@@ -48,7 +48,7 @@ AddRecipeUnit::Execute() {
 
 void
 AddRecipeUnit::SetReferences(
-	std::weak_ptr<interface::IFrontend> aFrontend,
+	std::weak_ptr<infas::IFrontend> aFrontend,
 	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)	// NOLINT
 {
 	myRecipe = aCurrentRecipe;

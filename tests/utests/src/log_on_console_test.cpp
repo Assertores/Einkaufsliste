@@ -14,9 +14,9 @@ TEST(LogOnConsole, log_message_is_containt_in_output)  // NOLINT
 	std::stringstream output;
 	common::LogOnConsole subject(output);
 
-	subject.DoLog(interface::LogLevel::Debug, interface::LogType::Generic, stringToLog);
+	subject.DoLog(infas::LogLevel::Debug, infas::LogType::Generic, stringToLog);
 
 	EXPECT_THAT(output.str(), HasSubstr(stringToLog));
 
-	interface::ILogger::Clear();
+	infas::ILogger::Clear();
 }

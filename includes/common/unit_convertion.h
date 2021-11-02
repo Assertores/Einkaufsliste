@@ -6,11 +6,11 @@
 #include <string_view>
 
 namespace common {
-class UnitConvertion : public interface::IFile {
+class UnitConvertion : public infas::IFile {
 public:
 	explicit UnitConvertion(const std::filesystem::path& aPath)
 		: IFile(aPath){};
-	explicit UnitConvertion(std::shared_ptr<interface::IFileImpl> aFileImpl)
+	explicit UnitConvertion(std::shared_ptr<infas::IFileImpl> aFileImpl)
 		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;

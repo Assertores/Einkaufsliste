@@ -9,21 +9,21 @@
 #include <optional>
 
 namespace common {
-class OpenRecipe : public interface::ICommand {
+class OpenRecipe : public infas::ICommand {
 public:
 	static std::shared_ptr<OpenRecipe> Create() { return std::make_shared<OpenRecipe>(); }
 
 	void SetReferences(
-		std::weak_ptr<interface::IFrontend> aFrontend,
+		std::weak_ptr<infas::IFrontend> aFrontend,
 		std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable);
 
-	std::unique_ptr<interface::ICommandMemento> Execute() override;
+	std::unique_ptr<infas::ICommandMemento> Execute() override;
 
 	// protected:
 	// OpenRecipe() = default;
 
 private:
-	std::weak_ptr<interface::IFrontend> myFrontend;
+	std::weak_ptr<infas::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipeObservable;
 };
 }  // namespace common

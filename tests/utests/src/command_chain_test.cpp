@@ -10,7 +10,7 @@
 using ::testing::InSequence;
 using ::testing::NiceMock;
 
-class CommandMementoMock : public interface::ICommandMemento {
+class CommandMementoMock : public infas::ICommandMemento {
 public:
 	MOCK_METHOD(void, ReExecute, (), (override));
 	MOCK_METHOD(void, Revert, (), (override));

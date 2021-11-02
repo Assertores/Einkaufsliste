@@ -1,6 +1,6 @@
 #include "interface/i_logger.h"
 
-namespace interface {
+namespace infas {
 std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue{};
 std::shared_ptr<ILogger> ILogger::myLoggerImplimentation = nullptr;
 LogLevel ILogger::myLogLevel = LogLevel::Verbose;
@@ -29,4 +29,4 @@ void
 ILogger::SetLogMask(LogMask aTypeMask) {
 	myLogMask = aTypeMask;
 }
-};	// namespace interface
+};	// namespace infas

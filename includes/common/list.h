@@ -8,11 +8,11 @@
 #include <string_view>
 
 namespace common {
-class List : public interface::IFile {
+class List : public infas::IFile {
 public:
 	explicit List(const std::filesystem::path& aPath)
 		: IFile(aPath){};
-	explicit List(std::shared_ptr<interface::IFileImpl> aFileImpl)
+	explicit List(std::shared_ptr<infas::IFileImpl> aFileImpl)
 		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;

@@ -2,7 +2,7 @@
 
 #include <functional>
 
-namespace interface {
+namespace infas {
 template <typename T>
 class IObserver {
 public:
@@ -20,4 +20,4 @@ public:
 	int onChangeCount = 0;
 };
 }  // namespace fake
-};	// namespace interface
+};	// namespace infas

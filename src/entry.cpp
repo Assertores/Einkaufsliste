@@ -15,9 +15,9 @@ int
 Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput) {
 	{
 		common::LogOnConsole logger(aOutput);
-		interface::ILogger::SetLogLevel(interface::LogLevel::Error);
-		interface::ILogger::SetLogMask(interface::locLogMaskAll);
-		interface::ILogger::SetImplimentation(std::move(logger));
+		infas::ILogger::SetLogLevel(infas::LogLevel::Error);
+		infas::ILogger::SetLogMask(infas::locLogMaskAll);
+		infas::ILogger::SetImplimentation(std::move(logger));
 	}
 
 	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
@@ -27,9 +27,9 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 	aOutput << "checking for updates ...\n";
 	if (Update(updaterSettings)) {
-		interface::ILogger::Log(
-			interface::LogLevel::Debug,
-			interface::LogType::StartUp,
+		infas::ILogger::Log(
+			infas::LogLevel::Debug,
+			infas::LogType::StartUp,
 			"update available, need to restart.");
 		return 1;
 	}

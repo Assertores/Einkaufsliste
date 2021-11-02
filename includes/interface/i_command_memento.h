@@ -2,7 +2,7 @@
 
 #include <functional>
 
-namespace interface {
+namespace infas {
 class ICommandMemento {
 public:
 	virtual ~ICommandMemento() = default;
@@ -24,4 +24,4 @@ public:
 	int revertCount = 0;
 };
 }  // namespace fake
-}  // namespace interface
+}  // namespace infas

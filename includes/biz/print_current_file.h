@@ -13,10 +13,10 @@
 
 namespace common {
 class PrintCurrentFile final
-	: public interface::ICommand
-	, public interface::IObserver<std::optional<Recipe>>
-	, public interface::IObserver<std::optional<Week>>
-	, public interface::IObserver<std::optional<List>>
+	: public infas::ICommand
+	, public infas::IObserver<std::optional<Recipe>>
+	, public infas::IObserver<std::optional<Week>>
+	, public infas::IObserver<std::optional<List>>
 	, public std::enable_shared_from_this<PrintCurrentFile> {
 public:
 	static std::shared_ptr<PrintCurrentFile> Create() {
@@ -30,7 +30,7 @@ public:
 		std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek,
 		std::weak_ptr<Observable<std::optional<List>>> aCurrentList);
 
-	std::unique_ptr<interface::ICommandMemento> Execute() override;
+	std::unique_ptr<infas::ICommandMemento> Execute() override;
 
 	void OnChange(std::optional<Recipe> aElement) override;
 	void OnChange(std::optional<Week> aElement) override;
@@ -49,6 +49,6 @@ private:
 	std::weak_ptr<Observable<std::optional<List>>> myCurrentList;
 	std::ostream* myOut = nullptr;
 
-	std::shared_ptr<interface::IFile> myCurrentFile;
+	std::shared_ptr<infas::IFile> myCurrentFile;
 };
 }  // namespace common

@@ -27,11 +27,11 @@ std::string ToString(DayTime aDayTime);
 bool FromString(std::string_view aString, WeekDay& aOutWeekDay);
 bool FromString(std::string_view aString, DayTime& aOutWeekDay);
 
-class Week : public interface::IFile {
+class Week : public infas::IFile {
 public:
 	explicit Week(const std::filesystem::path& aPath)
 		: IFile(aPath){};
-	explicit Week(std::shared_ptr<interface::IFileImpl> aFileImpl)
+	explicit Week(std::shared_ptr<infas::IFileImpl> aFileImpl)
 		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;

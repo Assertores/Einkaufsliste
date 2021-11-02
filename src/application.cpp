@@ -20,9 +20,9 @@
 
 namespace biz {
 Application::Application(const AppSettings& aSettings) {
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::StartUp,
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::StartUp,
 		"application creation started");
 	switch (aSettings.frontendType) {
 	case FrontendType::Cli: {
@@ -41,33 +41,27 @@ Application::Application(const AppSettings& aSettings) {
 		auto addWeekRecipe = common::AddWeekRecipe::Create();
 		auto removeWeekRecipe = common::RemoveWeekRecipe::Create();
 		CliCommands commands{
-			.myOpenRecipeCommand = openRecipe,
-			.myPrintCurrentFileCommand = printFile,
-			.myChangeNameOfRecipeCommand = changeRecipeName,
-			.myChangeDescriptionOfRecipeCommand = changeRecipeDescription,
-			.myAddIngredientToRecipeCommand = addRecipeIngrediant,
-			.myRemoveIngredientToRecipeCommand = removeRecipeIngrediant,
-			.myOpenConvertionCommand = openConvertion,
-			.myOpenWeekCommand = openWeek,
-			.myStartList = startNewList,
-			.myAddWeekToListCommand = addListWeek,
-			.myAddRecipeToListCommand = addListRecipe,
-			.myCompileListCommand = compileList,
-			.myAddRecipeToWeekCommand = addWeekRecipe,
-			.myRemoveRecipeFromWeekCommand = removeWeekRecipe};
+			openRecipe,
+			printFile,
+			changeRecipeName,
+			changeRecipeDescription,
+			addRecipeIngrediant,
+			removeRecipeIngrediant,
+			openConvertion,
+			openWeek,
+			startNewList,
+			addListWeek,
+			addListRecipe,
+			compileList,
+			addWeekRecipe,
+			removeWeekRecipe};
 
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
-			"commands created");
+		infas::ILogger::Log(infas::LogLevel::Verbose, infas::LogType::StartUp, "commands created");
 
 		myFrontend =
 			std::make_shared<CommandLineInterface>(aSettings.input, aSettings.output, commands);
 
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
-			"frontend created");
+		infas::ILogger::Log(infas::LogLevel::Verbose, infas::LogType::StartUp, "frontend created");
 
 		openRecipe->SetReferences(myFrontend, myCurrentRecipe);
 		printFile->SetReferences(&aSettings.output, myCurrentRecipe, myCurrentWeek, myCurrentList);
@@ -84,16 +78,13 @@ Application::Application(const AppSettings& aSettings) {
 		addWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 		removeWeekRecipe->SetReferences(myFrontend, myCurrentWeek);
 
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
-			"commands set up");
+		infas::ILogger::Log(infas::LogLevel::Verbose, infas::LogType::StartUp, "commands set up");
 		break;
 	}
 	default:
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::StartUp,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::StartUp,
 			"unhandled frontend setting!");
 		break;
 	}
@@ -102,24 +93,18 @@ Application::Application(const AppSettings& aSettings) {
 void
 Application::Run(const AppSettings& aSettings) {
 	if (!aSettings.doRun) {
-		interface::ILogger::Log(
-			interface::LogLevel::Debug,
-			interface::LogType::Generic,
+		infas::ILogger::Log(
+			infas::LogLevel::Debug,
+			infas::LogType::Generic,
 			"asked to imediatley shut down");
 		return;
 	}
 	while (!myFrontend->Poll()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::Generic,
-			"poll again");
+		infas::ILogger::Log(infas::LogLevel::Verbose, infas::LogType::Generic, "poll again");
 	}
 
-	interface::ILogger::Log(
-		interface::LogLevel::Debug,
-		interface::LogType::Generic,
-		"shutting down");
-	interface::IFileImpl::Clear();
-	interface::ILogger::Clear();
+	infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::Generic, "shutting down");
+	infas::IFileImpl::Clear();
+	infas::ILogger::Clear();
 }
 }  // namespace biz

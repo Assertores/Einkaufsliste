@@ -4,9 +4,9 @@
 
 #include "interface/i_logger.h"
 
-#if fix_external_dependencys
 #include <cpr/cpr.h>
 
+#if fix_external_dependencys
 #include <filesystem>
 #undef max
 #undef min
@@ -20,13 +20,12 @@ static constexpr auto locHttpOk = 200;
 bool
 Update(const UpdaterSettings& aSettings) {
 	if (!aSettings.doUpdate) {
-		interface::ILogger::Log(
-			interface::LogLevel::Debug,
-			interface::LogType::StartUp,
+		infas::ILogger::Log(
+			infas::LogLevel::Debug,
+			infas::LogType::StartUp,
 			"asked to not updater");
 		return false;
 	}
-#if fix_external_dependencys
 	// NOTE(andreas): (https://docs.github.com/en/rest/reference/repos#get-the-latest-release)
 	auto responce =
 		cpr::Get(cpr::Url("https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest"));
@@ -34,6 +33,7 @@ Update(const UpdaterSettings& aSettings) {
 		// TODO(andreas): log error
 		return false;
 	}
+#if fix_external_dependencys
 	rapidjson::Document jsonDocument{};
 	jsonDocument.Parse(responce.text.c_str());
 	if (jsonDocument.HasMember("prerelease") && jsonDocument["prerelease"].IsBool()) {
@@ -80,10 +80,7 @@ Update(const UpdaterSettings& aSettings) {
 	// TODO(andreas): save new version number or something
 	return true;
 #else
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::StartUp,
-		"updater not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "updater not implimented");
 	return false;
 #endif
 }

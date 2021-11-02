@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace interface {
+namespace infas {
 class IFileImpl {
 public:
 	template <typename Impl, typename = std::enable_if_t<std::is_base_of_v<IFileImpl, Impl>>>
@@ -106,4 +106,4 @@ IFileImpl::Open(const std::filesystem::path& aPath) {
 	file->Open(aPath);
 	return file;
 }
-}  // namespace interface
+}  // namespace infas
