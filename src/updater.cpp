@@ -5,17 +5,21 @@
 #include "interface/i_logger.h"
 
 #include <cpr/cpr.h>
-
-#if fix_external_dependencys
-#include <filesystem>
-#undef max
-#undef min
-#include <rapidjson/document.h>
-#endif
+#include <nlohmann/json.hpp>
 
 namespace biz {
 
 static constexpr auto locHttpOk = 200;
+
+// TODO(andreas): impliment
+std::filesystem::path
+GetExePath() {
+	infas::ILogger::Log(
+		infas::LogLevel::Fatal,
+		infas::LogType::StartUp,
+		"GetExePath not implimented");
+	return std::filesystem::current_path();
+}
 
 bool
 Update(const UpdaterSettings& aSettings) {
@@ -26,62 +30,88 @@ Update(const UpdaterSettings& aSettings) {
 			"asked to not updater");
 		return false;
 	}
+	// TODO(andreas): figure out how to work with prereleases
 	// NOTE(andreas): (https://docs.github.com/en/rest/reference/repos#get-the-latest-release)
-	auto responce =
-		cpr::Get(cpr::Url("https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest"));
-	if (responce.status_code != locHttpOk) {
-		// TODO(andreas): log error
+	cpr::Url url = !aSettings.url.empty()
+					   ? aSettings.url
+					   : "https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
+#if figure_out_how_to_do_this
+	if (url) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"invalide url: " + url.str());
 		return false;
 	}
-#if fix_external_dependencys
-	rapidjson::Document jsonDocument{};
-	jsonDocument.Parse(responce.text.c_str());
-	if (jsonDocument.HasMember("prerelease") && jsonDocument["prerelease"].IsBool()) {
-		if (jsonDocument["prerelease"].GetBool() && !aSettings.getPrerelease) {
-			// TODO(andreas): get next one?
-			return false;
-		}
+#endif
+	auto responce = cpr::Get(url);
+	if (responce.status_code != locHttpOk) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"endpoint answerd with Http error code: " + std::to_string(responce.status_code));
+		return false;
 	}
-	if (!jsonDocument.HasMember("published_at") || !jsonDocument["published_at"].IsString()) {
-		// TODO(andreas): handle error.
+
+	const auto jsonDocument = nlohmann::json::parse(responce.text);
+	if (!jsonDocument.contains("tag_name") || !jsonDocument["tag_name"].is_string()) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"json document doesn't contain key 'tag_name' or it's not a string:\n"
+				+ jsonDocument.dump());
 		return false;
 	}
 	// TODO(andreas): check if version is newer than current version
-	if (!jsonDocument.HasMember("assets") || !jsonDocument["assets"].IsArray()) {
-		// TODO(andreas): handle error.
+
+	if (!jsonDocument.contains("assets") || !jsonDocument["assets"].is_array()) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"json document doesn't contain key 'assets' or it's not an array:\n"
+				+ jsonDocument.dump());
 		return false;
 	}
-	auto assets = jsonDocument["assets"].GetArray();
-	assets[0].HasMember("name");
-	assets[0]["name"].IsString();
-	assets[0]["name"].GetString();
+	const auto assets = jsonDocument["assets"].array();
+
+	// TODO(andreas): figure out which platform to download
+	const std::string platform = "win10";
 	// TODO(andreas): weard random magic string also now is win10 specific
-	auto* build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
-		return aElement.HasMember("name") && aElement["name"].IsString()
-			   && std::string(assets[0]["name"].GetString()).find("win10") != std::string::npos;
+	const auto build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
+		return aElement.contains("name") && aElement["name"].is_string()
+			   && std::string(aElement["name"]).find(platform) != std::string::npos;
 	});
 	if (build == assets.end()) {
-		// TODO(andreas): handle error.
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"no valide build found for platform: " + platform);
 		return false;
 	}
-	if (!build->HasMember("browser_download_url") || !(*build)["browser_download_url"].IsString()) {
-		// TODO(andreas): handle error.
+	if (!build->contains("browser_download_url") || !(*build)["browser_download_url"].is_string()) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"asset dosen't contain key 'browser_download_url' or it's not a string: "
+				+ build->dump());
 		return false;
 	}
-	std::ofstream zip(std::filesystem::current_path() / "patch.zip");
-	cpr::Session().SetUrl(cpr::Url((*build)["browser_download_url"].GetString()));
+	const auto patchUrl = cpr::Url((*build)["browser_download_url"].get<std::string>());
+
+	std::ofstream zip(GetExePath() / "patch.zip");
+	cpr::Session().SetUrl(patchUrl);
 	auto resp = cpr::Download(zip);
 	if (resp.error) {
-		// TODO(andreas): handle error.
-		return false;  // NOLINT // TODO(andreas): remove this noce i know how to handle errors
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"unable to download patch from: " + patchUrl.str());
+		return false;
 	}
 	// TODO(andreas): rename stuff to .old
 	// TODO(andreas): unzip
 	// TODO(andreas): save new version number or something
-	return true;
-#else
 	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "updater not implimented");
 	return false;
-#endif
 }
 }  // namespace biz
