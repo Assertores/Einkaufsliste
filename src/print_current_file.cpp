@@ -46,7 +46,7 @@ PrintCurrentFile::~PrintCurrentFile() {
 	}
 }
 
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 PrintCurrentFile::Execute() {
 	if (!myCurrentFile) {
 		*myOut << "no file to print\n";

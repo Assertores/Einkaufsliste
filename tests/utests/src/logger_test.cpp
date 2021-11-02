@@ -4,28 +4,28 @@
 
 TEST(Logger, logs_get_replayed)	 // NOLINT
 {
-	interface::fake::Logger subject;
-	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::locLogMaskAll);
-	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::Generic, "lbukwe");
+	infas::fake::Logger subject;
+	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
+	infas::ILogger::SetLogMask(infas::locLogMaskAll);
+	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Generic, "lbukwe");
 
 	ASSERT_EQ(subject.doLogCount, 0);
 
-	interface::ILogger::SetImplimentation(subject);
+	infas::ILogger::SetImplimentation(subject);
 
 	EXPECT_EQ(subject.doLogCount, 1);
 
-	interface::ILogger::Clear();
+	infas::ILogger::Clear();
 }
 
 TEST(Logger, replay_data_is_same)  // NOLINT
 {
-	auto logLevel = interface::LogLevel::Error;
-	auto logType = interface::LogType::Generic;
+	auto logLevel = infas::LogLevel::Error;
+	auto logType = infas::LogType::Generic;
 	const auto* log = "lbukwe";
-	interface::fake::Logger subject;
-	auto outLogLevel = interface::LogLevel::Silent;
-	auto outLogType = interface::LogType::StartUp;
+	infas::fake::Logger subject;
+	auto outLogLevel = infas::LogLevel::Silent;
+	auto outLogType = infas::LogType::StartUp;
 	std::string outLog;
 	subject.doLog = [&](auto aLevel, auto aType, auto aLog) {
 		outLogLevel = aLevel;
@@ -33,48 +33,48 @@ TEST(Logger, replay_data_is_same)  // NOLINT
 		outLog = std::string(aLog);
 	};
 
-	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::locLogMaskAll);
-	interface::ILogger::Log(logLevel, logType, log);
+	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
+	infas::ILogger::SetLogMask(infas::locLogMaskAll);
+	infas::ILogger::Log(logLevel, logType, log);
 
-	interface::ILogger::SetImplimentation(std::move(subject));
+	infas::ILogger::SetImplimentation(std::move(subject));
 
 	EXPECT_EQ(outLogLevel, logLevel);
 	EXPECT_EQ(outLogType, logType);
 	EXPECT_EQ(outLog, log);
 
-	interface::ILogger::Clear();
+	infas::ILogger::Clear();
 }
 
 TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT
 {
-	interface::fake::Logger subject;
-	interface::ILogger::SetLogLevel(interface::LogLevel::Error);
-	interface::ILogger::SetLogMask(interface::locLogMaskAll);
-	interface::ILogger::SetImplimentation(subject);
+	infas::fake::Logger subject;
+	infas::ILogger::SetLogLevel(infas::LogLevel::Error);
+	infas::ILogger::SetLogMask(infas::locLogMaskAll);
+	infas::ILogger::SetImplimentation(subject);
 
-	interface::ILogger::Log(interface::LogLevel::Fatal, interface::LogType::Generic, "lbukwe");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::Generic, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 1);
-	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::Generic, "lbukwe");
+	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Generic, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 2);
-	interface::ILogger::Log(interface::LogLevel::Debug, interface::LogType::Generic, "lbukwe");
+	infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::Generic, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 2);
 
-	interface::ILogger::Clear();
+	infas::ILogger::Clear();
 }
 
 TEST(Logger, only_logs_Type_in_mask)  // NOLINT
 {
-	interface::fake::Logger subject;
-	interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
-	interface::ILogger::SetLogMask(interface::locLogMaskNone | interface::LogType::Network);
-	interface::ILogger::SetImplimentation(subject);
+	infas::fake::Logger subject;
+	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
+	infas::ILogger::SetLogMask(infas::locLogMaskNone | infas::LogType::Network);
+	infas::ILogger::SetImplimentation(subject);
 
-	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::Network, "lbukwe");
+	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Network, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 1);
 
-	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::StartUp, "lbukwe");
+	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::StartUp, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 1);
 
-	interface::ILogger::Clear();
+	infas::ILogger::Clear();
 }

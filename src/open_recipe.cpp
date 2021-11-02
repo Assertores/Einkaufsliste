@@ -5,13 +5,13 @@
 namespace common {
 void
 OpenRecipe::SetReferences(
-	std::weak_ptr<interface::IFrontend> aFrontend,
+	std::weak_ptr<infas::IFrontend> aFrontend,
 	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aRecipeObservable) {
 	myFrontend = std::move(aFrontend);
 	myRecipeObservable = std::move(aRecipeObservable);
 }
 
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 OpenRecipe::Execute() {
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
@@ -23,10 +23,7 @@ OpenRecipe::Execute() {
 	}
 	std::filesystem::path file = frontend->AskForFile();
 	while (file.extension().empty()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		file = frontend->AskForFile();
 	}
 	recipeObservable->Set(Recipe(file));

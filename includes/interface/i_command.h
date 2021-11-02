@@ -5,7 +5,7 @@
 #include <functional>
 #include <memory>
 
-namespace interface {
+namespace infas {
 class ICommand {
 public:
 	virtual ~ICommand() = default;
@@ -25,4 +25,4 @@ public:
 	int executeCount = 0;
 };
 }  // namespace fake
-}  // namespace interface
+}  // namespace infas

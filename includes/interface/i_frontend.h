@@ -5,7 +5,7 @@
 
 #include <filesystem>
 
-namespace interface {
+namespace infas {
 class IFrontend {
 public:
 	virtual ~IFrontend() = default;
@@ -20,4 +20,4 @@ public:
 	[[nodiscard]] virtual bool AskForWeekDay(common::WeekDay& aOutWeekDay) = 0;
 	[[nodiscard]] virtual bool AskForDayTime(common::DayTime& aOutDayTime) = 0;
 };
-};	// namespace interface
+};	// namespace infas

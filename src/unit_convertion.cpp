@@ -36,9 +36,9 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 	const auto* end = rate.data() + rate.size();  // NOLINT
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Units,
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::Units,
 			rate + " is not a floatingpoint number");
 		return false;
 	}
@@ -48,9 +48,9 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 	value = std::strtof(rate.data(), &ptr);
 	if (ptr != rate.data() + rate.size())  // NOLINT
 	{
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Units,
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::Units,
 			rate + " is not a floatingpoint number");
 		return false;
 	}

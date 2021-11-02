@@ -3,7 +3,7 @@
 #include "interface/i_file_impl.h"
 
 namespace common {
-class JsonParser final : public interface::IFileImpl {
+class JsonParser final : public infas::IFileImpl {
 public:
 	void Open(const std::filesystem::path& aPath) override;
 	void Save() override;

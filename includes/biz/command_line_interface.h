@@ -12,23 +12,23 @@
 
 namespace biz {
 struct CliCommands {
-	std::shared_ptr<interface::ICommand> myOpenRecipeCommand;
-	std::shared_ptr<interface::ICommand> myPrintCurrentFileCommand;
-	std::shared_ptr<interface::ICommand> myChangeNameOfRecipeCommand;
-	std::shared_ptr<interface::ICommand> myChangeDescriptionOfRecipeCommand;
-	std::shared_ptr<interface::ICommand> myAddIngredientToRecipeCommand;
-	std::shared_ptr<interface::ICommand> myRemoveIngredientToRecipeCommand;
-	std::shared_ptr<interface::ICommand> myOpenConvertionCommand;
-	std::shared_ptr<interface::ICommand> myOpenWeekCommand;
-	std::shared_ptr<interface::ICommand> myStartList;
-	std::shared_ptr<interface::ICommand> myAddWeekToListCommand;
-	std::shared_ptr<interface::ICommand> myAddRecipeToListCommand;
-	std::shared_ptr<interface::ICommand> myCompileListCommand;
-	std::shared_ptr<interface::ICommand> myAddRecipeToWeekCommand;
-	std::shared_ptr<interface::ICommand> myRemoveRecipeFromWeekCommand;
+	std::shared_ptr<infas::ICommand> myOpenRecipeCommand;
+	std::shared_ptr<infas::ICommand> myPrintCurrentFileCommand;
+	std::shared_ptr<infas::ICommand> myChangeNameOfRecipeCommand;
+	std::shared_ptr<infas::ICommand> myChangeDescriptionOfRecipeCommand;
+	std::shared_ptr<infas::ICommand> myAddIngredientToRecipeCommand;
+	std::shared_ptr<infas::ICommand> myRemoveIngredientToRecipeCommand;
+	std::shared_ptr<infas::ICommand> myOpenConvertionCommand;
+	std::shared_ptr<infas::ICommand> myOpenWeekCommand;
+	std::shared_ptr<infas::ICommand> myStartList;
+	std::shared_ptr<infas::ICommand> myAddWeekToListCommand;
+	std::shared_ptr<infas::ICommand> myAddRecipeToListCommand;
+	std::shared_ptr<infas::ICommand> myCompileListCommand;
+	std::shared_ptr<infas::ICommand> myAddRecipeToWeekCommand;
+	std::shared_ptr<infas::ICommand> myRemoveRecipeFromWeekCommand;
 };
 
-class CommandLineInterface : public interface::IFrontend {
+class CommandLineInterface : public infas::IFrontend {
 public:
 	CommandLineInterface(std::istream& aInput, std::ostream& aOutput, CliCommands aCommands);
 

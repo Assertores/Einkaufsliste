@@ -23,10 +23,7 @@ InterpreteStartArguments(
 	for (auto& [line, argument] : errors) {
 		std::stringstream log;
 		log << " argument '" << argument << "' (nr. " << line << ") was not interpreted";
-		interface::ILogger::Log(
-			interface::LogLevel::Verbose,
-			interface::LogType::StartUp,
-			log.str());
+		infas::ILogger::Log(infas::LogLevel::Verbose, infas::LogType::StartUp, log.str());
 	}
 }
 
@@ -47,15 +44,15 @@ CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings&
 		auto element = aQueue.front();
 		aQueue.pop();
 		if (element == "silent") {
-			interface::ILogger::SetLogLevel(interface::LogLevel::Silent);
+			infas::ILogger::SetLogLevel(infas::LogLevel::Silent);
 		} else if (element == "fatal") {
-			interface::ILogger::SetLogLevel(interface::LogLevel::Fatal);
+			infas::ILogger::SetLogLevel(infas::LogLevel::Fatal);
 		} else if (element == "error") {
-			interface::ILogger::SetLogLevel(interface::LogLevel::Error);
+			infas::ILogger::SetLogLevel(infas::LogLevel::Error);
 		} else if (element == "debug") {
-			interface::ILogger::SetLogLevel(interface::LogLevel::Debug);
+			infas::ILogger::SetLogLevel(infas::LogLevel::Debug);
 		} else if (element == "verbose") {
-			interface::ILogger::SetLogLevel(interface::LogLevel::Verbose);
+			infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
 		}
 	};
 	interpreter["--help"] = [=](auto& /*unused*/) {

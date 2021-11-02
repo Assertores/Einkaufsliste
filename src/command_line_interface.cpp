@@ -67,9 +67,9 @@ CommandLineInterface::AskForFile() {
 	std::string pathBuffer;
 	std::getline(myInput, pathBuffer);
 
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for file and returned: " + pathBuffer);
 	return {pathBuffer};
 }
@@ -79,10 +79,10 @@ CommandLineInterface::AskForFolder() {
 	myOutput << "please enter a folder path: ";
 	std::string pathBuffer;
 	std::getline(myInput, pathBuffer);
-	
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for folder and returned: " + pathBuffer);
 	return {pathBuffer};
 }
@@ -98,10 +98,10 @@ CommandLineInterface::AskForUnit() {
 	std::getline(myInput, amount);
 	myOutput << "please enter the unit: ";
 	std::getline(myInput, unit);
-	
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for unit and returned: " + type + ", " + amount + ", " + unit);
 	return {std::stof(amount), unit, type};
 }
@@ -111,10 +111,10 @@ CommandLineInterface::AskForText() {
 	std::string result;
 	myOutput << "please enter your text: ";
 	std::getline(myInput, result);
-	
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for text and returned: " + result);
 	return result;
 }
@@ -124,10 +124,10 @@ CommandLineInterface::AskForWeekDay(common::WeekDay& aOutWeekDay) {
 	std::string day;
 	myOutput << "please enter a weekday: ";
 	std::getline(myInput, day);
-	
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for weekday and returned: " + day);
 	return FromString(day, aOutWeekDay);
 }
@@ -137,10 +137,10 @@ CommandLineInterface::AskForDayTime(common::DayTime& aOutDayTime) {
 	std::string time;
 	myOutput << "please enter a time: ";
 	std::getline(myInput, time);
-	
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"asked for daytime and returned: " + time);
 	return FromString(time, aOutDayTime);
 }
@@ -151,9 +151,9 @@ CommandLineInterface::Poll() {
 	std::string command;
 	std::getline(myInput, command);
 
-	interface::ILogger::Log(
-		interface::LogLevel::Verbose,
-		interface::LogType::Frontend,
+	infas::ILogger::Log(
+		infas::LogLevel::Verbose,
+		infas::LogType::Frontend,
 		"read in next command: " + command);
 	if (command == "exit" || command == "quit") {
 		return true;
@@ -161,9 +161,9 @@ CommandLineInterface::Poll() {
 
 	auto it = myInterpreter.find(command);
 	if (it == myInterpreter.end()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::Commands,
 			"command '" + command + "' is unknowen.");
 
 		return false;

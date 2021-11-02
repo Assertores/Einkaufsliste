@@ -7,7 +7,7 @@
 
 TEST(Recipe, read_and_write)  // NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
@@ -35,7 +35,7 @@ TEST(Recipe, read_and_write)  // NOLINT
 		}
 	}
 	// NOTE(andreas): forces programm to read it in from the file
-	interface::IFileImpl::Clear();
+	infas::IFileImpl::Clear();
 
 	common::Recipe subject(recipePath);
 

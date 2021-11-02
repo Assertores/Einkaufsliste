@@ -6,17 +6,11 @@ namespace biz {
 void
 Patch(const PatcherSettings& aSettings) {
 	if (!aSettings.doPatching) {
-		interface::ILogger::Log(
-			interface::LogLevel::Debug,
-			interface::LogType::StartUp,
-			"asked to not patch");
+		infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::StartUp, "asked to not patch");
 		return;
 	}
 
-	interface::ILogger::Log(
-		interface::LogLevel::Fatal,
-		interface::LogType::StartUp,
-		"patcher not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "patcher not implimented");
 	// TODO(andreas): remove stuff from update
 	// TODO(andreas): Translate data to new version
 }

@@ -5,7 +5,7 @@
 #include <string_view>
 #include <vector>
 
-namespace interface {
+namespace infas {
 class IFileImpl;
 
 class IFile {
@@ -51,4 +51,4 @@ protected:
 private:
 	std::shared_ptr<IFileImpl> myFileImplimentation;
 };
-}  // namespace interface
+}  // namespace infas

@@ -6,11 +6,11 @@
 #include <string_view>
 
 namespace common {
-class Recipe : public interface::IFile {
+class Recipe : public infas::IFile {
 public:
 	explicit Recipe(const std::filesystem::path& aPath)
 		: IFile(aPath){};
-	explicit Recipe(std::shared_ptr<interface::IFileImpl> aFileImpl)
+	explicit Recipe(std::shared_ptr<infas::IFileImpl> aFileImpl)
 		: IFile(std::move(aFileImpl)){};
 
 	[[nodiscard]] std::string Print() const override;

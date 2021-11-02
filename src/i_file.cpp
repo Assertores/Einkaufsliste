@@ -6,7 +6,7 @@
 
 #include <queue>
 
-namespace interface {
+namespace infas {
 std::map<std::filesystem::path, std::shared_ptr<IFileImpl>> IFileImpl::myFiles{};
 
 IFile::IFile(const std::filesystem::path& aPath) {
@@ -21,11 +21,8 @@ IFile::IFile(const std::filesystem::path& aPath) {
 	}
 	// NOTE(andreas): add all parsers here
 
-	interface::ILogger::Log(
-		interface::LogLevel::Debug,
-		interface::LogType::File,
-		"no parser for this extention: " + extention);
-	myFileImplimentation = IFileImpl::Open<interface::fake::FileImpl>(aPath);
+	ILogger::Log(LogLevel::Debug, LogType::File, "no parser for this extention: " + extention);
+	myFileImplimentation = IFileImpl::Open<fake::FileImpl>(aPath);
 }
 
 IFile::~IFile() {
@@ -84,4 +81,4 @@ std::vector<std::filesystem::path>
 IFile::GetSubKeys(const std::filesystem::path& aRoot) const {
 	return myFileImplimentation->GetKeys(aRoot);
 }
-}  // namespace interface
+}  // namespace infas

@@ -6,7 +6,7 @@
 #include <string_view>
 #include <utility>
 
-namespace interface {
+namespace infas {
 enum class LogLevel {
 	Silent,
 	Fatal,
@@ -145,4 +145,4 @@ ToString(const LogType& aLevel) {
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
 	return "";
 }
-};	// namespace interface
+};	// namespace infas

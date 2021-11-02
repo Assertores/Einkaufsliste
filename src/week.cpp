@@ -29,7 +29,7 @@ ToString(WeekDay aWeekDay) {
 		return "Sunday";
 	}
 
-	interface::ILogger::Log(interface::LogLevel::Error, interface::LogType::File, "unhandled enum");
+	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::File, "unhandled enum");
 	return "";
 }
 

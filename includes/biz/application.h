@@ -30,7 +30,7 @@ public:
 	void Run(const AppSettings& aSettings);
 
 private:
-	std::shared_ptr<interface::IFrontend> myFrontend;
+	std::shared_ptr<infas::IFrontend> myFrontend;
 
 	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> myCurrentRecipe =
 		std::make_shared<common::Observable<std::optional<common::Recipe>>>();

@@ -5,7 +5,7 @@
 namespace common {
 
 void
-CommandChain::AddCommand(std::unique_ptr<interface::ICommandMemento> aCommand) {
+CommandChain::AddCommand(std::unique_ptr<infas::ICommandMemento> aCommand) {
 	if (aCommand == nullptr) {
 		return;
 	}

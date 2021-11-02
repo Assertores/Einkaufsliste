@@ -7,7 +7,7 @@
 #include <string>
 
 namespace common {
-class MdParser final : public interface::IFileImpl {
+class MdParser final : public infas::IFileImpl {
 public:
 	void Open(const std::filesystem::path& aPath) override;
 	void Save() override;

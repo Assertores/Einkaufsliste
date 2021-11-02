@@ -3,7 +3,7 @@
 #include "common/unit.h"
 
 namespace common {
-class AddWeekRecipeMemento : public interface::ICommandMemento {
+class AddWeekRecipeMemento : public infas::ICommandMemento {
 public:
 	AddWeekRecipeMemento(Week aWeek, Recipe aNewRecipe, WeekDay aWeekDay, DayTime aDayTime)
 		: myWeek(std::move(aWeek))
@@ -22,21 +22,21 @@ private:
 	DayTime myDayTime;
 };
 
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 AddWeekRecipe::Execute() {
 	auto sub = myWeek.lock();
 	if (!sub) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"lost connection to observable");
 		return nullptr;
 	}
 	auto week = sub->Get();
 	if (!week.has_value()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"tryed to access current file but it is not set");
 		return nullptr;
 	}
@@ -46,27 +46,18 @@ AddWeekRecipe::Execute() {
 	}
 	std::filesystem::path filePath = frontend->AskForFile();
 	while (filePath.extension().empty()) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		filePath = frontend->AskForFile();
 	}
 	auto file = Recipe(filePath);
 	WeekDay day{};
 	while (!frontend->AskForWeekDay(day)) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		// TODO(andreas): invalide input
 	}
 	DayTime time{};
 	while (!frontend->AskForDayTime(time)) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		// TODO(andreas): invalide input
 	}
 	week->AddRecipe(file, day, time);
@@ -76,7 +67,7 @@ AddWeekRecipe::Execute() {
 
 void
 AddWeekRecipe::SetReferences(
-	std::weak_ptr<interface::IFrontend> aFrontend,
+	std::weak_ptr<infas::IFrontend> aFrontend,
 	std::shared_ptr<Observable<std::optional<Week>>> aCurrentWeek)	// NOLINT
 {
 	myWeek = aCurrentWeek;

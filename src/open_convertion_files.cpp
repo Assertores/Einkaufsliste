@@ -4,7 +4,7 @@
 #include "interface/i_logger.h"
 
 namespace common {
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 OpenConvertionFile::Execute() {
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
@@ -12,10 +12,7 @@ OpenConvertionFile::Execute() {
 	}
 	std::filesystem::path folder = frontend->AskForFolder();
 	while (!std::filesystem::is_directory(folder)) {
-		interface::ILogger::Log(
-			interface::LogLevel::Error,
-			interface::LogType::Commands,
-			"invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
 		folder = frontend->AskForFolder();
 	}
 
@@ -29,7 +26,7 @@ OpenConvertionFile::Execute() {
 }
 
 void
-OpenConvertionFile::SetReferences(std::weak_ptr<interface::IFrontend> aFrontend) {
+OpenConvertionFile::SetReferences(std::weak_ptr<infas::IFrontend> aFrontend) {
 	myFrontend = std::move(aFrontend);
 }
 }  // namespace common

@@ -15,18 +15,15 @@ public:
 	explicit Observable(T aValue)
 		: myBackingValue(std::move(aValue)){};
 
-	void Subscribe(std::weak_ptr<interface::IObserver<T>> aObserver) {
-		myObservers.emplace(aObserver);
-	}
-	void Remove(std::weak_ptr<interface::IObserver<T>> aObserver) { myObservers.erase(aObserver); }
+	void Subscribe(std::weak_ptr<infas::IObserver<T>> aObserver) { myObservers.emplace(aObserver); }
+	void Remove(std::weak_ptr<infas::IObserver<T>> aObserver) { myObservers.erase(aObserver); }
 	void Set(T aValue) noexcept;
 	[[nodiscard]] const T& Get() const noexcept { return myBackingValue; }
 
 private:
-	std::set<
-		std::weak_ptr<interface::IObserver<T>>,
-		std::owner_less<std::weak_ptr<interface::IObserver<T>>>>
-		myObservers;
+	std::
+		set<std::weak_ptr<infas::IObserver<T>>, std::owner_less<std::weak_ptr<infas::IObserver<T>>>>
+			myObservers;
 
 	T myBackingValue = T();
 };
@@ -38,18 +35,17 @@ Observable<T>::Set(T aValue) noexcept {
 		return;
 	}
 	myBackingValue = aValue;
-	std::set<
-		std::weak_ptr<interface::IObserver<T>>,
-		std::owner_less<std::weak_ptr<interface::IObserver<T>>>>
-		removedObservers;
+	std::
+		set<std::weak_ptr<infas::IObserver<T>>, std::owner_less<std::weak_ptr<infas::IObserver<T>>>>
+			removedObservers;
 	for (const auto& it : myObservers) {
 		auto ptr = it.lock();
 		if (!ptr) {
 			removedObservers.insert(it);
 
-			interface::ILogger::Log(
-				interface::LogLevel::Debug,
-				interface::LogType::Observer,
+			infas::ILogger::Log(
+				infas::LogLevel::Debug,
+				infas::LogType::Observer,
 				"a observer should have been notifyed but did not exist anymore.");
 			continue;
 		}

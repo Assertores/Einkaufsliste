@@ -5,7 +5,7 @@
 
 TEST(Observer, observer_object_gets_notifyed)  // NOLINT
 {
-	auto observer = std::make_shared<interface::fake::Observer<int>>();
+	auto observer = std::make_shared<infas::fake::Observer<int>>();
 	common::Observable<int> subject;
 
 	subject.Subscribe(observer);
@@ -17,7 +17,7 @@ TEST(Observer, observer_object_gets_notifyed)  // NOLINT
 
 TEST(Observer, observer_is_pased_the_correct_element)  // NOLINT
 {
-	auto observer = std::make_shared<interface::fake::Observer<int>>();
+	auto observer = std::make_shared<infas::fake::Observer<int>>();
 	int number = 0;
 	observer->onChange = [&](auto aElement) { number = aElement; };
 	common::Observable<int> subject;
@@ -31,7 +31,7 @@ TEST(Observer, observer_is_pased_the_correct_element)  // NOLINT
 
 TEST(Observer, observer_is_pased_a_copy)  // NOLINT
 {
-	auto observer = std::make_shared<interface::fake::Observer<int>>();
+	auto observer = std::make_shared<infas::fake::Observer<int>>();
 	int* number = nullptr;
 	observer->onChange = [&](auto aElement) { number = &aElement; };
 	common::Observable<int> subject;
@@ -52,7 +52,7 @@ TEST(Observer, notify_empty_observable_does_not_crash)	// NOLINT
 
 TEST(Observer, unsubscribed_observer_is_not_called)	 // NOLINT
 {
-	auto observer = std::make_shared<interface::fake::Observer<int>>();
+	auto observer = std::make_shared<infas::fake::Observer<int>>();
 	common::Observable<int> subject;
 
 	subject.Subscribe(observer);

@@ -7,7 +7,7 @@
 
 TEST(Unit, parses_it_correctly)	 // NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
@@ -24,7 +24,7 @@ TEST(Unit, parses_it_correctly)	 // NOLINT
 
 TEST(Unit, different_types_are_not_parsed)	// NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
@@ -41,7 +41,7 @@ TEST(Unit, different_types_are_not_parsed)	// NOLINT
 
 TEST(Unit, same_types_can_be_added_together)  // NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
@@ -59,7 +59,7 @@ TEST(Unit, same_types_can_be_added_together)  // NOLINT
 
 TEST(Unit, different_types_can_not_be_added_together)  // NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
@@ -83,7 +83,7 @@ TEST(Unit, type_can_be_deduced_from_string)	 // NOLINT
 
 TEST(Unit, parses_string_into_units)  // NOLINT
 {
-	auto mockingFileImpl = std::make_shared<interface::fake::FileImpl>();
+	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};

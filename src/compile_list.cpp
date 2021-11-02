@@ -4,13 +4,13 @@
 #include "common/unit_convertion.h"
 
 namespace common {
-std::unique_ptr<interface::ICommandMemento>
+std::unique_ptr<infas::ICommandMemento>
 CompileList::Execute() {
 	auto sub = myList.lock();
 	if (!sub) {
-		interface::ILogger::Log(
-			interface::LogLevel::Fatal,
-			interface::LogType::Commands,
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::Commands,
 			"lost connection to observable");
 		return nullptr;
 	}
