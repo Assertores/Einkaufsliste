@@ -13,18 +13,23 @@
 #include <string>
 #include <string_view>
 
+#if _WIN32
+#include <Windows.h>
+#endif
+
 namespace biz {
 
 static constexpr auto locHttpOk = 200;
 
-// TODO(andreas): impliment
 std::filesystem::path
 GetExePath() {
-	infas::ILogger::Log(
-		infas::LogLevel::Fatal,
-		infas::LogType::StartUp,
-		"GetExePath not implimented");
-	return std::filesystem::current_path();
+#if _WIN32
+	wchar_t exePath[UNICODE_STRING_MAX_CHARS]; // NOLINT
+	GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS); // NOLINT
+	return exePath;
+#else
+	return std::filesystem::canonical("/proc/self/exe");
+#endif
 }
 
 bool
@@ -34,14 +39,14 @@ CompareVersion(const std::string& aOldVersion, const std::string& aNewVersion, b
 	int oldMinor = 0;
 	int oldRevision = 0;
 	// NOLINTNEXTLINE
-	if (sscanf(aOldVersion.c_str(), "%d.%d.%d", &oldMayor, &oldMinor, &oldRevision) != 3) {
+	if (sscanf(aOldVersion.c_str(), "v%d.%d.%d", &oldMayor, &oldMinor, &oldRevision) != 3) {
 		return false;
 	}
 	int newMayor = 0;
 	int newMinor = 0;
 	int newRevision = 0;
 	// NOLINTNEXTLINE
-	if (sscanf(aNewVersion.c_str(), "%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
+	if (sscanf(aNewVersion.c_str(), "v%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
 		return false;
 	}
 	if (newMayor > oldMayor) {
@@ -159,8 +164,9 @@ Update(const UpdaterSettings& aSettings) {
 
 	const auto zipPath = exeDir / "patch.zip";
 	std::ofstream zip(zipPath);
-	cpr::Session().SetUrl(patchUrl);
-	auto resp = cpr::Download(zip);
+	cpr::Session session{};
+	session.SetUrl(patchUrl);
+	auto resp = session.Download(zip);
 	if (resp.error) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
@@ -186,6 +192,7 @@ Update(const UpdaterSettings& aSettings) {
 	}
 	versionFile.clear();
 	versionFile << patchVersion;
+	// TODO(andreas): remove extracted files as well
 	return true;
 }
 }  // namespace biz

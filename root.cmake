@@ -6,7 +6,9 @@ target_link_libraries(Einkaufsliste
 )
 
 add_library(biz STATIC)
-SET_TARGET_PROPERTIES(biz PROPERTIES LINKER_LANGUAGE CXX)
+# set_target_properties(biz PROPERTIES LINKER_LANGUAGE CXX)
+
+target_compile_definitions(biz PUBLIC _CRT_SECURE_NO_WARNINGS)
 
 target_compile_features(biz
 	PUBLIC
