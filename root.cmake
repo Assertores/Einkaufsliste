@@ -17,6 +17,7 @@ target_link_libraries(biz
 	PRIVATE
 		cpr::cpr
 		nlohmann_json::nlohmann_json
+		elzip
 )
 
 target_include_directories(biz
