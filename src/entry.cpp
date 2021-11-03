@@ -37,7 +37,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		for (const auto& it : aArgs) {
 			stringBuilder << it << ' ';
 		}
-		std::system(stringBuilder.str().c_str());
+		std::system(stringBuilder.str().c_str()); // NOLINT
 		return 1;
 	}
 	Patch(patcherSettings);
