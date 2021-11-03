@@ -28,7 +28,7 @@ GetExePath() {
 }
 
 bool
-CompareVersion(std::string aOldVersion, std::string aNewVersion, bool& aIsNewer) {
+CompareVersion(const std::string& aOldVersion, const std::string& aNewVersion, bool& aIsNewer) {
 	// TODO(andreas): find a better way of doing this in general
 	int oldMayor = 0;
 	int oldMinor = 0;
@@ -175,7 +175,7 @@ Update(const UpdaterSettings& aSettings) {
 	std::filesystem::remove_all(zipPath);
 
 	std::filesystem::recursive_directory_iterator newFiles(patchPath);
-	for (const auto it : newFiles) {
+	for (const auto& it : newFiles) {
 		const auto file = exeDir / std::filesystem::relative(it.path(), patchPath);
 		if (std::filesystem::exists(file)) {
 			// NOTE(andreas): there is no easy way to concatinate a string with a path without
