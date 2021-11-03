@@ -1,5 +1,3 @@
-#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS	 // NOLINT
-												 // "bugprone-reserved-identifier,cert-dcl37-c,cert-dcl51-cpp"
 #include "biz/updater.h"
 
 #include "interface/i_logger.h"
@@ -24,8 +22,8 @@ static constexpr auto locHttpOk = 200;
 std::filesystem::path
 GetExePath() {
 #if _WIN32
-	wchar_t exePath[UNICODE_STRING_MAX_CHARS]; // NOLINT
-	GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS); // NOLINT
+	wchar_t exePath[UNICODE_STRING_MAX_CHARS];						 // NOLINT
+	GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS);	 // NOLINT
 	return exePath;
 #else
 	return std::filesystem::canonical("/proc/self/exe");
@@ -34,7 +32,6 @@ GetExePath() {
 
 bool
 CompareVersion(const std::string& aOldVersion, const std::string& aNewVersion, bool& aIsNewer) {
-	// TODO(andreas): find a better way of doing this in general
 	int oldMayor = 0;
 	int oldMinor = 0;
 	int oldRevision = 0;
@@ -76,8 +73,11 @@ Update(const UpdaterSettings& aSettings) {
 	}
 	const auto exeDir = GetExePath();
 	auto versionFile = std::fstream(exeDir / "version.txt");
-	// TODO(andreas): figure out which platform to download
+#if _WIN32
 	const std::string platform = "win10";
+#elif __linux__
+	const std::string platform = "linux";
+#endif
 	// NOTE(andreas):
 	// https://stackoverflow.com/questions/2912520/read-file-contents-into-a-string-in-c
 	const std::string currentVersion(
