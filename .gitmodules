@@ -7,3 +7,6 @@
 [submodule "extern/json"]
 	path = extern/json
 	url = https://github.com/nlohmann/json.git
+[submodule "extern/11Zip"]
+	path = extern/11Zip
+	url = https://github.com/Sygmei/11Zip.git
