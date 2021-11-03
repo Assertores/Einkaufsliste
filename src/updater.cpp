@@ -5,6 +5,7 @@
 #include "interface/i_logger.h"
 
 #include <cpr/cpr.h>
+#include <elzip/elzip.hpp>
 #include <nlohmann/json.hpp>
 
 #include <charconv>
@@ -156,7 +157,8 @@ Update(const UpdaterSettings& aSettings) {
 	}
 	const auto patchUrl = cpr::Url((*build)["browser_download_url"].get<std::string>());
 
-	std::ofstream zip(exeDir / "patch.zip");
+	const auto zipPath = exeDir / "patch.zip";
+	std::ofstream zip(zipPath);
 	cpr::Session().SetUrl(patchUrl);
 	auto resp = cpr::Download(zip);
 	if (resp.error) {
@@ -166,14 +168,15 @@ Update(const UpdaterSettings& aSettings) {
 			"unable to download patch from: " + patchUrl.str());
 		return false;
 	}
-
-	// TODO(andreas): unzip into folder "patch"
 	zip.close();
-	std::filesystem::remove_all(exeDir / "patch.zip");
 
-	std::filesystem::recursive_directory_iterator newFiles(exeDir / "patch");
+	const auto patchPath = exeDir / "patch";
+	elz::extractZip(zipPath, patchPath);
+	std::filesystem::remove_all(zipPath);
+
+	std::filesystem::recursive_directory_iterator newFiles(patchPath);
 	for (const auto it : newFiles) {
-		const auto file = exeDir / std::filesystem::relative(it.path(), exeDir / "patch");
+		const auto file = exeDir / std::filesystem::relative(it.path(), patchPath);
 		if (std::filesystem::exists(file)) {
 			// NOTE(andreas): there is no easy way to concatinate a string with a path without
 			// adding a '/'
