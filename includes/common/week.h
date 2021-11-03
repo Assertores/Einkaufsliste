@@ -24,8 +24,8 @@ struct DayTime {
 
 std::string ToString(WeekDay aWeekDay);
 std::string ToString(DayTime aDayTime);
-bool FromString(std::string_view aString, WeekDay& aOutWeekDay);
-bool FromString(std::string_view aString, DayTime& aOutWeekDay);
+bool FromString(const std::string& aString, WeekDay& aOutWeekDay);
+bool FromString(const std::string& aString, DayTime& aOutWeekDay);
 
 class Week : public infas::IFile {
 public:

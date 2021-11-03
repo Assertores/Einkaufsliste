@@ -13,6 +13,10 @@ add_subdirectory("extern/cpr")
 add_subdirectory("extern/googletest")
 add_subdirectory("extern/json")
 
+# NOTE(andreas): this file contains a non ASCII copyright simbole whitch prevents clang of compiling it.
+# https://github.com/curl/curl/issues/7765
+file(WRITE "${CMAKE_BINARY_DIR}/_deps/curl-src/lib/libcurl.rc" "")
+
 include("CodeAnalysis.cmake")
 include(CTest)
 

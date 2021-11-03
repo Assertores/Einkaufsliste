@@ -37,6 +37,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		for (const auto& it : aArgs) {
 			stringBuilder << it << ' ';
 		}
+		// TODO(andreas): make this run in a non sub process
 		std::system(stringBuilder.str().c_str()); // NOLINT
 		return 1;
 	}
