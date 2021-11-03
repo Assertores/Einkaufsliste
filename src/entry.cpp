@@ -7,6 +7,8 @@
 #include "biz/updater.h"
 #include "interface/i_logger.h"
 
+#include <sstream>
+
 static constexpr std::string_view locDefaultUrl =
 	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
 
@@ -31,6 +33,11 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 			infas::LogLevel::Debug,
 			infas::LogType::StartUp,
 			"update available, need to restart.");
+		std::stringstream stringBuilder{};
+		for (const auto& it : aArgs) {
+			stringBuilder << it << ' ';
+		}
+		std::system(stringBuilder.str().c_str());
 		return 1;
 	}
 	Patch(patcherSettings);
