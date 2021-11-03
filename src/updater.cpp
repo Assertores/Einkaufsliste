@@ -7,6 +7,11 @@
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
+#include <charconv>
+#include <fstream>
+#include <string>
+#include <string_view>
+
 namespace biz {
 
 static constexpr auto locHttpOk = 200;
@@ -22,6 +27,39 @@ GetExePath() {
 }
 
 bool
+CompareVersion(std::string aOldVersion, std::string aNewVersion, bool& aIsNewer) {
+	// TODO(andreas): find a better way of doing this in general
+	int oldMayor = 0;
+	int oldMinor = 0;
+	int oldRevision = 0;
+	// NOLINTNEXTLINE
+	if (sscanf(aOldVersion.c_str(), "%d.%d.%d", &oldMayor, &oldMinor, &oldRevision) != 3) {
+		return false;
+	}
+	int newMayor = 0;
+	int newMinor = 0;
+	int newRevision = 0;
+	// NOLINTNEXTLINE
+	if (sscanf(aNewVersion.c_str(), "%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
+		return false;
+	}
+	if (newMayor > oldMayor) {
+		aIsNewer = true;
+		return true;
+	}
+	if (newMinor > oldMinor) {
+		aIsNewer = true;
+		return true;
+	}
+	if (newRevision > oldRevision) {
+		aIsNewer = true;
+		return true;
+	}
+	aIsNewer = false;
+	return true;
+}
+
+bool
 Update(const UpdaterSettings& aSettings) {
 	if (!aSettings.doUpdate) {
 		infas::ILogger::Log(
@@ -30,6 +68,16 @@ Update(const UpdaterSettings& aSettings) {
 			"asked to not updater");
 		return false;
 	}
+	const auto exeDir = GetExePath();
+	auto versionFile = std::fstream(exeDir / "version.txt");
+	// TODO(andreas): figure out which platform to download
+	const std::string platform = "win10";
+	// NOTE(andreas):
+	// https://stackoverflow.com/questions/2912520/read-file-contents-into-a-string-in-c
+	const std::string currentVersion(
+		(std::istreambuf_iterator<char>(versionFile)),
+		(std::istreambuf_iterator<char>()));
+
 	// TODO(andreas): figure out how to work with prereleases
 	// NOTE(andreas): (https://docs.github.com/en/rest/reference/repos#get-the-latest-release)
 	cpr::Url url = !aSettings.url.empty()
@@ -62,7 +110,20 @@ Update(const UpdaterSettings& aSettings) {
 				+ jsonDocument.dump());
 		return false;
 	}
-	// TODO(andreas): check if version is newer than current version
+	const auto patchVersion = jsonDocument["tag_name"].get<std::string>();
+	bool isNewer = false;
+	if (!CompareVersion(currentVersion, patchVersion, isNewer)) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			"unable to parse version numbers.\ncurrent: " + currentVersion
+				+ "\nnew: " + patchVersion);
+		return false;
+	}
+	if (isNewer) {
+		infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::StartUp, "no update available");
+		return false;
+	}
 
 	if (!jsonDocument.contains("assets") || !jsonDocument["assets"].is_array()) {
 		infas::ILogger::Log(
@@ -74,9 +135,6 @@ Update(const UpdaterSettings& aSettings) {
 	}
 	const auto assets = jsonDocument["assets"].array();
 
-	// TODO(andreas): figure out which platform to download
-	const std::string platform = "win10";
-	// TODO(andreas): weard random magic string also now is win10 specific
 	const auto build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
 		return aElement.contains("name") && aElement["name"].is_string()
 			   && std::string(aElement["name"]).find(platform) != std::string::npos;
@@ -98,7 +156,7 @@ Update(const UpdaterSettings& aSettings) {
 	}
 	const auto patchUrl = cpr::Url((*build)["browser_download_url"].get<std::string>());
 
-	std::ofstream zip(GetExePath() / "patch.zip");
+	std::ofstream zip(exeDir / "patch.zip");
 	cpr::Session().SetUrl(patchUrl);
 	auto resp = cpr::Download(zip);
 	if (resp.error) {
@@ -108,10 +166,23 @@ Update(const UpdaterSettings& aSettings) {
 			"unable to download patch from: " + patchUrl.str());
 		return false;
 	}
-	// TODO(andreas): rename stuff to .old
-	// TODO(andreas): unzip
-	// TODO(andreas): save new version number or something
-	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "updater not implimented");
-	return false;
+
+	// TODO(andreas): unzip into folder "patch"
+	zip.close();
+	std::filesystem::remove_all(exeDir / "patch.zip");
+
+	std::filesystem::recursive_directory_iterator newFiles(exeDir / "patch");
+	for (const auto it : newFiles) {
+		const auto file = exeDir / std::filesystem::relative(it.path(), exeDir / "patch");
+		if (std::filesystem::exists(file)) {
+			// NOTE(andreas): there is no easy way to concatinate a string with a path without
+			// adding a '/'
+			std::filesystem::rename(file, file.string() + ".old");
+		}
+		std::filesystem::copy_file(it, file);
+	}
+	versionFile.clear();
+	versionFile << patchVersion;
+	return true;
 }
 }  // namespace biz
