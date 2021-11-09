@@ -24,6 +24,7 @@ Checks: >-
     -cppcoreguidelines-avoid-non-const-global-variables,
     -cppcoreguidelines-macro-usage,
     -cppcoreguidelines-owning-memory,
+    -cppcoreguidelines-pro-bounds-pointer-arithmetic,
     -cppcoreguidelines-pro-type-reinterpret-cast,
     hicpp-*,
     -hicpp-special-member-functions, # NOTE(andreas): redirects to `cppcoreguidelines-special-member-functions` which has special options
