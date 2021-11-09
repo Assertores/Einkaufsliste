@@ -8,10 +8,10 @@ set(CPR_BUILD_TESTS_SSL OFF)
 set(BUILD_SHARED_LIBS OFF)
 set(CURL_ZLIB OFF CACHE STRING "" FORCE)
 
-add_subdirectory("extern/11Zip")
-add_subdirectory("extern/cpr")
-add_subdirectory("extern/googletest")
-add_subdirectory("extern/json")
+add_subdirectory("extern/11Zip" EXCLUDE_FROM_ALL)
+add_subdirectory("extern/cpr" EXCLUDE_FROM_ALL)
+add_subdirectory("extern/googletest" EXCLUDE_FROM_ALL)
+add_subdirectory("extern/json" EXCLUDE_FROM_ALL)
 
 # NOTE(andreas): this file contains a non ASCII copyright simbole whitch prevents clang of compiling it.
 # https://github.com/curl/curl/issues/7765
