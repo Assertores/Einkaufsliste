@@ -2,9 +2,9 @@
 
 #include "biz/application.h"
 #include "biz/argument_parser.h"
+#include "biz/github_updater.h"
 #include "biz/log_on_console.h"
 #include "biz/patcher.h"
-#include "biz/updater.h"
 #include "interface/i_logger.h"
 
 #include <sstream>
@@ -23,12 +23,15 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	}
 
 	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
-	UpdaterSettings updaterSettings{true, false, locDefaultUrl.data()};
+	common::UpdaterSettings updaterSettings{true, false, locDefaultUrl.data()};
 	PatcherSettings patcherSettings{true};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 	aOutput << "checking for updates ...\n";
-	if (Update(updaterSettings)) {
+	std::unique_ptr<common::UpdaterTemplateMethode> updater = nullptr;
+	// NOTE(andreas): here we can deside whitch updater to use. currently there is only this one
+	updater = std::make_unique<GithubUpdater>();
+	if (updater->Execute(updaterSettings)) {
 		infas::ILogger::Log(
 			infas::LogLevel::Debug,
 			infas::LogType::StartUp,
@@ -38,7 +41,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 			stringBuilder << it << ' ';
 		}
 		// TODO(andreas): make this run in a non sub process
-		std::system(stringBuilder.str().c_str()); // NOLINT
+		std::system(stringBuilder.str().c_str());  // NOLINT
 		return 1;
 	}
 	Patch(patcherSettings);

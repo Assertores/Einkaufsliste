@@ -2,7 +2,7 @@
 
 #include "biz/application.h"
 #include "biz/patcher.h"
-#include "biz/updater.h"
+#include "common/updater_template_methode.h"
 #include "interface/i_logger.h"
 
 #include <sstream>
@@ -14,7 +14,7 @@ void
 InterpreteStartArguments(
 	const std::vector<std::string_view>& aArgs,
 	AppSettings& aApp,
-	UpdaterSettings& aUpdater,
+	common::UpdaterSettings& aUpdater,
 	PatcherSettings& aPatcher) {
 	ReadArgumentsFromFile(aApp, aUpdater, aPatcher);
 
@@ -28,10 +28,10 @@ InterpreteStartArguments(
 }
 
 void
-ReadArgumentsFromFile(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {}
+ReadArgumentsFromFile(AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {}
 
 Interpreter
-CreateInterpreter(AppSettings& aApp, UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {
+CreateInterpreter(AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {
 	Interpreter interpreter;
 	interpreter["--no-patch"] = [&](auto& /*unused*/) { aPatcher.doPatching = false; };
 	interpreter["--no-update"] = [&](auto& /*unused*/) { aUpdater.doUpdate = false; };
