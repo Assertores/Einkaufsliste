@@ -9,7 +9,9 @@ set(BUILD_SHARED_LIBS OFF)
 set(CURL_ZLIB OFF CACHE STRING "" FORCE)
 
 add_subdirectory("extern/11Zip" EXCLUDE_FROM_ALL)
+set(CURRENT_BUILD_TESTING ${BUILD_TESTING}) # NOTE(andreas): cpr sets BUILD_TESTING to OFF in there cmake file.
 add_subdirectory("extern/cpr" EXCLUDE_FROM_ALL)
+set(BUILD_TESTING ${CURRENT_BUILD_TESTING})
 add_subdirectory("extern/googletest" EXCLUDE_FROM_ALL)
 add_subdirectory("extern/json" EXCLUDE_FROM_ALL)
 
