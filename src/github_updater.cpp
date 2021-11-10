@@ -17,6 +17,8 @@ static constexpr auto locAssetUrlKey = "browser_download_url";
 static constexpr auto locPlatform = "win10";
 #elif __linux__
 static constexpr auto locPlatform = "linux";
+#else
+#error "unsupporded platform"
 #endif
 
 namespace biz {
@@ -108,23 +110,24 @@ GithubUpdater::DownloadPatch() {
 	cpr::Session session{};
 	session.SetUrl(myPatch);
 	auto resp = session.Download(zip);
+	zip.close();
 	if (resp.error) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::StartUp,
 			"unable to download patch from: " + myPatch.str());
-		return false;
 	}
-	zip.close();
 
-	return true;
+	return !resp.error;
 }
 
 bool
 GithubUpdater::ExtractPatch() {
-	const auto zipPath = GetZipPath();
-	elz::extractZip(zipPath, GetPatchPath());
-	std::filesystem::remove_all(zipPath);
+	try {
+		elz::extractZip(GetZipPath(), GetPatchPath());
+	} catch (...) {
+		return false;
+	}
 	return true;
 }
 
@@ -138,6 +141,7 @@ GithubUpdater::ApplyPatch() {
 			// NOTE(andreas): there is no easy way to concatinate a string with a path without
 			// adding a '/'
 			std::filesystem::rename(file, file.u8string() + ".old");
+			// TODO(andreas): what if the .old file also already exists?
 		}
 		std::filesystem::rename(it, file);
 	}
@@ -157,13 +161,16 @@ GithubUpdater::CleanUp() {
 
 std::filesystem::path
 GithubUpdater::GetExePath() {
+	// TODO(andreas): exePath is file name instead of folder
 	if (myExePath.empty()) {
 #if _WIN32
 		wchar_t exePath[UNICODE_STRING_MAX_CHARS];						 // NOLINT
 		GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS);	 // NOLINT
 		myExePath = exePath;
-#else
+#elif __linux__
 		myExePath = std::filesystem::canonical("/proc/self/exe");
+#else
+#error "unsupporded platform"
 #endif
 	}
 
@@ -181,7 +188,8 @@ GithubUpdater::GetPatchPath() {
 
 std::filesystem::path
 GithubUpdater::GetVersionPath() {
-	return GetExePath() / "version.txt";
+	return GetExePath() / "version.txt";  // TODO(andreas): do i want to compile the version number
+										  // into the executable
 }
 
 bool
@@ -201,19 +209,19 @@ GithubUpdater::CompareVersion(
 	if (sscanf(aNewVersion.c_str(), "v%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
 		return false;
 	}
-	if (newMayor > oldMayor) {
-		aIsNewer = true;
+	if (newMayor < oldMayor) {
+		aIsNewer = false;
 		return true;
 	}
-	if (newMinor > oldMinor) {
-		aIsNewer = true;
+	if (newMinor < oldMinor) {
+		aIsNewer = false;
 		return true;
 	}
-	if (newRevision > oldRevision) {
-		aIsNewer = true;
+	if (newRevision < oldRevision) {
+		aIsNewer = false;
 		return true;
 	}
-	aIsNewer = false;
+	aIsNewer = true;
 	return true;
 }
 }  // namespace biz
