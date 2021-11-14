@@ -5,6 +5,7 @@
 #include <elzip/elzip.hpp>
 
 #include <fstream>
+#include <iostream>
 
 static constexpr auto locDefaultUrl =
 	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
@@ -54,7 +55,7 @@ GithubUpdater::IsPatchUpdate() {
 	}
 	myNewVersion = myJson[locVersionKey].get<std::string>();
 	bool isNewer = false;
-	if (!CompareVersion(myNewVersion, currentVersion, isNewer)) {
+	if (!CompareVersion(currentVersion, myNewVersion, isNewer)) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::StartUp,
@@ -172,6 +173,7 @@ GithubUpdater::GetExePath() {
 #else
 #error "unsupporded platform"
 #endif
+		myExePath = myExePath.parent_path();
 	}
 
 	return myExePath;
@@ -194,7 +196,7 @@ GithubUpdater::GetVersionPath() {
 
 bool
 GithubUpdater::CompareVersion(
-	const std::string& aOldVersion, const std::string& aNewVersion, bool& aIsNewer) {
+	const std::string& aOldVersion, const std::string& aNewVersion, bool& aOutIsNewer) {
 	int oldMayor = 0;
 	int oldMinor = 0;
 	int oldRevision = 0;
@@ -209,19 +211,19 @@ GithubUpdater::CompareVersion(
 	if (sscanf(aNewVersion.c_str(), "v%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
 		return false;
 	}
-	if (newMayor < oldMayor) {
-		aIsNewer = false;
+	if (newMayor != oldMayor){
+		aOutIsNewer = newMayor > oldMayor;
 		return true;
 	}
-	if (newMinor < oldMinor) {
-		aIsNewer = false;
+	if(newMinor != oldMinor){
+		aOutIsNewer = newMinor > oldMinor;
 		return true;
 	}
-	if (newRevision < oldRevision) {
-		aIsNewer = false;
+	if(newRevision != oldRevision){
+		aOutIsNewer = newRevision > oldRevision;
 		return true;
 	}
-	aIsNewer = true;
+	aOutIsNewer = false;
 	return true;
 }
 }  // namespace biz
