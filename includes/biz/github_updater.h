@@ -8,7 +8,6 @@
 #include <filesystem>
 #include <string>
 
-
 namespace biz {
 class GithubUpdater : public common::UpdaterTemplateMethode {
 public:
@@ -20,16 +19,16 @@ public:
 	bool ApplyPatch() override;
 	void CleanUp() override;
 
-	std::filesystem::path GetExePath();
+	virtual std::filesystem::path GetExePath();
 	std::filesystem::path GetZipPath();
 	std::filesystem::path GetPatchPath();
 	std::filesystem::path GetVersionPath();
 	static bool CompareVersion(
-		const std::string& aOldVersion, const std::string& aNewVersion, bool& aIsNewer);
+		const std::string& aOldVersion, const std::string& aNewVersion, bool& aOutIsNewer);
 
-    std::filesystem::path myExePath;
-	nlohmann::json myJson;
-	cpr::Url myPatch;
-    std::string myNewVersion;
+	std::filesystem::path myExePath {};
+	nlohmann::json myJson {};
+	cpr::Url myPatch {};
+	std::string myNewVersion {};
 };
 }  // namespace biz

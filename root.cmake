@@ -6,7 +6,6 @@ target_link_libraries(Einkaufsliste
 )
 
 add_library(biz STATIC)
-# set_target_properties(biz PROPERTIES LINKER_LANGUAGE CXX)
 
 target_compile_definitions(biz PUBLIC _CRT_SECURE_NO_WARNINGS)
 
@@ -16,7 +15,7 @@ target_compile_features(biz
 )
 
 target_link_libraries(biz
-	PRIVATE
+	PUBLIC
 		cpr::cpr
 		nlohmann_json::nlohmann_json
 		elzip
