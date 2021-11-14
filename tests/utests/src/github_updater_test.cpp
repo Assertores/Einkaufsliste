@@ -1,6 +1,8 @@
 
 #include "biz/github_updater.h"
 
+#include "biz/log_on_console.h"
+
 #include <gtest/gtest.h>
 
 #include <filesystem>
@@ -107,12 +109,16 @@ protected:
 			locAssetDir,
 			std::filesystem::copy_options::overwrite_existing
 				| std::filesystem::copy_options::recursive);
+		common::LogOnConsole logger(std::cout);
+		infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
+		infas::ILogger::SetLogMask(infas::locLogMaskAll);
+		infas::ILogger::SetImplimentation(std::move(logger));
 	}
 
 	void TearDown() override { std::filesystem::remove_all(locAssetDir); }
 };
 
-TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)	// NOLINT
+TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)  // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v2.0.0";
@@ -126,7 +132,7 @@ TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)	// NOLINT
 	EXPECT_TRUE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)  // NOLINT
+TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)	// NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v0.0.0";
@@ -140,10 +146,18 @@ TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)  // NOLINT
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)	 // NOLINT
+TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v1.2.3";
 	subject.RetraveMetaData();
 	EXPECT_FALSE(subject.IsPatchUpdate());
+}
+
+TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	subject.RetraveMetaData();
+	ASSERT_TRUE(subject.RetreavePatchLocation());
+	EXPECT_EQ(subject.myPatch, subject.myDownloadUrl);
 }
