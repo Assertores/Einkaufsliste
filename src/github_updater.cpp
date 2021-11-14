@@ -79,11 +79,11 @@ GithubUpdater::RetreavePatchLocation() {
 			"json document doesn't contain key 'assets' or it's not an array:\n" + myJson.dump());
 		return false;
 	}
-	const auto assets = myJson[locAssetKey].array();
+	const auto assets = myJson[locAssetKey];
 
 	const auto build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
 		return aElement.contains(locAssetNameKey) && aElement[locAssetNameKey].is_string()
-			   && std::string(aElement[locAssetNameKey]).find(locPlatform) != std::string::npos;
+			   && aElement[locAssetNameKey].template get<std::string>().find(locPlatform) != std::string::npos;
 	});
 	if (build == assets.end()) {
 		infas::ILogger::Log(
