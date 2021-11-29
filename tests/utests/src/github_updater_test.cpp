@@ -159,7 +159,7 @@ protected:
 					 std::filesystem::path(locAssetDir))) {
 				std::cout << " > " << it.path().u8string() << '\n';
 				if (it.is_regular_file()) {
-					auto file = std::ifstream(it);
+					auto file = std::ifstream(it.path());
 					std::cout << std::string(
 						(std::istreambuf_iterator<char>(file)),
 						(std::istreambuf_iterator<char>()))
@@ -168,6 +168,7 @@ protected:
 				}
 			}
 		}
+		infas::ILogger::Clear();
 
 		std::filesystem::remove_all(locAssetDir);
 	}
@@ -226,7 +227,6 @@ TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
 TEST_F(GithubTestFixture, patch_zip_is_unpacked)  // NOLINT
 {
 	GithubUpdaterStub subject;
-	subject.RetraveMetaData();
 	ASSERT_TRUE(subject.ExtractPatch());
 
 	EXPECT_TRUE(std::filesystem::exists(subject.GetPatchPath()));
@@ -247,4 +247,96 @@ TEST_F(GithubTestFixture, patch_zip_is_unpacked)  // NOLINT
 		(std::istreambuf_iterator<char>()));
 	moreStuffFile.close();
 	EXPECT_EQ(moreStuffContent, "different content");
+}
+
+TEST_F(GithubTestFixture, patch_is_applied_to_folder)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	ASSERT_TRUE(subject.ExtractPatch());
+	ASSERT_TRUE(subject.ApplyPatch());
+
+	EXPECT_TRUE(std::filesystem::exists(subject.GetExePath() / "stuff.txt"));
+	EXPECT_TRUE(std::filesystem::exists(subject.GetExePath() / "subfolder"));
+	EXPECT_TRUE(std::filesystem::exists(subject.GetExePath() / "subfolder" / "moreStuff.txt"));
+
+	auto stuffFile = std::ifstream(subject.GetExePath() / "stuff.txt");
+	const std::string stuffContent(
+		(std::istreambuf_iterator<char>(stuffFile)),
+		(std::istreambuf_iterator<char>()));
+	stuffFile.close();
+	EXPECT_EQ(stuffContent, "content");
+
+	auto moreStuffFile = std::ifstream(subject.GetExePath() / "subfolder" / "moreStuff.txt");
+	const std::string moreStuffContent(
+		(std::istreambuf_iterator<char>(moreStuffFile)),
+		(std::istreambuf_iterator<char>()));
+	moreStuffFile.close();
+	EXPECT_EQ(moreStuffContent, "different content");
+}
+
+TEST_F(GithubTestFixture, existing_files_are_renaimed_to_old)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	ASSERT_TRUE(subject.ExtractPatch());
+	ASSERT_TRUE(subject.ApplyPatch());
+
+	EXPECT_TRUE(std::filesystem::exists(subject.GetExePath() / "stuff.txt.old"));
+
+	auto stuffFile = std::ifstream(subject.GetExePath() / "stuff.txt.old");
+	const std::string stuffContent(
+		(std::istreambuf_iterator<char>(stuffFile)),
+		(std::istreambuf_iterator<char>()));
+	stuffFile.close();
+	EXPECT_EQ(stuffContent, "SHOULD BE OVERWRITTEN");
+}
+
+TEST_F(GithubTestFixture, version_file_is_not_overwritten)	// NOLINT
+{
+	GithubUpdaterStub subject;
+	ASSERT_TRUE(subject.ExtractPatch());
+	ASSERT_TRUE(subject.ApplyPatch());
+
+	EXPECT_FALSE(std::filesystem::exists(subject.GetExePath() / "version.txt.old"));
+	// TODO(andreas): this test is not sufficiont!!!
+}
+
+TEST_F(GithubTestFixture, new_version_is_written_to_version_file)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	subject.myNewVersion = "asbfnuaeklskd";
+	ASSERT_TRUE(subject.ExtractPatch());
+	ASSERT_TRUE(subject.ApplyPatch());
+
+	auto versionFile = std::ifstream(subject.GetExePath() / "version.txt");
+	const std::string versionContent(
+		(std::istreambuf_iterator<char>(versionFile)),
+		(std::istreambuf_iterator<char>()));
+	versionFile.close();
+	EXPECT_EQ(versionContent, subject.myNewVersion);
+}
+
+TEST_F(GithubTestFixture, temporary_files_are_cleaned_up)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	ASSERT_TRUE(subject.ExtractPatch());
+	subject.CleanUp();
+
+	EXPECT_FALSE(std::filesystem::exists(subject.GetPatchPath()));
+	EXPECT_FALSE(std::filesystem::exists(subject.GetZipPath()));
+}
+
+TEST_F(GithubTestFixture, cleanup_wont_crash_on_partial_data)  // NOLINT
+{
+	GithubUpdaterStub subject;
+	EXPECT_NO_THROW(subject.CleanUp());	 // NOLINT
+
+	EXPECT_FALSE(std::filesystem::exists(subject.GetPatchPath()));
+	EXPECT_FALSE(std::filesystem::exists(subject.GetZipPath()));
+}
+
+TEST_F(GithubTestFixture, extraction_fails_if_zip_file_is_missing)	// NOLINT
+{
+	GithubUpdaterStub subject;
+	std::filesystem::remove(locAssetDir / "patch.zip");
+	EXPECT_FALSE(subject.ExtractPatch());
 }
