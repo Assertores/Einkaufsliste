@@ -83,7 +83,8 @@ GithubUpdater::RetreavePatchLocation() {
 
 	const auto build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
 		return aElement.contains(locAssetNameKey) && aElement[locAssetNameKey].is_string()
-			   && aElement[locAssetNameKey].template get<std::string>().find(locPlatform) != std::string::npos;
+			   && aElement[locAssetNameKey].template get<std::string>().find(locPlatform)
+					  != std::string::npos;
 	});
 	if (build == assets.end()) {
 		infas::ILogger::Log(
@@ -124,6 +125,13 @@ GithubUpdater::DownloadPatch() {
 
 bool
 GithubUpdater::ExtractPatch() {
+	if (!std::filesystem::exists(GetZipPath())) {
+		infas::ILogger::Log(
+			infas::LogLevel::Error,
+			infas::LogType::StartUp,
+			GetZipPath().u8string() + " is missing");
+		return false;
+	}
 	try {
 		elz::extractZip(GetZipPath(), GetPatchPath());
 	} catch (...) {
@@ -137,6 +145,12 @@ GithubUpdater::ApplyPatch() {
 	const auto patchPath = GetPatchPath();
 	std::filesystem::recursive_directory_iterator newFiles(patchPath);
 	for (const auto& it : newFiles) {
+		if (it.is_directory()) {
+			continue;
+		}
+		if (it.path().filename() == "version.txt") {
+			continue;
+		}
 		const auto file = GetExePath() / std::filesystem::relative(it.path(), patchPath);
 		if (std::filesystem::exists(file)) {
 			// NOTE(andreas): there is no easy way to concatinate a string with a path without
@@ -144,6 +158,7 @@ GithubUpdater::ApplyPatch() {
 			std::filesystem::rename(file, file.u8string() + ".old");
 			// TODO(andreas): what if the .old file also already exists?
 		}
+		std::filesystem::create_directories(file.parent_path());
 		std::filesystem::rename(it, file);
 	}
 
@@ -211,15 +226,15 @@ GithubUpdater::CompareVersion(
 	if (sscanf(aNewVersion.c_str(), "v%d.%d.%d", &newMayor, &newMinor, &newRevision) != 3) {
 		return false;
 	}
-	if (newMayor != oldMayor){
+	if (newMayor != oldMayor) {
 		aOutIsNewer = newMayor > oldMayor;
 		return true;
 	}
-	if(newMinor != oldMinor){
+	if (newMinor != oldMinor) {
 		aOutIsNewer = newMinor > oldMinor;
 		return true;
 	}
-	if(newRevision != oldRevision){
+	if (newRevision != oldRevision) {
 		aOutIsNewer = newRevision > oldRevision;
 		return true;
 	}
