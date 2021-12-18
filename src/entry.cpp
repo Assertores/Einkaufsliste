@@ -5,6 +5,7 @@
 #include "biz/github_updater.h"
 #include "biz/log_on_console.h"
 #include "biz/patcher.h"
+#include "common/platform.h"
 #include "interface/i_logger.h"
 
 #include <sstream>
@@ -27,24 +28,23 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	PatcherSettings patcherSettings{true};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
-	aOutput << "checking for updates ...\n";
+
 	std::unique_ptr<common::UpdaterTemplateMethode> updater = nullptr;
 	// NOTE(andreas): here we can deside whitch updater to use. currently there is only this one
-	updater = std::make_unique<GithubUpdater>();
+	{
+		updater = std::make_unique<GithubUpdater>();
+	}
+	aOutput << "checking for updates ...\n";
 	if (updater->Execute(updaterSettings)) {
 		infas::ILogger::Log(
 			infas::LogLevel::Debug,
 			infas::LogType::StartUp,
 			"update available, need to restart.");
-		std::stringstream stringBuilder{};
-		for (const auto& it : aArgs) {
-			stringBuilder << it << ' ';
-		}
-		// TODO(andreas): make this run in a non sub process
-		std::system(stringBuilder.str().c_str());  // NOLINT
+		common::StartProcess(common::CurrentExe(), aArgs, std::filesystem::current_path());
 		return 1;
 	}
 	Patch(patcherSettings);
+	
 	aOutput << "starting ...\n";
 	Application app(appSettings);
 	app.Run(appSettings);

@@ -55,6 +55,7 @@ target_sources(biz
 		"includes/common/list.h"
 		"includes/common/md_parser.h"
 		"includes/common/observable.h"
+		"includes/common/platform.h"
 		"includes/common/recipe.h"
 		"includes/common/unit.h"
 		"includes/common/updater_template_methode.h"
@@ -101,3 +102,10 @@ target_sources(biz
 		"src/updater_template_methode.cpp"
 		"src/week.cpp"
 )
+
+if(WIN32)
+target_sources(biz
+	PRIVATE
+		"src/windows_platform.cpp"
+)
+endif()
