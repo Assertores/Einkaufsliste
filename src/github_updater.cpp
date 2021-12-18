@@ -1,11 +1,13 @@
 #include "biz/github_updater.h"
 
+#include "common/platform.h"
 #include "interface/i_logger.h"
 
 #include <elzip/elzip.hpp>
 
 #include <fstream>
 #include <iostream>
+
 
 static constexpr auto locDefaultUrl =
 	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
@@ -177,18 +179,8 @@ GithubUpdater::CleanUp() {
 
 std::filesystem::path
 GithubUpdater::GetExePath() {
-	// TODO(andreas): exePath is file name instead of folder
 	if (myExePath.empty()) {
-#if _WIN32
-		wchar_t exePath[UNICODE_STRING_MAX_CHARS];						 // NOLINT
-		GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS);	 // NOLINT
-		myExePath = exePath;
-#elif __linux__
-		myExePath = std::filesystem::canonical("/proc/self/exe");
-#else
-#error "unsupporded platform"
-#endif
-		myExePath = myExePath.parent_path();
+		myExePath = common::CurrentExe().parent_path();
 	}
 
 	return myExePath;
