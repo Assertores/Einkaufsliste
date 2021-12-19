@@ -1,11 +1,11 @@
-#include "biz/open_convertion_files.h"
+#include "biz/open_conversion_files.h"
 
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 #include "interface/i_logger.h"
 
 namespace common {
 std::unique_ptr<infas::ICommandMemento>
-OpenConvertionFile::Execute() {
+OpenConversionFile::Execute() {
 	auto frontend = myFrontend.lock();
 	if (!frontend) {
 		return nullptr;
@@ -16,17 +16,18 @@ OpenConvertionFile::Execute() {
 		folder = frontend->AskForFolder();
 	}
 
-	std::vector<UnitConvertion> files{};
+	std::vector<UnitConversion> files{};
 	for (const auto& it : std::filesystem::directory_iterator(folder)) {
 		files.emplace_back(it);
 	}
-	Unit::SetConvertionFiles(files);
+	Unit::SetConversionFiles(files);
 
 	return nullptr;
 }
 
 void
-OpenConvertionFile::SetReferences(std::weak_ptr<infas::IFrontend> aFrontend) {
+OpenConversionFile::SetReferences(std::weak_ptr<infas::IFrontend> aFrontend) {
 	myFrontend = std::move(aFrontend);
 }
 }  // namespace common
+

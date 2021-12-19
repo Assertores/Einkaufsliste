@@ -219,14 +219,14 @@ TEST(application, can_add_description_to_recipe)  // NOLINT
 }
 
 #if not_tesable
-TEST(application, can - open - convertion - file)  // NOLINT
+TEST(application, can - open - conversion - file)  // NOLINT
 {
-	const auto* const convertionFileName = "assets/exampleConvertion.md";
+	const auto* const conversionFileName = "assets/exampleConversion.md";
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open-convertion\n";
-	in << convertionFileName << '\n';
+	in << "open-conversion\n";
+	in << conversionFileName << '\n';
 	in << "print\n";
 	in << "exit\n";
 
@@ -252,25 +252,25 @@ TEST(application, can_add_ingrediance_to_recipe)  // NOLINT
 		locAssetDir / "exampleRecipe.md",
 		fileName,
 		std::filesystem::copy_options::overwrite_existing);
-	const auto convertionFileName = locAssetDir / "convertionLive";
-	ASSERT_TRUE(std::filesystem::is_directory(locAssetDir / "convertion"))
-		<< "path: " << (locAssetDir / "convertion").string();
+	const auto conversionFileName = locAssetDir / "conversionLive";
+	ASSERT_TRUE(std::filesystem::is_directory(locAssetDir / "conversion"))
+		<< "path: " << (locAssetDir / "conversion").string();
 	std::filesystem::copy(
-		locAssetDir / "convertion",
-		convertionFileName,
+		locAssetDir / "conversion",
+		conversionFileName,
 		std::filesystem::copy_options::overwrite_existing
 			| std::filesystem::copy_options::recursive);
-	ASSERT_TRUE(std::filesystem::is_directory(convertionFileName))
-		<< "og path: " << (locAssetDir / "convertion").string()
-		<< "\nnew path: " << convertionFileName.string();
+	ASSERT_TRUE(std::filesystem::is_directory(conversionFileName))
+		<< "og path: " << (locAssetDir / "conversion").string()
+		<< "\nnew path: " << conversionFileName.string();
 	ASSERT_TRUE(std::filesystem::is_regular_file(fileName))
 		<< "og path: " << (locAssetDir / "exampleRecipe.md").string()
 		<< "\nnew path: " << fileName.string();
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open convertion\n";
-	in << convertionFileName.string() << '\n';
+	in << "open conversion\n";
+	in << conversionFileName.string() << '\n';
 	in << "open recipe\n";
 	in << fileName.string() << '\n';
 	in << "add recipe ingredient\n";
@@ -305,23 +305,23 @@ TEST(application, can_remove_ingrediance_from_recipe)  // NOLINT
 		locAssetDir / "exampleRecipe.md",
 		fileName,
 		std::filesystem::copy_options::overwrite_existing);
-	const auto convertionFileName = locAssetDir / "convertionLive";
+	const auto conversionFileName = locAssetDir / "conversionLive";
 	std::filesystem::copy(
-		locAssetDir / "convertion",
-		convertionFileName,
+		locAssetDir / "conversion",
+		conversionFileName,
 		std::filesystem::copy_options::overwrite_existing
 			| std::filesystem::copy_options::recursive);
-	ASSERT_TRUE(std::filesystem::is_directory(convertionFileName))
-		<< "og path: " << (locAssetDir / "convertion").string()
-		<< "\nnew path: " << convertionFileName.string();
+	ASSERT_TRUE(std::filesystem::is_directory(conversionFileName))
+		<< "og path: " << (locAssetDir / "conversion").string()
+		<< "\nnew path: " << conversionFileName.string();
 	ASSERT_TRUE(std::filesystem::is_regular_file(fileName))
 		<< "og path: " << (locAssetDir / "exampleRecipe.md").string()
 		<< "\nnew path: " << fileName.string();
 
 	std::stringstream out;
 	std::stringstream in;
-	in << "open convertion\n";
-	in << convertionFileName.string() << '\n';
+	in << "open conversion\n";
+	in << conversionFileName.string() << '\n';
 	in << "open recipe\n";
 	in << fileName.string() << '\n';
 	in << "add recipe ingredient\n";

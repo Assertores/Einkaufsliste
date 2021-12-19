@@ -4,10 +4,10 @@
 #include "interface/i_frontend.h"
 
 namespace common {
-class OpenConvertionFile : public infas::ICommand {
+class OpenConversionFile : public infas::ICommand {
 public:
-	static std::shared_ptr<OpenConvertionFile> Create() {
-		return std::make_shared<OpenConvertionFile>();
+	static std::shared_ptr<OpenConversionFile> Create() {
+		return std::make_shared<OpenConversionFile>();
 	}
 
 	std::unique_ptr<infas::ICommandMemento> Execute() override;
@@ -15,9 +15,10 @@ public:
 	void SetReferences(std::weak_ptr<infas::IFrontend> aFrontend);
 
 	// protected:
-	// OpenConvertionFile() = default;
+	// OpenConversionFile() = default;
 
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 };
 }  // namespace common
+

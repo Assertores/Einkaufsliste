@@ -56,7 +56,7 @@ you can not input multiple commands at once. writing `open recipe C:\my\path.md`
 | `add recipe ingredient`     | add an ingredient to the current active recipe                                     | this command is only guaranteed to work if the current opened file is a **recipe**                                                                |
 | `remove recipe ingredient`  | removes a specific ingredient of the current active recipe                         | this command is only guaranteed to work if the current opened file is a **recipe**                                                                |
 | `print`                     | prints the current active file                                                     |                                                                                                                                                   |
-| `open convertion`           | opens a folder containing convertion files                                         | the folder may only contain convertion files                                                                                                      |
+| `open conversion`           | opens a folder containing conversion files                                         | the folder may only contain conversion files                                                                                                      |
 | `open week`                 | opens a file and considers it to represent a week                                  | creates file if not already exisiting                                                                                                             |
 | `start list`                | creates a new file as a list                                                       | if the file already exists, it will automatically pick up it's content                                                                            |
 | `add week to list`          | adds the contents of a week to the staged files of the current active list         | this command is only guaranteed to work if the current opened file is a **list**                                                                  |
@@ -77,7 +77,7 @@ you can not input multiple commands at once. writing `open recipe C:\my\path.md`
 
 ### files
 
-#### convertion
+#### conversion
 
 a file containing describing how to convert between different units of the same type. e.g.:
 
@@ -128,7 +128,7 @@ can hold a reference to a recipe for every weekday and every timepoint (with a m
 
 #### list
 
-contains a list of "staged" files which are used for compiling the list and a list of unique ingredience with there units added together as far as possible. for this the convertion files are used. if it can not combine two units they are listed separately. e.g. `onion: 150g, 2 piece`.
+contains a list of "staged" files which are used for compiling the list and a list of unique ingredience with there units added together as far as possible. for this the conversion files are used. if it can not combine two units they are listed separately. e.g. `onion: 150g, 2 piece`.
 
 ## licence
 

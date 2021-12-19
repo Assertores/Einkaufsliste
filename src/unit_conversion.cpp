@@ -1,4 +1,4 @@
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 
 #include "interface/i_logger.h"
 
@@ -8,7 +8,7 @@
 
 namespace common {
 std::string
-UnitConvertion::Print() const {
+UnitConversion::Print() const {
 	std::stringstream reslut;
 	for (const auto& it : GetSubKeys("")) {
 		reslut << it << ": " << ReadFromField(it) << '\n';
@@ -16,17 +16,17 @@ UnitConvertion::Print() const {
 	return reslut.str();
 }
 void
-UnitConvertion::SetConvertionRate(std::string_view aUnit, float aConvertionRate) {
-	WriteField(aUnit, std::to_string(aConvertionRate));
+UnitConversion::SetConversionRate(std::string_view aUnit, float aConversionRate) {
+	WriteField(aUnit, std::to_string(aConversionRate));
 }
 
 bool
-UnitConvertion::CanConvertUnit(std::string_view aUnit) const {
+UnitConversion::CanConvertUnit(std::string_view aUnit) const {
 	return !ReadFromField(aUnit).empty();
 }
 
 bool
-UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConvertionRate) const {
+UnitConversion::GetConversionRate(std::string_view aCurrentUnit, float& aOutConversionRate) const {
 	auto rate = ReadFromField(aCurrentUnit);
 	if (rate.empty()) {
 		return false;
@@ -55,12 +55,12 @@ UnitConvertion::GetConvertionRate(std::string_view aCurrentUnit, float& aOutConv
 		return false;
 	}
 #endif
-	aOutConvertionRate = 1 / value;
+	aOutConversionRate = 1 / value;
 	return true;
 }
 
 std::string
-UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const {
+UnitConversion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const {
 	if (aBaseUnitAmount == 0) {
 		aOutConvertedAmount = 0;
 		return "NAN";
@@ -72,7 +72,7 @@ UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) c
 	float currentConvertedAmount = std::numeric_limits<float>::max();
 	for (const auto& it : allUnits) {
 		float rate = std::numeric_limits<float>::quiet_NaN();
-		GetConvertionRate(it.string(), rate);
+		GetConversionRate(it.string(), rate);
 		rate = aBaseUnitAmount / rate;
 
 		if (rate >= 1 && rate < currentConvertedAmount) {
@@ -85,3 +85,4 @@ UnitConvertion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) c
 	return currentUnit;
 }
 }  // namespace common
+

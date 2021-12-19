@@ -29,8 +29,8 @@ CommandLineInterface::CommandLineInterface(
 	myInterpreter["print"] = [this]() {
 		myCommandChain.AddCommand(myCommands.myPrintCurrentFileCommand->Execute());
 	};
-	myInterpreter["open convertion"] = [this]() {
-		myCommandChain.AddCommand(myCommands.myOpenConvertionCommand->Execute());
+	myInterpreter["open conversion"] = [this]() {
+		myCommandChain.AddCommand(myCommands.myOpenConversionCommand->Execute());
 	};
 	myInterpreter["open week"] = [this]() {
 		myCommandChain.AddCommand(myCommands.myOpenWeekCommand->Execute());
@@ -172,3 +172,4 @@ CommandLineInterface::Poll() {
 	return false;
 }
 }  // namespace biz
+

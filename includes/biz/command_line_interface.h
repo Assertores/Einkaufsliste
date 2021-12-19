@@ -18,7 +18,7 @@ struct CliCommands {
 	std::shared_ptr<infas::ICommand> myChangeDescriptionOfRecipeCommand;
 	std::shared_ptr<infas::ICommand> myAddIngredientToRecipeCommand;
 	std::shared_ptr<infas::ICommand> myRemoveIngredientToRecipeCommand;
-	std::shared_ptr<infas::ICommand> myOpenConvertionCommand;
+	std::shared_ptr<infas::ICommand> myOpenConversionCommand;
 	std::shared_ptr<infas::ICommand> myOpenWeekCommand;
 	std::shared_ptr<infas::ICommand> myStartList;
 	std::shared_ptr<infas::ICommand> myAddWeekToListCommand;
@@ -49,3 +49,4 @@ private:
 	std::map<std::string_view, std::function<void()>> myInterpreter;
 };
 }  // namespace biz
+

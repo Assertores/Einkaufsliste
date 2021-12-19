@@ -6,33 +6,33 @@
 #include <sstream>
 
 namespace common {
-std::vector<UnitConvertion> Unit::myConvertionFiles{};
+std::vector<UnitConversion> Unit::myConversionFiles{};
 
 Unit::Unit(float aAmount, std::string_view aUnit, std::string aType)
 	: myType(std::move(aType)) {
-	for (const auto& it : myConvertionFiles) {
+	for (const auto& it : myConversionFiles) {
 		if (it.CanConvertUnit(aUnit)) {
-			myConvertionFile = it;
+			myConversionFile = it;
 			break;
 		}
 	}
-	if (!myConvertionFile) {
+	if (!myConversionFile) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::Units,
 			std::string("tryed to create unit ot type ") + aType
-				+ " but the convertion file was not able to convert it ");
+				+ " but the conversion file was not able to convert it ");
 		myAmount = aAmount;
 		return;
 	}
 
 	float rate = std::numeric_limits<float>::quiet_NaN();
-	if (!myConvertionFile->GetConvertionRate(aUnit, rate)) {
+	if (!myConversionFile->GetConversionRate(aUnit, rate)) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::Units,
 			std::string("tryed to create unit ot type ") + aType
-				+ " but the convertion file was not able to convert it ");
+				+ " but the conversion file was not able to convert it ");
 		myAmount = aAmount;
 		return;
 	}
@@ -44,7 +44,7 @@ Unit::Add(const Unit& aOther) {
 	if (aOther.myType != myType) {
 		return false;
 	}
-	if (aOther.myConvertionFile != myConvertionFile) {
+	if (aOther.myConversionFile != myConversionFile) {
 		return false;
 	}
 	myAmount += aOther.myAmount;
@@ -56,7 +56,7 @@ Unit::Subtract(const Unit& aOther) {
 	if (aOther.myType != myType) {
 		return false;
 	}
-	if (aOther.myConvertionFile != myConvertionFile) {
+	if (aOther.myConversionFile != myConversionFile) {
 		return false;
 	}
 	myAmount -= aOther.myAmount;
@@ -101,7 +101,7 @@ Unit::FromString(std::string_view aString) {
 		result.emplace_back(value, unit, type);
 	}
 
-	return result;	// TODO(andreas): where do i get the ConvertionFile
+	return result;	// TODO(andreas): where do i get the ConversionFile
 }
 
 std::string
@@ -122,7 +122,7 @@ Unit::ToString(const std::vector<Unit>& aUnits) {
 			return "";
 		}
 		float amount = std::numeric_limits<float>::quiet_NaN();
-		auto unit = it.myConvertionFile->GetBestUnit(it.myAmount, amount);
+		auto unit = it.myConversionFile->GetBestUnit(it.myAmount, amount);
 		if (amount > 0) {
 			valid = true;
 			strBuilder << amount << unit << " & ";
@@ -132,3 +132,4 @@ Unit::ToString(const std::vector<Unit>& aUnits) {
 	return valid ? result.substr(0, result.size() - 3) : "";
 }
 }  // namespace common
+

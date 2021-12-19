@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 
 #include <optional>
 #include <string>
@@ -16,8 +16,8 @@ public:
 	static std::string ResultsInUnitsOfType(std::string_view aString);
 	static std::vector<Unit> FromString(std::string_view aString);
 	static std::string ToString(const std::vector<Unit>& aUnits);
-	static void SetConvertionFiles(std::vector<UnitConvertion> aConvertionFiles) {
-		myConvertionFiles = std::move(aConvertionFiles);
+	static void SetConversionFiles(std::vector<UnitConversion> aConversionFiles) {
+		myConversionFiles = std::move(aConversionFiles);
 	}
 
 	// returns wether or not it was able to add aOther to this object
@@ -34,7 +34,8 @@ public:
 private:
 	float myAmount = 0;
 	std::string myType;
-	std::optional<UnitConvertion> myConvertionFile;
-	static std::vector<UnitConvertion> myConvertionFiles;
+	std::optional<UnitConversion> myConversionFile;
+	static std::vector<UnitConversion> myConversionFiles;
 };
 }  // namespace common
+

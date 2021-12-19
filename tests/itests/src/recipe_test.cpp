@@ -12,9 +12,9 @@ TEST(Recipe, read_and_write)  // NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
+	common::UnitConversion conversion(mockingFileImpl);
 
-	common::Unit::SetConvertionFiles({convertion});
+	common::Unit::SetConversionFiles({conversion});
 	const auto* name = "Example";
 	const auto* description = "this is a example recipe.";
 	std::vector<common::Unit> ingredians = {
