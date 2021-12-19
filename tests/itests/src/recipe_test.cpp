@@ -24,7 +24,7 @@ TEST(Recipe, read_and_write)  // NOLINT
 
 	const auto recipePath = std::filesystem::current_path() / "example.md";
 	std::filesystem::remove(recipePath);
-	std::cout << "example recepy was created at: " << recipePath.string() << '\n';
+	std::cout << "example recipe was created at: " << recipePath.string() << '\n';
 	{
 		common::Recipe subject(recipePath);
 
@@ -47,3 +47,4 @@ TEST(Recipe, read_and_write)  // NOLINT
 		EXPECT_EQ(resultIngredians[i], ingredians[i]);
 	}
 }
+

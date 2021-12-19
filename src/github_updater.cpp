@@ -19,7 +19,7 @@ static constexpr auto locAssetUrlKey = "browser_download_url";
 
 namespace biz {
 bool
-GithubUpdater::RetraveMetaData() {
+GithubUpdater::RetrieveMetaData() {
 	auto responce = cpr::Get(cpr::Url(locDefaultUrl));
 	if (responce.status_code != locHttpOk) {
 		infas::ILogger::Log(
@@ -66,7 +66,7 @@ GithubUpdater::IsPatchUpdate() {
 }
 
 bool
-GithubUpdater::RetreavePatchLocation() {
+GithubUpdater::RetrievePatchLocation() {
 	if (!myJson.contains(locAssetKey) || !myJson[locAssetKey].is_array()) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,

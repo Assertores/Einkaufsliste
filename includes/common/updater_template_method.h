@@ -16,9 +16,9 @@ public:
 	bool Execute(const UpdaterSettings& aSettings);
 
 protected:
-	virtual bool RetraveMetaData() = 0;
+	virtual bool RetrieveMetaData() = 0;
 	virtual bool IsPatchUpdate() = 0;
-	virtual bool RetreavePatchLocation() = 0;
+	virtual bool RetrievePatchLocation() = 0;
 	virtual bool DownloadPatch() = 0;
 	virtual bool ExtractPatch() = 0;
 	virtual bool ApplyPatch() = 0;
