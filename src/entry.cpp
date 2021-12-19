@@ -29,7 +29,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 
-	std::unique_ptr<common::UpdaterTemplateMethode> updater = nullptr;
+	std::unique_ptr<common::UpdaterTemplateMethod> updater = nullptr;
 	// NOTE(andreas): here we can deside whitch updater to use. currently there is only this one
 	{
 		updater = std::make_unique<GithubUpdater>();
@@ -51,3 +51,4 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	return 0;
 }
 }  // namespace biz
+

@@ -58,7 +58,7 @@ target_sources(biz
 		"includes/common/platform.h"
 		"includes/common/recipe.h"
 		"includes/common/unit.h"
-		"includes/common/updater_template_methode.h"
+		"includes/common/updater_template_method.h"
 		"includes/common/unit_conversion.h"
 		"includes/common/week.h"
 		"includes/interface/i_command.h"
@@ -99,7 +99,7 @@ target_sources(biz
 		"src/remove_week_recipe.cpp"
 		"src/unit_conversion.cpp"
 		"src/unit.cpp"
-		"src/updater_template_methode.cpp"
+		"src/updater_template_method.cpp"
 		"src/week.cpp"
 )
 

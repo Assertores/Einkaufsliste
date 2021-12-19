@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/updater_template_methode.h"
+#include "common/updater_template_method.h"
 
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
@@ -9,7 +9,7 @@
 #include <string>
 
 namespace biz {
-class GithubUpdater : public common::UpdaterTemplateMethode {
+class GithubUpdater : public common::UpdaterTemplateMethod {
 public:
 	bool RetraveMetaData() override;
 	bool IsPatchUpdate() override;

@@ -9,9 +9,9 @@ struct UpdaterSettings {
 	std::string url;
 };
 
-class UpdaterTemplateMethode {
+class UpdaterTemplateMethod {
 public:
-	virtual ~UpdaterTemplateMethode() = default;
+	virtual ~UpdaterTemplateMethod() = default;
 
 	bool Execute(const UpdaterSettings& aSettings);
 
@@ -25,3 +25,4 @@ protected:
 	virtual void CleanUp() = 0;
 };
 }  // namespace common
+
