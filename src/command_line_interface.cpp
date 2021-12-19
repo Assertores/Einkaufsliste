@@ -58,7 +58,7 @@ CommandLineInterface::CommandLineInterface(
 			myOutput << it.first << '\n';
 		}
 	};
-	// TODO: add funktionality here
+	// TODO: add functionality here
 };
 
 std::filesystem::path
@@ -164,7 +164,7 @@ CommandLineInterface::Poll() {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::Commands,
-			"command '" + command + "' is unknowen.");
+			"command '" + command + "' is unknown.");
 
 		return false;
 	}

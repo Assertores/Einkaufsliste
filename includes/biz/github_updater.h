@@ -11,9 +11,9 @@
 namespace biz {
 class GithubUpdater : public common::UpdaterTemplateMethod {
 public:
-	bool RetraveMetaData() override;
+	bool RetrieveMetaData() override;
 	bool IsPatchUpdate() override;
-	bool RetreavePatchLocation() override;
+	bool RetrievePatchLocation() override;
 	bool DownloadPatch() override;
 	bool ExtractPatch() override;
 	bool ApplyPatch() override;
@@ -32,3 +32,4 @@ public:
 	std::string myNewVersion {};
 };
 }  // namespace biz
+

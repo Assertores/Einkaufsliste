@@ -12,13 +12,13 @@ UpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 			"asked to not update");
 		return false;
 	}
-	if (!RetraveMetaData()) {
+	if (!RetrieveMetaData()) {
 		return false;
 	}
 	if (!IsPatchUpdate()) {
 		return false;
 	}
-	if (!RetreavePatchLocation()) {
+	if (!RetrievePatchLocation()) {
 		return false;
 	}
 	if (!DownloadPatch()) {
