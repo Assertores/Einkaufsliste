@@ -8,7 +8,7 @@
 #include "biz/change_recipe_name.h"
 #include "biz/command_line_interface.h"
 #include "biz/compile_list.h"
-#include "biz/open_convertion_files.h"
+#include "biz/open_conversion_files.h"
 #include "biz/open_list.h"
 #include "biz/open_recipe.h"
 #include "biz/open_week.h"
@@ -32,7 +32,7 @@ Application::Application(const AppSettings& aSettings) {
 		auto changeRecipeDescription = common::ChangeRecipeDescription::Create();
 		auto addRecipeIngrediant = common::AddRecipeUnit::Create();
 		auto removeRecipeIngrediant = common::RemoveRecipeUnit::Create();
-		auto openConvertion = common::OpenConvertionFile::Create();
+		auto openConversion = common::OpenConversionFile::Create();
 		auto openWeek = common::OpenWeek::Create();
 		auto startNewList = common::OpenList::Create();
 		auto addListWeek = common::AddListWeek::Create();
@@ -47,7 +47,7 @@ Application::Application(const AppSettings& aSettings) {
 			changeRecipeDescription,
 			addRecipeIngrediant,
 			removeRecipeIngrediant,
-			openConvertion,
+			openConversion,
 			openWeek,
 			startNewList,
 			addListWeek,
@@ -69,7 +69,7 @@ Application::Application(const AppSettings& aSettings) {
 		changeRecipeDescription->SetReferences(myFrontend, myCurrentRecipe);
 		addRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
 		removeRecipeIngrediant->SetReferences(myFrontend, myCurrentRecipe);
-		openConvertion->SetReferences(myFrontend);
+		openConversion->SetReferences(myFrontend);
 		openWeek->SetReferences(myFrontend, myCurrentWeek);
 		startNewList->SetReferences(myFrontend, myCurrentList);
 		addListWeek->SetReferences(myFrontend, myCurrentList);
@@ -108,3 +108,4 @@ Application::Run(const AppSettings& aSettings) {
 	infas::ILogger::Clear();
 }
 }  // namespace biz
+

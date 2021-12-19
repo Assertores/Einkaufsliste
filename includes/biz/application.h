@@ -3,7 +3,7 @@
 #include "common/list.h"
 #include "common/observable.h"
 #include "common/recipe.h"
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 #include "common/week.h"
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
@@ -40,3 +40,4 @@ private:
 		std::make_shared<common::Observable<std::optional<common::List>>>();
 };
 }  // namespace biz
+

@@ -1,7 +1,7 @@
 #include "biz/open_list.h"
 
 #include "common/list.h"
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 
 namespace common {
 std::unique_ptr<infas::ICommandMemento>
@@ -32,3 +32,4 @@ OpenList::SetReferences(
 	myListObservable = std::move(aListObservable);
 }
 }  // namespace common
+

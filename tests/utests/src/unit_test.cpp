@@ -1,6 +1,6 @@
 #include "common/unit.h"
 
-#include "common/unit_convertion.h"
+#include "common/unit_conversion.h"
 #include "interface/i_file_impl.h"
 
 #include <gtest/gtest.h>
@@ -12,8 +12,8 @@ TEST(Unit, parses_it_correctly)	 // NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit::SetConvertionFiles({convertion});
+	common::UnitConversion conversion(mockingFileImpl);
+	common::Unit::SetConversionFiles({conversion});
 	common::Unit subject1(1, "kg", "apple");
 	common::Unit subject2(3, "kg", "apple");
 
@@ -29,8 +29,8 @@ TEST(Unit, different_types_are_not_parsed)	// NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit::SetConvertionFiles({convertion});
+	common::UnitConversion conversion(mockingFileImpl);
+	common::Unit::SetConversionFiles({conversion});
 	common::Unit subject1(1, "kg", "apple");
 	common::Unit subject2(3, "kg", "banana");
 
@@ -46,8 +46,8 @@ TEST(Unit, same_types_can_be_added_together)  // NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit::SetConvertionFiles({convertion});
+	common::UnitConversion conversion(mockingFileImpl);
+	common::Unit::SetConversionFiles({conversion});
 	common::Unit subject1(1, "kg", "apple");
 	common::Unit subject2(3, "kg", "apple");
 
@@ -64,8 +64,8 @@ TEST(Unit, different_types_can_not_be_added_together)  // NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit::SetConvertionFiles({convertion});
+	common::UnitConversion conversion(mockingFileImpl);
+	common::Unit::SetConversionFiles({conversion});
 	common::Unit subject1(1, "kg", "apple");
 	common::Unit subject2(3, "kg", "banana");
 
@@ -88,11 +88,12 @@ TEST(Unit, parses_string_into_units)  // NOLINT
 	mockingFileImpl->getKeys = [](auto /*unused*/) {
 		return std::vector<std::filesystem::path>{"kg"};
 	};
-	common::UnitConvertion convertion(mockingFileImpl);
-	common::Unit::SetConvertionFiles({convertion});
+	common::UnitConversion conversion(mockingFileImpl);
+	common::Unit::SetConversionFiles({conversion});
 	auto subject = common::Unit::FromString("apple 1kg & 3kg");
 
 	ASSERT_EQ(subject.size(), 2);
 	EXPECT_TRUE(subject[0].Equals(common::Unit(1, "kg", "apple")));
 	EXPECT_TRUE(subject[1].Equals(common::Unit(3, "kg", "apple")));
 }
+
