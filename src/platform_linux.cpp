@@ -15,6 +15,7 @@ StartProcess(
 	const std::filesystem::path& aWorkingDirectory) {
 	std::vector<std::string> argCopy(aCommands.cbegin(), aCommands.cend());
 	std::vector<char*> args{};
+	args.reserve(aCommands.size());
 	for (auto& it : argCopy) {
 		args.push_back(it.data());
 	}
