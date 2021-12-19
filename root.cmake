@@ -106,6 +106,14 @@ target_sources(biz
 if(WIN32)
 target_sources(biz
 	PRIVATE
-		"src/windows_platform.cpp"
+		"src/platform_windows.cpp"
 )
 endif()
+
+if(UNIX)
+target_sources(biz
+	PRIVATE
+		"src/platform_linux.cpp"
+)
+endif()
+
