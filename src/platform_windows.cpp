@@ -3,9 +3,13 @@
 #include <windows.h>
 
 #include <cuchar>
-#include <string>
 
 namespace common {
+std::string
+PlatformIdentifyer() {
+	return "win10";
+}
+
 void
 StartProcess(
 	const std::filesystem::path& aExe,

@@ -128,8 +128,8 @@ can hold a reference to a recipe for every weekday and every timepoint (with a m
 
 #### list
 
-contains a list of "staged" files which are used for compiling the list and a list of unique ingredience with there units added together as far as possible. for this the convertion files are used. if it can not combine two units they are listed seperatly. e.g. `onion 150g, 2 piece`.
+contains a list of "staged" files which are used for compiling the list and a list of unique ingredience with there units added together as far as possible. for this the convertion files are used. if it can not combine two units they are listed seperatly. e.g. `onion: 150g, 2 piece`.
 
 ## licence
 
-[MIT](./LICENSE)
+[GNU General Public License v3.0](./LICENSE)

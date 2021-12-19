@@ -16,13 +16,6 @@ static constexpr auto locVersionKey = "tag_name";
 static constexpr auto locAssetKey = "assets";
 static constexpr auto locAssetNameKey = "name";
 static constexpr auto locAssetUrlKey = "browser_download_url";
-#if _WIN32
-static constexpr auto locPlatform = "win10";
-#elif __linux__
-static constexpr auto locPlatform = "linux";
-#else
-#error "unsupporded platform"
-#endif
 
 namespace biz {
 bool
@@ -82,17 +75,18 @@ GithubUpdater::RetreavePatchLocation() {
 		return false;
 	}
 	const auto assets = myJson[locAssetKey];
+	const auto platformId = common::PlatformIdentifyer();
 
 	const auto build = std::find_if(assets.begin(), assets.end(), [&](const auto& aElement) {
 		return aElement.contains(locAssetNameKey) && aElement[locAssetNameKey].is_string()
-			   && aElement[locAssetNameKey].template get<std::string>().find(locPlatform)
+			   && aElement[locAssetNameKey].template get<std::string>().find(platformId)
 					  != std::string::npos;
 	});
 	if (build == assets.end()) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
 			infas::LogType::StartUp,
-			"no valide build found for platform: " + std::string(locPlatform));
+			"no valide build found for platform: " + platformId);
 		return false;
 	}
 	if (!build->contains(locAssetUrlKey) || !(*build)[locAssetUrlKey].is_string()) {
