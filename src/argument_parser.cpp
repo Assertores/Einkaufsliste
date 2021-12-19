@@ -2,7 +2,7 @@
 
 #include "biz/application.h"
 #include "biz/patcher.h"
-#include "common/updater_template_methode.h"
+#include "common/updater_template_method.h"
 #include "interface/i_logger.h"
 
 #include <sstream>
@@ -84,3 +84,4 @@ RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& a
 	return invalideArguments;
 }
 }  // namespace biz
+

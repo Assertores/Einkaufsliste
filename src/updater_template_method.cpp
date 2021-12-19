@@ -1,15 +1,15 @@
-#include "common/updater_template_methode.h"
+#include "common/updater_template_method.h"
 
 #include "interface/i_logger.h"
 
 namespace common {
 bool
-UpdaterTemplateMethode::Execute(const UpdaterSettings& aSettings) {
+UpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 	if (!aSettings.doUpdate) {
 		infas::ILogger::Log(
 			infas::LogLevel::Debug,
 			infas::LogType::StartUp,
-			"asked to not updater");
+			"asked to not update");
 		return false;
 	}
 	if (!RetraveMetaData()) {
@@ -34,3 +34,4 @@ UpdaterTemplateMethode::Execute(const UpdaterSettings& aSettings) {
 	return isPatched;
 }
 }  // namespace common
+
