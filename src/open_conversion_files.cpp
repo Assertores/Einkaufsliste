@@ -12,7 +12,7 @@ OpenConversionFile::Execute() {
 	}
 	std::filesystem::path folder = frontend->AskForFolder();
 	while (!std::filesystem::is_directory(folder)) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		folder = frontend->AskForFolder();
 	}
 

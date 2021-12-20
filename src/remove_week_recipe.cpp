@@ -46,12 +46,12 @@ RemoveWeekRecipe::Execute() {
 	}
 	WeekDay day{};
 	while (!frontend->AskForWeekDay(day)) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		// TODO(andreas): handle error
 	}
 	DayTime time{};
 	while (!frontend->AskForDayTime(time)) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		// TODO(andreas): handle error
 	}
 
