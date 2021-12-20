@@ -70,18 +70,18 @@ RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& a
 		args.emplace(aArgs[i]);
 	}
 
-	std::vector<std::pair<int, std::string_view>> invalideArguments;
+	std::vector<std::pair<int, std::string_view>> invalidArguments;
 	for (int i = 1; !args.empty(); i++) {
 		auto arg = args.front();
 		args.pop();
 		auto it = aInterpreter.find(arg);
 		if (it == aInterpreter.end()) {
-			invalideArguments.emplace_back(std::make_pair(i, arg));
+			invalidArguments.emplace_back(std::make_pair(i, arg));
 			continue;
 		}
 		it->second(args);
 	}
-	return invalideArguments;
+	return invalidArguments;
 }
 }  // namespace biz
 

@@ -48,7 +48,7 @@ AddListWeek::Execute() {
 	}
 	std::filesystem::path file = frontend->AskForFile();
 	while (file.extension().empty()) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		file = frontend->AskForFile();
 	}
 

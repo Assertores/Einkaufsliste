@@ -46,19 +46,19 @@ AddWeekRecipe::Execute() {
 	}
 	std::filesystem::path filePath = frontend->AskForFile();
 	while (filePath.extension().empty()) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		filePath = frontend->AskForFile();
 	}
 	auto file = Recipe(filePath);
 	WeekDay day{};
 	while (!frontend->AskForWeekDay(day)) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
-		// TODO(andreas): invalide input
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
+		// TODO(andreas): invalid input
 	}
 	DayTime time{};
 	while (!frontend->AskForDayTime(time)) {
-		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalide input");
-		// TODO(andreas): invalide input
+		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
+		// TODO(andreas): invalid input
 	}
 	week->AddRecipe(file, day, time);
 

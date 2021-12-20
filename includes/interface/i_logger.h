@@ -118,7 +118,7 @@ ToString(const LogLevel& aLevel) {
 	case LogLevel::Verbose:
 		return "[Verbose]";
 	}
-	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
+	ILogger::Log(LogLevel::Error, LogType::Generic, "invalid log level");
 	return "";
 }
 
@@ -142,7 +142,7 @@ ToString(const LogType& aLevel) {
 	case LogType::Frontend:
 		return "Frontend";
 	}
-	ILogger::Log(LogLevel::Error, LogType::Generic, "invalide log level");
+	ILogger::Log(LogLevel::Error, LogType::Generic, "invalid log level");
 	return "";
 }
 };	// namespace infas
