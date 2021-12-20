@@ -9,7 +9,7 @@
 #include <iostream>
 
 static constexpr auto locDefaultUrl =
-	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
+	"https://api.github.com/repos/Assertores/Einkaufsliste/releases";
 static constexpr auto locHttpOk = 200;
 static constexpr auto locVersionKey = "tag_name";
 static constexpr auto locAssetKey = "assets";
@@ -17,9 +17,15 @@ static constexpr auto locAssetNameKey = "name";
 static constexpr auto locAssetUrlKey = "browser_download_url";
 
 namespace biz {
+GithubUpdater::GithubUpdater()
+	: myUrl(locDefaultUrl) {}
+
+GithubUpdater::GithubUpdater(std::string aUrl)
+	: myUrl(std::move(aUrl)) {}
+
 bool
-GithubUpdater::RetrieveMetaData() {
-	auto responce = cpr::Get(cpr::Url(locDefaultUrl));
+GithubUpdater::RetrieveMetaData(bool aPrerelease) {
+	auto responce = cpr::Get(cpr::Url(myUrl + (aPrerelease ? "" : "/latest")));
 	if (responce.status_code != locHttpOk) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
@@ -29,6 +35,16 @@ GithubUpdater::RetrieveMetaData() {
 	}
 
 	myJson = nlohmann::json::parse(responce.text);
+	if (aPrerelease) {
+		if (!myJson.is_array()) {
+			infas::ILogger::Log(
+				infas::LogLevel::Error,
+				infas::LogType::StartUp,
+				"json document is not a array:\n" + myJson.dump());
+		}
+
+		myJson = myJson[0];
+	}
 	return true;
 }
 

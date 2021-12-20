@@ -16,7 +16,7 @@ public:
 	bool Execute(const UpdaterSettings& aSettings);
 
 protected:
-	virtual bool RetrieveMetaData() = 0;
+	virtual bool RetrieveMetaData(bool aPrerelease) = 0;
 	virtual bool IsPatchUpdate() = 0;
 	virtual bool RetrievePatchLocation() = 0;
 	virtual bool DownloadPatch() = 0;

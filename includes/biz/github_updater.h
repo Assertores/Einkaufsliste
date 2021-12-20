@@ -11,7 +11,10 @@
 namespace biz {
 class GithubUpdater : public common::UpdaterTemplateMethod {
 public:
-	bool RetrieveMetaData() override;
+	GithubUpdater();
+	explicit GithubUpdater(std::string aUrl);
+
+	bool RetrieveMetaData(bool aPrerelease) override;
 	bool IsPatchUpdate() override;
 	bool RetrievePatchLocation() override;
 	bool DownloadPatch() override;
@@ -25,6 +28,8 @@ public:
 	std::filesystem::path GetVersionPath();
 	static bool CompareVersion(
 		const std::string& aOldVersion, const std::string& aNewVersion, bool& aOutIsNewer);
+
+	std::string myUrl;
 
 	std::filesystem::path myExePath{};
 	nlohmann::json myJson{};

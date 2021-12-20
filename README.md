@@ -25,14 +25,15 @@ This project is meant to help you figure out what you have to buy to be able to 
 
 ### execution arguments
 
-| argument              | description                                                                                                          | remark                                                                                                                   |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `--no-patch`          | will not try to patch files to the new version                                                                       |                                                                                                                          |
-| `--no-update`         | will not try to download an update                                                                                   |                                                                                                                          |
-| `--set-update-url`    | changes the url it trys to get the download from                                                                     | not implimented                                                                                                          |
-| `--shut-down`         | will automaticly shut down the executable after updating and patching.                                               |                                                                                                                          |
+| argument              | description                                                                                               | remark                                                                                                                              |
+| --------------------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `--no-patch`          | will not try to patch files to the new version                                                            |                                                                                                                                     |
+| `--no-update`         | will not try to download an update                                                                        |                                                                                                                                     |
+| `--set-update-url`    | changes the url it trys to get the download from                                                          | not implimented                                                                                                                     |
+| `--prerelease`        | update also accepts prereleases                                                                           |                                                                                                                                     |
+| `--shut-down`         | will automaticly shut down the executable after updating and patching.                                    |                                                                                                                                     |
 | `--log-level [LEVEL]` | sets the logging granularity. the following are possible: `silent`, `fatal`, `error`, `debug`, `verbose`. | the more verbose levels also contain the less verbose levels of logging. e.g. `--log-level error` logs all `fatal` and `error` logs |
-| `--help`              | shows these arguments                                                                                                |                                                                                                                          |
+| `--help`              | shows these arguments                                                                                     |                                                                                                                                     |
 
 example:
 

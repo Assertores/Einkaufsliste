@@ -10,9 +10,6 @@
 
 #include <sstream>
 
-static constexpr std::string_view locDefaultUrl =
-	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
-
 namespace biz {
 int
 Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput) {
@@ -24,14 +21,20 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	}
 
 	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
-	common::UpdaterSettings updaterSettings{true, false, locDefaultUrl.data()};
+	common::UpdaterSettings updaterSettings{true, false, ""};
 	PatcherSettings patcherSettings{true};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 
 	std::unique_ptr<common::UpdaterTemplateMethod> updater = nullptr;
 	// NOTE(andreas): here we can deside whitch updater to use. currently there is only this one
-	{ updater = std::make_unique<GithubUpdater>(); }
+	{
+		if (!updaterSettings.url.empty()) {
+			updater = std::make_unique<GithubUpdater>(updaterSettings.url);
+		} else {
+			updater = std::make_unique<GithubUpdater>();
+		}
+	}
 	aOutput << "checking for updates ...\n";
 	if (updater->Execute(updaterSettings)) {
 		infas::ILogger::Log(

@@ -40,6 +40,7 @@ CreateInterpreter(AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherS
 		aUpdater.url = aQueue.front();
 		aQueue.pop();
 	};
+	interpreter["--prerelease"] = [&](auto& /*unused*/) { aUpdater.getPrerelease = true; };
 	interpreter["--shut-down"] = [&](auto& /*unused*/) { aApp.doRun = false; };
 	interpreter["--log-level"] = [](auto& aQueue) {
 		auto element = aQueue.front();

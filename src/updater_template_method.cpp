@@ -9,7 +9,7 @@ UpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 		infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::StartUp, "asked to not update");
 		return false;
 	}
-	if (!RetrieveMetaData()) {
+	if (!RetrieveMetaData(aSettings.getPrerelease)) {
 		return false;
 	}
 	if (!IsPatchUpdate()) {

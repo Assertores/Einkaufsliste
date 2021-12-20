@@ -11,7 +11,7 @@ static const std::filesystem::path locAssetDir{ASSETS_DIR "_Live"};
 
 class GithubUpdaterStub : public biz::GithubUpdater {
 public:
-	bool RetrieveMetaData() override {
+	bool RetrieveMetaData(bool aPrerelease) override {
 		// TODO(andreas): replace this with a json of my own repository once i made a release
 		myJson = nlohmann::json::parse(
 			R"json({
@@ -178,13 +178,13 @@ TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)  // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v2.0.0";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_TRUE(subject.IsPatchUpdate());
 	subject.myTestVersion = "v1.3.0";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_TRUE(subject.IsPatchUpdate());
 	subject.myTestVersion = "v1.2.4";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_TRUE(subject.IsPatchUpdate());
 }
 
@@ -192,13 +192,13 @@ TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)	// NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v0.0.0";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_FALSE(subject.IsPatchUpdate());
 	subject.myTestVersion = "v1.0.0";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_FALSE(subject.IsPatchUpdate());
 	subject.myTestVersion = "v1.2.0";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
@@ -206,14 +206,14 @@ TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v1.2.3";
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
 TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
 {
 	GithubUpdaterStub subject;
-	subject.RetrieveMetaData();
+	subject.RetrieveMetaData(false);
 	ASSERT_TRUE(subject.RetrievePatchLocation());
 #if _WIN32
 	EXPECT_EQ(subject.myPatch, subject.myDownloadUrlWin);
