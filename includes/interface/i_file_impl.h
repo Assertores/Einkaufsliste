@@ -7,6 +7,9 @@
 #include <utility>
 #include <vector>
 
+static constexpr auto locVersionKey = "version";
+static constexpr auto locVersion = "0.0.0";
+
 namespace infas {
 class IFileImpl {
 public:
@@ -104,6 +107,10 @@ IFileImpl::Open(const std::filesystem::path& aPath) {
 	auto file = std::make_shared<Impl>();
 	myFiles[aPath] = file;
 	file->Open(aPath);
+	const auto keys = file->GetKeys("");
+	if (std::find(keys.begin(), keys.end(), locVersionKey) == keys.end()) {
+		file->AddToKey(locVersionKey, locVersion);
+	}
 	return file;
 }
 }  // namespace infas
