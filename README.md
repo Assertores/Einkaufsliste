@@ -1,4 +1,4 @@
-# Einkaufsliste
+# Einkaufsliste - Shopping List
 
 [![workflow](https://github.com/Assertores/Einkaufsliste/actions/workflows/linux.yml/badge.svg)](https://github.com/Assertores/Einkaufsliste/actions/workflows/linux.yml)
 [![workflow](https://github.com/Assertores/Einkaufsliste/actions/workflows/windows.yml/badge.svg)](https://github.com/Assertores/Einkaufsliste/actions/workflows/windows.yml)
