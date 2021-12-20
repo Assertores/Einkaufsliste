@@ -153,7 +153,7 @@ protected:
 
 	void TearDown() override {
 		if (HasFailure()) {
-			infas::ILogger::SetImplimentation(common::LogOnConsole(std::cout));
+			infas::ILogger::SetImplementation(common::LogOnConsole(std::cout));
 			std::cout << "===== ===== assetContent ===== =====\n";
 			for (const auto& it : std::filesystem::recursive_directory_iterator(
 					 std::filesystem::path(locAssetDir))) {
@@ -340,3 +340,4 @@ TEST_F(GithubTestFixture, extraction_fails_if_zip_file_is_missing)	// NOLINT
 	std::filesystem::remove(locAssetDir / "patch.zip");
 	EXPECT_FALSE(subject.ExtractPatch());
 }
+

@@ -20,7 +20,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		common::LogOnConsole logger(aOutput);
 		infas::ILogger::SetLogLevel(infas::LogLevel::Error);
 		infas::ILogger::SetLogMask(infas::locLogMaskAll);
-		infas::ILogger::SetImplimentation(std::move(logger));
+		infas::ILogger::SetImplementation(std::move(logger));
 	}
 
 	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
@@ -44,7 +44,7 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 		return 1;
 	}
 	Patch(patcherSettings);
-	
+
 	aOutput << "starting ...\n";
 	Application app(appSettings);
 	app.Run(appSettings);

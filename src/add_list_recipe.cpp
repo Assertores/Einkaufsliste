@@ -3,7 +3,7 @@
 #include "common/unit.h"
 
 namespace common {
-#if not_implimented
+#if not_implemented
 class AddListRecipeMemento : public interface::ICommandMemento {
 public:
 	AddListRecipeMemento(Week aWeek, Recipe aNewRecipe, WeekDay aWeekDay, DayTime aDayTime)

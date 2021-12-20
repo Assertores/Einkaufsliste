@@ -12,7 +12,7 @@ class IFile {
 public:
 	explicit IFile(const std::filesystem::path& aPath);
 	explicit IFile(std::shared_ptr<IFileImpl> aFileImpl)
-		: myFileImplimentation(std::move(aFileImpl)){};
+		: myFileImplementation(std::move(aFileImpl)){};
 
 	IFile(const IFile&) = default;
 	IFile(IFile&&) = default;
@@ -22,13 +22,13 @@ public:
 	virtual ~IFile();
 
 	friend bool operator==(const IFile& aLhs, const IFile& aRhs) {
-		return aLhs.myFileImplimentation == aRhs.myFileImplimentation;
+		return aLhs.myFileImplementation == aRhs.myFileImplementation;
 	}
 	friend bool operator!=(const IFile& aLhs, const IFile& aRhs) {
-		return aLhs.myFileImplimentation != aRhs.myFileImplimentation;
+		return aLhs.myFileImplementation != aRhs.myFileImplementation;
 	}
 	friend bool operator<(const IFile& aLhs, const IFile& aRhs) {
-		return aLhs.myFileImplimentation < aRhs.myFileImplimentation;
+		return aLhs.myFileImplementation < aRhs.myFileImplementation;
 	}
 
 	[[nodiscard]] virtual std::string Print() const = 0;
@@ -49,6 +49,7 @@ protected:
 		const std::filesystem::path& aRoot) const;
 
 private:
-	std::shared_ptr<IFileImpl> myFileImplimentation;
+	std::shared_ptr<IFileImpl> myFileImplementation;
 };
 }  // namespace infas
+

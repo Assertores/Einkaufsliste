@@ -2,7 +2,7 @@
 
 namespace infas {
 std::queue<std::tuple<LogLevel, LogType, std::string>> ILogger::myReplayQueue{};
-std::shared_ptr<ILogger> ILogger::myLoggerImplimentation = nullptr;
+std::shared_ptr<ILogger> ILogger::myLoggerImplementation = nullptr;
 LogLevel ILogger::myLogLevel = LogLevel::Verbose;
 LogMask ILogger::myLogMask = locLogMaskAll;
 
@@ -12,11 +12,11 @@ ILogger::Log(LogLevel aLevel, LogType aType, std::string_view aLog) {
 		return;
 	}
 	if ((myLogMask & static_cast<LogMask>(aType)) != 0) {
-		if (!myLoggerImplimentation) {
+		if (!myLoggerImplementation) {
 			myReplayQueue.emplace(aLevel, aType, aLog);
 			return;
 		}
-		myLoggerImplimentation->DoLog(aLevel, aType, aLog);
+		myLoggerImplementation->DoLog(aLevel, aType, aLog);
 	}
 }
 
@@ -29,4 +29,5 @@ void
 ILogger::SetLogMask(LogMask aTypeMask) {
 	myLogMask = aTypeMask;
 }
-};	// namespace infas
+}  // namespace infas
+

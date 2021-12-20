@@ -10,8 +10,9 @@ Patch(const PatcherSettings& aSettings) {
 		return;
 	}
 
-	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "patcher not implimented");
+	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::StartUp, "patcher not implemented");
 	// TODO(andreas): remove stuff from update
 	// TODO(andreas): Translate data to new version
 }
 }  // namespace biz
+
