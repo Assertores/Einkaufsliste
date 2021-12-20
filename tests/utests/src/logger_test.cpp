@@ -78,4 +78,3 @@ TEST(Logger, only_logs_Type_in_mask)  // NOLINT
 
 	infas::ILogger::Clear();
 }
-

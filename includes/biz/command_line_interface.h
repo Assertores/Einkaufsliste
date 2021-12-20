@@ -49,4 +49,3 @@ private:
 	std::map<std::string_view, std::function<void()>> myInterpreter;
 };
 }  // namespace biz
-

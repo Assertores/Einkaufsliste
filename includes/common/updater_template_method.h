@@ -25,4 +25,3 @@ protected:
 	virtual void CleanUp() = 0;
 };
 }  // namespace common
-

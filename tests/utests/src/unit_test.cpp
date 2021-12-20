@@ -96,4 +96,3 @@ TEST(Unit, parses_string_into_units)  // NOLINT
 	EXPECT_TRUE(subject[0].Equals(common::Unit(1, "kg", "apple")));
 	EXPECT_TRUE(subject[1].Equals(common::Unit(3, "kg", "apple")));
 }
-

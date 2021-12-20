@@ -25,4 +25,3 @@ CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<List>>
 	myList = std::move(aList);
 }
 }  // namespace common
-

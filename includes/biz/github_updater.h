@@ -26,10 +26,9 @@ public:
 	static bool CompareVersion(
 		const std::string& aOldVersion, const std::string& aNewVersion, bool& aOutIsNewer);
 
-	std::filesystem::path myExePath {};
-	nlohmann::json myJson {};
-	cpr::Url myPatch {};
-	std::string myNewVersion {};
+	std::filesystem::path myExePath{};
+	nlohmann::json myJson{};
+	cpr::Url myPatch{};
+	std::string myNewVersion{};
 };
 }  // namespace biz
-

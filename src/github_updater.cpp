@@ -8,7 +8,6 @@
 #include <fstream>
 #include <iostream>
 
-
 static constexpr auto locDefaultUrl =
 	"https://api.github.com/repos/Assertores/Einkaufsliste/releases/latest";
 static constexpr auto locHttpOk = 200;
@@ -77,11 +76,12 @@ GithubUpdater::RetrievePatchLocation() {
 	const auto assets = myJson[locAssetKey];
 	const auto platformId = common::PlatformIdentifyer();
 
-	const auto build = std::find_if(assets.begin(), assets.end(), [&platformId](const auto& aElement) {
-		return aElement.contains(locAssetNameKey) && aElement[locAssetNameKey].is_string()
-			   && aElement[locAssetNameKey].template get<std::string>().find(platformId)
-					  != std::string::npos;
-	});
+	const auto build =
+		std::find_if(assets.begin(), assets.end(), [&platformId](const auto& aElement) {
+			return aElement.contains(locAssetNameKey) && aElement[locAssetNameKey].is_string()
+				   && aElement[locAssetNameKey].template get<std::string>().find(platformId)
+						  != std::string::npos;
+		});
 	if (build == assets.end()) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,

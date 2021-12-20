@@ -22,4 +22,3 @@ public:
 	std::string GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const;
 };
 }  // namespace common
-

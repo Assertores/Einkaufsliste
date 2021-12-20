@@ -6,10 +6,7 @@ namespace common {
 bool
 UpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 	if (!aSettings.doUpdate) {
-		infas::ILogger::Log(
-			infas::LogLevel::Debug,
-			infas::LogType::StartUp,
-			"asked to not update");
+		infas::ILogger::Log(infas::LogLevel::Debug, infas::LogType::StartUp, "asked to not update");
 		return false;
 	}
 	if (!RetrieveMetaData()) {
@@ -34,4 +31,3 @@ UpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 	return isPatched;
 }
 }  // namespace common
-

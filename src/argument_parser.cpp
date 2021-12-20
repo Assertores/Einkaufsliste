@@ -28,7 +28,8 @@ InterpreteStartArguments(
 }
 
 void
-ReadArgumentsFromFile(AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {}
+ReadArgumentsFromFile(
+	AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {}
 
 Interpreter
 CreateInterpreter(AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher) {
@@ -84,4 +85,3 @@ RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& a
 	return invalidArguments;
 }
 }  // namespace biz
-
