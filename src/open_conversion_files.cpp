@@ -30,4 +30,3 @@ OpenConversionFile::SetReferences(std::weak_ptr<infas::IFrontend> aFrontend) {
 	myFrontend = std::move(aFrontend);
 }
 }  // namespace common
-

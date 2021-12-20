@@ -38,4 +38,3 @@ private:
 	static std::vector<UnitConversion> myConversionFiles;
 };
 }  // namespace common
-

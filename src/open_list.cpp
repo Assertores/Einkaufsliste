@@ -32,4 +32,3 @@ OpenList::SetReferences(
 	myListObservable = std::move(aListObservable);
 }
 }  // namespace common
-

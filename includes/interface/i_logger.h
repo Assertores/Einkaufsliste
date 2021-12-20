@@ -146,4 +146,3 @@ ToString(const LogType& aLevel) {
 	return "";
 }
 };	// namespace infas
-

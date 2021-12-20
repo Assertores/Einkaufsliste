@@ -47,4 +47,3 @@ TEST(Recipe, read_and_write)  // NOLINT
 		EXPECT_EQ(resultIngredians[i], ingredians[i]);
 	}
 }
-

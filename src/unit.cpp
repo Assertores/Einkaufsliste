@@ -132,4 +132,3 @@ Unit::ToString(const std::vector<Unit>& aUnits) {
 	return valid ? result.substr(0, result.size() - 3) : "";
 }
 }  // namespace common
-

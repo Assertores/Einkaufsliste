@@ -21,4 +21,3 @@ private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 };
 }  // namespace common
-

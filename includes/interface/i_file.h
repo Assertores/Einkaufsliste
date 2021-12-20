@@ -52,4 +52,3 @@ private:
 	std::shared_ptr<IFileImpl> myFileImplementation;
 };
 }  // namespace infas
-

@@ -40,4 +40,3 @@ private:
 		std::make_shared<common::Observable<std::optional<common::List>>>();
 };
 }  // namespace biz
-

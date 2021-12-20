@@ -15,4 +15,3 @@ Patch(const PatcherSettings& aSettings) {
 	// TODO(andreas): Translate data to new version
 }
 }  // namespace biz
-

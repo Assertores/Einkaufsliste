@@ -340,4 +340,3 @@ TEST_F(GithubTestFixture, extraction_fails_if_zip_file_is_missing)	// NOLINT
 	std::filesystem::remove(locAssetDir / "patch.zip");
 	EXPECT_FALSE(subject.ExtractPatch());
 }
-

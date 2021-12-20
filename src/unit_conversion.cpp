@@ -85,4 +85,3 @@ UnitConversion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) c
 	return currentUnit;
 }
 }  // namespace common
-

@@ -108,4 +108,3 @@ Application::Run(const AppSettings& aSettings) {
 	infas::ILogger::Clear();
 }
 }  // namespace biz
-

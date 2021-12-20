@@ -82,4 +82,3 @@ IFile::GetSubKeys(const std::filesystem::path& aRoot) const {
 	return myFileImplementation->GetKeys(aRoot);
 }
 }  // namespace infas
-
