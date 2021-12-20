@@ -51,14 +51,14 @@ class ILogger {
 public:
 	// returns sharedpointer to logger given via parameter for continuation.
 	template <typename LogT, typename = std::enable_if_t<std::is_base_of_v<ILogger, LogT>>>
-	static void SetImplimentation(LogT aLogger);
+	static void SetImplementation(LogT aLogger);
 
 	static void Log(LogLevel aLevel, LogType aType, std::string_view aLog);
 	static void SetLogLevel(LogLevel aLevel);
 	static void SetLogMask(LogMask aTypeMask);
 
 	static void Clear() {
-		myLoggerImplimentation = nullptr;
+		myLoggerImplementation = nullptr;
 		myReplayQueue = {};
 		myLogLevel = LogLevel::Verbose;
 		myLogMask = locLogMaskNone;
@@ -70,7 +70,7 @@ protected:
 	virtual void DoLog(LogLevel aLevel, LogType aType, std::string_view aLog) = 0;
 
 private:
-	static std::shared_ptr<ILogger> myLoggerImplimentation;
+	static std::shared_ptr<ILogger> myLoggerImplementation;
 	static std::queue<std::tuple<LogLevel, LogType, std::string>> myReplayQueue;
 
 	static LogLevel myLogLevel;
@@ -93,10 +93,10 @@ public:
 
 template <typename LogT, typename>
 void
-ILogger::SetImplimentation(LogT aLogger) {
-	myLoggerImplimentation = std::make_shared<LogT>(std::move(aLogger));
+ILogger::SetImplementation(LogT aLogger) {
+	myLoggerImplementation = std::make_shared<LogT>(std::move(aLogger));
 	while (!myReplayQueue.empty()) {
-		myLoggerImplimentation->DoLog(
+		myLoggerImplementation->DoLog(
 			std::get<0>(myReplayQueue.front()),
 			std::get<1>(myReplayQueue.front()),
 			std::get<2>(myReplayQueue.front()));
@@ -146,3 +146,4 @@ ToString(const LogType& aLevel) {
 	return "";
 }
 };	// namespace infas
+

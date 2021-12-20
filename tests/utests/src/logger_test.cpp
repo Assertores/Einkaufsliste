@@ -11,7 +11,7 @@ TEST(Logger, logs_get_replayed)	 // NOLINT
 
 	ASSERT_EQ(subject.doLogCount, 0);
 
-	infas::ILogger::SetImplimentation(subject);
+	infas::ILogger::SetImplementation(subject);
 
 	EXPECT_EQ(subject.doLogCount, 1);
 
@@ -37,7 +37,7 @@ TEST(Logger, replay_data_is_same)  // NOLINT
 	infas::ILogger::SetLogMask(infas::locLogMaskAll);
 	infas::ILogger::Log(logLevel, logType, log);
 
-	infas::ILogger::SetImplimentation(std::move(subject));
+	infas::ILogger::SetImplementation(std::move(subject));
 
 	EXPECT_EQ(outLogLevel, logLevel);
 	EXPECT_EQ(outLogType, logType);
@@ -51,7 +51,7 @@ TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT
 	infas::fake::Logger subject;
 	infas::ILogger::SetLogLevel(infas::LogLevel::Error);
 	infas::ILogger::SetLogMask(infas::locLogMaskAll);
-	infas::ILogger::SetImplimentation(subject);
+	infas::ILogger::SetImplementation(subject);
 
 	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::Generic, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 1);
@@ -68,7 +68,7 @@ TEST(Logger, only_logs_Type_in_mask)  // NOLINT
 	infas::fake::Logger subject;
 	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
 	infas::ILogger::SetLogMask(infas::locLogMaskNone | infas::LogType::Network);
-	infas::ILogger::SetImplimentation(subject);
+	infas::ILogger::SetImplementation(subject);
 
 	infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Network, "lbukwe");
 	EXPECT_EQ(subject.doLogCount, 1);
@@ -78,3 +78,4 @@ TEST(Logger, only_logs_Type_in_mask)  // NOLINT
 
 	infas::ILogger::Clear();
 }
+
