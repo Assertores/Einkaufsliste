@@ -120,7 +120,7 @@ GithubUpdater::RetrievePatchLocation() {
 
 bool
 GithubUpdater::DownloadPatch() {
-	std::ofstream zip(GetZipPath());
+	std::ofstream zip(GetZipPath(), std::ios_base::out | std::ios_base::binary);
 	cpr::Session session{};
 	session.SetUrl(myPatch);
 	auto resp = session.Download(zip);
@@ -137,6 +137,7 @@ GithubUpdater::DownloadPatch() {
 
 bool
 GithubUpdater::ExtractPatch() {
+	bool result = true;
 	if (!std::filesystem::exists(GetZipPath())) {
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
@@ -146,10 +147,14 @@ GithubUpdater::ExtractPatch() {
 	}
 	try {
 		elz::extractZip(GetZipPath(), GetPatchPath());
-	} catch (...) {
-		return false;
+	} catch (const std::exception &e) {
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::StartUp,
+			std::string("unable to extract zip: ") + e.what());
+		result = false;
 	}
-	return true;
+	return result;
 }
 
 bool
