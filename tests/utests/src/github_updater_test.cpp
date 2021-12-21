@@ -210,6 +210,13 @@ TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
+TEST_F(GithubTestFixture, can_handle_negative_numbers)  // NOLINT
+{
+	bool isNewer = false;
+	ASSERT_TRUE(biz::GithubUpdater::CompareVersion("v0.0.-1", "v0.0.0", isNewer));
+	EXPECT_TRUE(isNewer);
+}
+
 TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
 {
 	GithubUpdaterStub subject;
