@@ -11,6 +11,7 @@ set(MZ_LZMA OFF)
 set(MZ_LZMA OFF)
 set(MZ_BZIP2 OFF)
 set(MZ_DECOMPRESS_ONLY ON)
+set(ELZIP_EXCLUDE_ZLIB ON)
 
 add_subdirectory("extern/11Zip" EXCLUDE_FROM_ALL)
 set(CURRENT_BUILD_TESTING ${BUILD_TESTING}) # NOTE(andreas): cpr sets BUILD_TESTING to OFF in there cmake file.

@@ -147,11 +147,17 @@ GithubUpdater::ExtractPatch() {
 	}
 	try {
 		elz::extractZip(GetZipPath(), GetPatchPath());
-	} catch (const std::exception &e) {
+	} catch (const std::exception& e) {
 		infas::ILogger::Log(
 			infas::LogLevel::Fatal,
 			infas::LogType::StartUp,
 			std::string("unable to extract zip: ") + e.what());
+		result = false;
+	} catch (...) {
+		infas::ILogger::Log(
+			infas::LogLevel::Fatal,
+			infas::LogType::StartUp,
+			"something whent wrong ¯\\_(ツ)_/¯.");
 		result = false;
 	}
 	return result;
@@ -173,7 +179,7 @@ GithubUpdater::ApplyPatch() {
 			// NOTE(andreas): there is no easy way to concatinate a string with a path without
 			// adding a '/'
 			std::filesystem::rename(file, file.u8string() + ".old");
-			// TODO(andreas): what if the .old file also already exists?
+			std::filesystem::permissions(it, std::filesystem::status(file).permissions());
 		}
 		std::filesystem::create_directories(file.parent_path());
 		std::filesystem::rename(it, file);
