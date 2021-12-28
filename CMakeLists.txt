@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.15)
 
-project ("Einkaufsliste" C CXX)
+project ("Einkaufsliste" VERSION 0.0.1 LANGUAGES C CXX)
 
 set(CPR_USE_SYSTEM_GTEST ON)
 set(CPR_BUILD_TESTS OFF)

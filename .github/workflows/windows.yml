@@ -13,6 +13,7 @@ env:
 jobs:
   test:
     name: Build on Windows
+    timeout-minutes: 10
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -26,4 +27,9 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/build
       run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure
-      
+    - name: Install
+      run: cmake --build ${{github.workspace}}/build --target install
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        path: ${{github.workspace}}/bin

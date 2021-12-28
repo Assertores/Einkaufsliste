@@ -5,6 +5,9 @@ target_link_libraries(Einkaufsliste
 		biz
 )
 
+install(TARGETS Einkaufsliste RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(CODE "file(WRITE ${CMAKE_INSTALL_BINDIR}/version.txt v${CMAKE_PROJECT_VERSION})")
+
 add_library(biz STATIC)
 
 target_compile_definitions(biz PUBLIC _CRT_SECURE_NO_WARNINGS)
@@ -116,4 +119,3 @@ target_sources(biz
 		"src/platform_linux.cpp"
 )
 endif()
-
