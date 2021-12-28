@@ -5,8 +5,22 @@ target_link_libraries(Einkaufsliste
 		biz
 )
 
-install(TARGETS Einkaufsliste RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(CODE "file(WRITE ${CMAKE_INSTALL_BINDIR}/version.txt v${CMAKE_PROJECT_VERSION})")
+add_custom_command(
+	TARGET Einkaufsliste POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bin
+)
+add_custom_command(
+	TARGET Einkaufsliste POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/bin
+)
+add_custom_command(
+	TARGET Einkaufsliste POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Einkaufsliste> ${CMAKE_CURRENT_SOURCE_DIR}/bin/$<TARGET_FILE_NAME:Einkaufsliste>
+)
+add_custom_command(
+	TARGET Einkaufsliste POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E echo_append v${CMAKE_PROJECT_VERSION}> ${CMAKE_CURRENT_SOURCE_DIR}/bin/version.txt
+)
 
 add_library(biz STATIC)
 
