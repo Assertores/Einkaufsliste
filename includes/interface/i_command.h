@@ -18,7 +18,7 @@ class Command : public ICommand {
 public:
 	std::function<std::unique_ptr<ICommandMemento>()> execute = [this]() {
 		executeCount++;
-		return nullptr;
+		return std::make_unique<CommandMemento>();
 	};
 	std::unique_ptr<ICommandMemento> Execute() override { return execute(); }
 

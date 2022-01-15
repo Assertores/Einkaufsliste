@@ -39,31 +39,49 @@ private:
 namespace fake {
 class FileImpl : public IFileImpl {
 public:
-	std::function<void(const std::filesystem::path&)> open = [this](auto /*unused*/) {
+	std::function<void(const std::filesystem::path&)> open = [this](auto aPath) {
 		openCount++;
+		myPath = aPath;
 	};
 	std::function<void()> save = [this]() { saveCount++; };
 	std::function<void()> refresh = [this]() { refreshCount++; };
 	std::function<std::filesystem::path()> getPath = [this]() {
 		getPathCount++;
-		return std::filesystem::path();
+		return myPath;
 	};
 	std::function<void(std::filesystem::path, std::string_view)> addToKey =
-		[this](auto /*unused*/, auto /*unused*/) { addToKeyCount++; };
-	std::function<void(std::filesystem::path, std::string_view)> removeFromKey =
-		[this](auto /*unused*/, auto /*unused*/) { removeFromKeyCount++; };
-	std::function<void(std::filesystem::path)> clearField = [this](auto /*unused*/) {
+		[this](auto aKey, auto aValue) {
+			addToKeyCount++;
+			myContent[aKey].emplace_back(aValue);
+		};
+	std::function<void(std::filesystem::path, std::string_view)> removeFromKey = [this](
+																					 auto aKey,
+																					 auto aValue) {
+		removeFromKeyCount++;
+		myContent[aKey].erase(std::find(myContent[aKey].begin(), myContent[aKey].end(), aValue));
+	};
+	std::function<void(std::filesystem::path)> clearField = [this](auto aKey) {
+		myContent[aKey].clear();
 		clearFieldCount++;
 	};
-	std::function<std::vector<std::string>(std::filesystem::path)> getField =
-		[this](auto /*unused*/) {
-			getFieldCount++;
-			return std::vector<std::string>();
-		};
+	std::function<std::vector<std::string>(std::filesystem::path)> getField = [this](auto aKey) {
+		getFieldCount++;
+		return myContent.find(aKey)->second;
+	};
 	std::function<std::vector<std::filesystem::path>(std::filesystem::path)> getKeys =
-		[this](auto /*unused*/) {
+		[this](auto aKey) {
 			getKeysCount++;
-			return std::vector<std::filesystem::path>();
+			std::vector<std::filesystem::path> result;
+			for (const auto& it : myContent) {
+				auto relPath = it.first.lexically_relative(aKey);
+				if (relPath != "."
+					&& *relPath.begin()
+						   != "..")	 // NOLINT TODO(andreas): check if key is a parent path
+				{
+					result.push_back(it.first);
+				}
+			}
+			return result;
 		};
 
 	void Open(const std::filesystem::path& aPath) override { open(aPath); }
@@ -94,6 +112,9 @@ public:
 	int clearFieldCount = 0;
 	int getFieldCount = 0;
 	int getKeysCount = 0;
+
+	std::map<std::filesystem::path, std::vector<std::string>> myContent;
+	std::filesystem::path myPath;
 };
 }  // namespace fake
 
