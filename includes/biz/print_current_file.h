@@ -11,12 +11,12 @@
 #include <optional>
 #include <ostream>
 
-namespace common {
+namespace biz {
 class PrintCurrentFile final
 	: public infas::ICommand
-	, public infas::IObserver<std::optional<Recipe>>
-	, public infas::IObserver<std::optional<Week>>
-	, public infas::IObserver<std::optional<List>>
+	, public infas::IObserver<std::optional<common::Recipe>>
+	, public infas::IObserver<std::optional<common::Week>>
+	, public infas::IObserver<std::optional<common::List>>
 	, public std::enable_shared_from_this<PrintCurrentFile> {
 public:
 	static std::shared_ptr<PrintCurrentFile> Create() {
@@ -26,15 +26,15 @@ public:
 	~PrintCurrentFile() override;
 	void SetReferences(
 		std::ostream* aOut,
-		std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe,
-		std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek,
-		std::weak_ptr<Observable<std::optional<List>>> aCurrentList);
+		std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe,
+		std::weak_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek,
+		std::weak_ptr<common::Observable<std::optional<common::List>>> aCurrentList);
 
 	std::unique_ptr<infas::ICommandMemento> Execute() override;
 
-	void OnChange(std::optional<Recipe> aElement) override;
-	void OnChange(std::optional<Week> aElement) override;
-	void OnChange(std::optional<List> aElement) override;
+	void OnChange(std::optional<common::Recipe> aElement) override;
+	void OnChange(std::optional<common::Week> aElement) override;
+	void OnChange(std::optional<common::List> aElement) override;
 
 	// protected:
 	PrintCurrentFile() = default;
@@ -44,11 +44,11 @@ public:
 	PrintCurrentFile& operator=(PrintCurrentFile&&) = default;
 
 private:
-	std::weak_ptr<Observable<std::optional<Recipe>>> myCurrentRecipe;
-	std::weak_ptr<Observable<std::optional<Week>>> myCurrentWeek;
-	std::weak_ptr<Observable<std::optional<List>>> myCurrentList;
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myCurrentRecipe;
+	std::weak_ptr<common::Observable<std::optional<common::Week>>> myCurrentWeek;
+	std::weak_ptr<common::Observable<std::optional<common::List>>> myCurrentList;
 	std::ostream* myOut = nullptr;
 
 	std::shared_ptr<infas::IFile> myCurrentFile;
 };
-}  // namespace common
+}  // namespace biz

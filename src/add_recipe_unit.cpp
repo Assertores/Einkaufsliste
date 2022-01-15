@@ -2,11 +2,11 @@
 
 #include "common/unit.h"
 
-namespace common {
+namespace biz {
 
 class AddRecipeUnitMemento : public infas::ICommandMemento {
 public:
-	AddRecipeUnitMemento(Recipe aRecipe, Unit aNewUnit)
+	AddRecipeUnitMemento(common::Recipe aRecipe, common::Unit aNewUnit)
 		: myRecipe(std::move(aRecipe))
 		, myNewUnit(std::move(aNewUnit)){};
 
@@ -15,8 +15,8 @@ public:
 	void Revert() override { myRecipe.RemoveIngredient(myNewUnit); }
 
 private:
-	Recipe myRecipe;
-	Unit myNewUnit;
+	common::Recipe myRecipe;
+	common::Unit myNewUnit;
 };
 
 std::unique_ptr<infas::ICommandMemento>
@@ -49,9 +49,9 @@ AddRecipeUnit::Execute() {
 void
 AddRecipeUnit::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe)	// NOLINT
 {
 	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace common
+}  // namespace biz

@@ -2,11 +2,11 @@
 
 #include "common/week.h"
 
-namespace common {
+namespace biz {
 void
 OpenWeek::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::weak_ptr<common::Observable<std::optional<Week>>> aWeekObservable) {
+	std::weak_ptr<common::Observable<std::optional<common::Week>>> aWeekObservable) {
 	myFrontend = std::move(aFrontend);
 	myWeekObservable = std::move(aWeekObservable);
 }
@@ -26,8 +26,8 @@ OpenWeek::Execute() {
 		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		file = frontend->AskForFile();
 	}
-	weekObservable->Set(Week(file));
+	weekObservable->Set(common::Week(file));
 
 	return nullptr;
 }
-}  // namespace common
+}  // namespace biz

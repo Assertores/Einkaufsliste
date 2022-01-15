@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace common {
+namespace biz {
 class LogOnConsole : public infas::ILogger {
 public:
 	explicit LogOnConsole(std::ostream& aOut)
@@ -14,4 +14,4 @@ public:
 private:
 	std::ostream& myOut;
 };
-}  // namespace common
+}  // namespace biz

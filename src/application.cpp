@@ -26,20 +26,20 @@ Application::Application(const AppSettings& aSettings) {
 		"application creation started");
 	switch (aSettings.frontendType) {
 	case FrontendType::Cli: {
-		auto openRecipe = common::OpenRecipe::Create();
-		auto printFile = common::PrintCurrentFile::Create();
-		auto changeRecipeName = common::ChangeRecipeName::Create();
-		auto changeRecipeDescription = common::ChangeRecipeDescription::Create();
-		auto addRecipeIngrediant = common::AddRecipeUnit::Create();
-		auto removeRecipeIngrediant = common::RemoveRecipeUnit::Create();
-		auto openConversion = common::OpenConversionFile::Create();
-		auto openWeek = common::OpenWeek::Create();
-		auto startNewList = common::OpenList::Create();
-		auto addListWeek = common::AddListWeek::Create();
-		auto addListRecipe = common::AddListRecipe::Create();
-		auto compileList = common::CompileList::Create();
-		auto addWeekRecipe = common::AddWeekRecipe::Create();
-		auto removeWeekRecipe = common::RemoveWeekRecipe::Create();
+		auto openRecipe = biz::OpenRecipe::Create();
+		auto printFile = biz::PrintCurrentFile::Create();
+		auto changeRecipeName = biz::ChangeRecipeName::Create();
+		auto changeRecipeDescription = biz::ChangeRecipeDescription::Create();
+		auto addRecipeIngrediant = biz::AddRecipeUnit::Create();
+		auto removeRecipeIngrediant = biz::RemoveRecipeUnit::Create();
+		auto openConversion = biz::OpenConversionFile::Create();
+		auto openWeek = biz::OpenWeek::Create();
+		auto startNewList = biz::OpenList::Create();
+		auto addListWeek = biz::AddListWeek::Create();
+		auto addListRecipe = biz::AddListRecipe::Create();
+		auto compileList = biz::CompileList::Create();
+		auto addWeekRecipe = biz::AddWeekRecipe::Create();
+		auto removeWeekRecipe = biz::RemoveWeekRecipe::Create();
 		CliCommands commands{
 			openRecipe,
 			printFile,

@@ -3,7 +3,7 @@
 #include "common/list.h"
 #include "common/unit_conversion.h"
 
-namespace common {
+namespace biz {
 std::unique_ptr<infas::ICommandMemento>
 CompileList::Execute() {
 	auto sub = myList.lock();
@@ -21,7 +21,7 @@ CompileList::Execute() {
 }
 
 void
-CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<List>>> aList) {
+CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<common::List>>> aList) {
 	myList = std::move(aList);
 }
-}  // namespace common
+}  // namespace biz

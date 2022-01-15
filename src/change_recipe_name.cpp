@@ -1,10 +1,10 @@
 #include "biz/change_recipe_name.h"
 
-namespace common {
+namespace biz {
 
 class ChangeRecipeNameMemento : public infas::ICommandMemento {
 public:
-	ChangeRecipeNameMemento(Recipe aRecipe, std::string aNewName, std::string aPrevName)
+	ChangeRecipeNameMemento(common::Recipe aRecipe, std::string aNewName, std::string aPrevName)
 		: myRecipe(std::move(aRecipe))
 		, myNewName(std::move(aNewName))
 		, myPrevName(std::move(aPrevName)){};
@@ -14,7 +14,7 @@ public:
 	void Revert() override { myRecipe.SetName(myPrevName); }
 
 private:
-	Recipe myRecipe;
+	common::Recipe myRecipe;
 	std::string myNewName;
 	std::string myPrevName;
 };
@@ -51,9 +51,9 @@ ChangeRecipeName::Execute() {
 void
 ChangeRecipeName::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe)	// NOLINT
 {
 	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace common
+}  // namespace biz

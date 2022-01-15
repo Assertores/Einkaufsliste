@@ -3,7 +3,7 @@
 #include "common/list.h"
 #include "common/unit_conversion.h"
 
-namespace common {
+namespace biz {
 std::unique_ptr<infas::ICommandMemento>
 OpenList::Execute() {
 	auto frontend = myFrontend.lock();
@@ -19,7 +19,7 @@ OpenList::Execute() {
 		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		file = frontend->AskForFile();
 	}
-	listObservable->Set(List(file));
+	listObservable->Set(common::List(file));
 
 	return nullptr;
 }
@@ -27,8 +27,8 @@ OpenList::Execute() {
 void
 OpenList::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::weak_ptr<common::Observable<std::optional<List>>> aListObservable) {
+	std::weak_ptr<common::Observable<std::optional<common::List>>> aListObservable) {
 	myFrontend = std::move(aFrontend);
 	myListObservable = std::move(aListObservable);
 }
-}  // namespace common
+}  // namespace biz

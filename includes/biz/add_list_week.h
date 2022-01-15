@@ -9,7 +9,7 @@
 #include <optional>
 #include <string>
 
-namespace common {
+namespace biz {
 class AddListWeek
 	: public infas::ICommand
 	, public std::enable_shared_from_this<AddListWeek> {
@@ -20,7 +20,7 @@ public:
 
 	void SetReferences(
 		std::weak_ptr<infas::IFrontend> aFrontend,
-		std::shared_ptr<Observable<std::optional<List>>> aCurrentList);
+		std::shared_ptr<common::Observable<std::optional<common::List>>> aCurrentList);
 
 	// protected:
 	AddListWeek() = default;
@@ -32,6 +32,6 @@ public:
 
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
-	std::weak_ptr<Observable<std::optional<List>>> myList;
+	std::weak_ptr<common::Observable<std::optional<common::List>>> myList;
 };
-}  // namespace common
+}  // namespace biz

@@ -3,7 +3,7 @@
 #include "interface/i_command.h"
 #include "interface/i_frontend.h"
 
-namespace common {
+namespace biz {
 class OpenConversionFile : public infas::ICommand {
 public:
 	static std::shared_ptr<OpenConversionFile> Create() {
@@ -20,4 +20,4 @@ public:
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 };
-}  // namespace common
+}  // namespace biz

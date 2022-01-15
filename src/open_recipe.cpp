@@ -2,7 +2,7 @@
 
 #include "common/recipe.h"
 
-namespace common {
+namespace biz {
 void
 OpenRecipe::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
@@ -26,8 +26,8 @@ OpenRecipe::Execute() {
 		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		file = frontend->AskForFile();
 	}
-	recipeObservable->Set(Recipe(file));
+	recipeObservable->Set(common::Recipe(file));
 
 	return nullptr;
 }
-}  // namespace common
+}  // namespace biz

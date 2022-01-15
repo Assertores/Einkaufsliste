@@ -8,14 +8,14 @@
 #include <memory>
 #include <optional>
 
-namespace common {
+namespace biz {
 class OpenWeek : public infas::ICommand {
 public:
 	static std::shared_ptr<OpenWeek> Create() { return std::make_shared<OpenWeek>(); }
 
 	void SetReferences(
 		std::weak_ptr<infas::IFrontend> aFrontend,
-		std::weak_ptr<common::Observable<std::optional<Week>>> aWeekObservable);
+		std::weak_ptr<common::Observable<std::optional<common::Week>>> aWeekObservable);
 
 	std::unique_ptr<infas::ICommandMemento> Execute() override;
 
@@ -24,6 +24,6 @@ public:
 
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
-	std::weak_ptr<common::Observable<std::optional<Week>>> myWeekObservable;
+	std::weak_ptr<common::Observable<std::optional<common::Week>>> myWeekObservable;
 };
-}  // namespace common
+}  // namespace biz

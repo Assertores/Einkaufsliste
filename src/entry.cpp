@@ -14,7 +14,7 @@ namespace biz {
 int
 Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::istream& aInput) {
 	{
-		common::LogOnConsole logger(aOutput);
+		biz::LogOnConsole logger(aOutput);
 		infas::ILogger::SetLogLevel(infas::LogLevel::Error);
 		infas::ILogger::SetLogMask(infas::locLogMaskAll);
 		infas::ILogger::SetImplementation(std::move(logger));

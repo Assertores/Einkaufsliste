@@ -9,7 +9,7 @@
 #include <optional>
 #include <string>
 
-namespace common {
+namespace biz {
 class RemoveWeekRecipe
 	: public infas::ICommand
 	, public std::enable_shared_from_this<RemoveWeekRecipe> {
@@ -22,7 +22,7 @@ public:
 
 	void SetReferences(
 		std::weak_ptr<infas::IFrontend> aFrontend,
-		std::shared_ptr<Observable<std::optional<Week>>> aCurrentWeek);
+		std::shared_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek);
 
 	// protected:
 	RemoveWeekRecipe() = default;
@@ -34,6 +34,6 @@ public:
 
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
-	std::weak_ptr<Observable<std::optional<Week>>> myWeek;
+	std::weak_ptr<common::Observable<std::optional<common::Week>>> myWeek;
 };
-}  // namespace common
+}  // namespace biz

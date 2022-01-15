@@ -2,10 +2,14 @@
 
 #include "common/unit.h"
 
-namespace common {
+namespace biz {
 class RemoveWeekRecipeMemento : public infas::ICommandMemento {
 public:
-	RemoveWeekRecipeMemento(Week aWeek, Recipe aNewRecipe, WeekDay aWeekDay, DayTime aDayTime)
+	RemoveWeekRecipeMemento(
+		common::Week aWeek,
+		common::Recipe aNewRecipe,
+		common::WeekDay aWeekDay,
+		common::DayTime aDayTime)
 		: myWeek(std::move(aWeek))
 		, myNewRecipe(std::move(aNewRecipe))
 		, myWeekDay(aWeekDay)
@@ -16,10 +20,10 @@ public:
 	void Revert() override { myWeek.AddRecipe(myNewRecipe, myWeekDay, myDayTime); }
 
 private:
-	Week myWeek;
-	Recipe myNewRecipe;
-	WeekDay myWeekDay;
-	DayTime myDayTime;
+	common::Week myWeek;
+	common::Recipe myNewRecipe;
+	common::WeekDay myWeekDay;
+	common::DayTime myDayTime;
 };
 
 std::unique_ptr<infas::ICommandMemento>
@@ -44,12 +48,12 @@ RemoveWeekRecipe::Execute() {
 	if (!frontend) {
 		return nullptr;
 	}
-	WeekDay day{};
+	common::WeekDay day{};
 	while (!frontend->AskForWeekDay(day)) {
 		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		// TODO(andreas): handle error
 	}
-	DayTime time{};
+	common::DayTime time{};
 	while (!frontend->AskForDayTime(time)) {
 		infas::ILogger::Log(infas::LogLevel::Error, infas::LogType::Commands, "invalid input");
 		// TODO(andreas): handle error
@@ -64,9 +68,9 @@ RemoveWeekRecipe::Execute() {
 void
 RemoveWeekRecipe::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<Week>>> aCurrentWeek)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek)	// NOLINT
 {
 	myWeek = aCurrentWeek;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace common
+}  // namespace biz

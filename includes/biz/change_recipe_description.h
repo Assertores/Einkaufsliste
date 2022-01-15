@@ -9,7 +9,7 @@
 #include <optional>
 #include <string>
 
-namespace common {
+namespace biz {
 class ChangeRecipeDescription
 	: public infas::ICommand
 	, public std::enable_shared_from_this<ChangeRecipeDescription> {
@@ -22,7 +22,7 @@ public:
 
 	void SetReferences(
 		std::weak_ptr<infas::IFrontend> aFrontend,
-		std::shared_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe);
+		std::shared_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe);
 
 	// protected:
 	ChangeRecipeDescription() = default;
@@ -34,6 +34,6 @@ public:
 
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
-	std::weak_ptr<Observable<std::optional<Recipe>>> myRecipe;
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipe;
 };
-}  // namespace common
+}  // namespace biz

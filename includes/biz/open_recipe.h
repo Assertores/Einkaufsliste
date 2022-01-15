@@ -8,7 +8,7 @@
 #include <memory>
 #include <optional>
 
-namespace common {
+namespace biz {
 class OpenRecipe : public infas::ICommand {
 public:
 	static std::shared_ptr<OpenRecipe> Create() { return std::make_shared<OpenRecipe>(); }
@@ -26,4 +26,4 @@ private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipeObservable;
 };
-}  // namespace common
+}  // namespace biz

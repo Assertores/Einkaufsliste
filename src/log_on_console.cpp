@@ -6,7 +6,7 @@
 
 static constexpr auto locBufferSize = 32;
 
-namespace common {
+namespace biz {
 void
 LogOnConsole::DoLog(infas::LogLevel aLevel, infas::LogType aType, std::string_view aLog) {
 	auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -23,4 +23,4 @@ LogOnConsole::DoLog(infas::LogLevel aLevel, infas::LogType aType, std::string_vi
 	myOut << time.c_str() << " | " << infas::ToString(aLevel) << ' ' << infas::ToString(aType)
 		  << ": " << aLog << '\n';
 }
-}  // namespace common
+}  // namespace biz

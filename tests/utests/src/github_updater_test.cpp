@@ -153,7 +153,7 @@ protected:
 
 	void TearDown() override {
 		if (HasFailure()) {
-			infas::ILogger::SetImplementation(common::LogOnConsole(std::cout));
+			infas::ILogger::SetImplementation(biz::LogOnConsole(std::cout));
 			std::cout << "===== ===== assetContent ===== =====\n";
 			for (const auto& it : std::filesystem::recursive_directory_iterator(
 					 std::filesystem::path(locAssetDir))) {
@@ -210,7 +210,7 @@ TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, can_handle_negative_numbers)  // NOLINT
+TEST_F(GithubTestFixture, can_handle_negative_numbers)	// NOLINT
 {
 	bool isNewer = false;
 	ASSERT_TRUE(biz::GithubUpdater::CompareVersion("v0.0.-1", "v0.0.0", isNewer));

@@ -1,12 +1,12 @@
 #include "biz/print_current_file.h"
 
-namespace common {
+namespace biz {
 void
 PrintCurrentFile::SetReferences(
 	std::ostream* aOut,
-	std::weak_ptr<Observable<std::optional<Recipe>>> aCurrentRecipe,
-	std::weak_ptr<Observable<std::optional<Week>>> aCurrentWeek,
-	std::weak_ptr<Observable<std::optional<List>>> aCurrentList) {
+	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe,
+	std::weak_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek,
+	std::weak_ptr<common::Observable<std::optional<common::List>>> aCurrentList) {
 	myOut = aOut;
 	myCurrentRecipe = std::move(aCurrentRecipe);
 	myCurrentWeek = std::move(aCurrentWeek);
@@ -57,26 +57,26 @@ PrintCurrentFile::Execute() {
 }
 
 void
-PrintCurrentFile::OnChange(std::optional<Recipe> aElement) {
+PrintCurrentFile::OnChange(std::optional<common::Recipe> aElement) {
 	if (!aElement.has_value()) {
 		return;
 	}
-	myCurrentFile = std::make_shared<Recipe>(std::move(aElement.value()));
+	myCurrentFile = std::make_shared<common::Recipe>(std::move(aElement.value()));
 }
 
 void
-PrintCurrentFile::OnChange(std::optional<Week> aElement) {
+PrintCurrentFile::OnChange(std::optional<common::Week> aElement) {
 	if (!aElement.has_value()) {
 		return;
 	}
-	myCurrentFile = std::make_shared<Week>(std::move(aElement.value()));
+	myCurrentFile = std::make_shared<common::Week>(std::move(aElement.value()));
 }
 
 void
-PrintCurrentFile::OnChange(std::optional<List> aElement) {
+PrintCurrentFile::OnChange(std::optional<common::List> aElement) {
 	if (!aElement.has_value()) {
 		return;
 	}
-	myCurrentFile = std::make_shared<List>(std::move(aElement.value()));
+	myCurrentFile = std::make_shared<common::List>(std::move(aElement.value()));
 }
-}  // namespace common
+}  // namespace biz

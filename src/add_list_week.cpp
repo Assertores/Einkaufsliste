@@ -2,7 +2,7 @@
 
 #include "common/unit.h"
 
-namespace common {
+namespace biz {
 #if not_implemented
 class AddListRecipeMemento : public interface::ICommandMemento {
 public:
@@ -52,7 +52,7 @@ AddListWeek::Execute() {
 		file = frontend->AskForFile();
 	}
 
-	list->AddWeek(Week(file));
+	list->AddWeek(common::Week(file));
 
 	return nullptr;
 }
@@ -60,9 +60,9 @@ AddListWeek::Execute() {
 void
 AddListWeek::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<Observable<std::optional<List>>> aCurrentList)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::List>>> aCurrentList)	// NOLINT
 {
 	myList = aCurrentList;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace common
+}  // namespace biz
