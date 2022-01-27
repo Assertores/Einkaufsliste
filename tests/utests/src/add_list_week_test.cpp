@@ -1,17 +1,23 @@
-#include "biz/add_list_recipe.h"
+#include "biz/add_list_week.h"
 
 #include "interface/i_file_impl.h"
 
 #include <gtest/gtest.h>
 
-TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
+TEST(AddListWeek, file_is_added_to_list)  // NOLINT
 {
 	auto mockList = std::make_shared<infas::fake::FileImpl>();
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 
-	auto subject = biz::AddListRecipe::Create();
+	auto week = common::Week(infas::fake::Frontend::defaultFilePath);
+	week.AddRecipe(
+		common::Recipe(infas::fake::Frontend::defaultFilePath),
+		common::WeekDay::Saturday,
+		common::DayTime{10, 20});  // NOLINT
+
+	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
 
 	subject->Execute();
@@ -29,23 +35,29 @@ TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
+TEST(AddListWeek, adding_file_to_list_can_not_be_undone)  // NOLINT
 {
 	auto mockList = std::make_shared<infas::fake::FileImpl>();
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 
-	auto subject = biz::AddListRecipe::Create();
+	auto week = common::Week(infas::fake::Frontend::defaultFilePath);
+	week.AddRecipe(
+		common::Recipe(infas::fake::Frontend::defaultFilePath),
+		common::WeekDay::Saturday,
+		common::DayTime{10, 20});  // NOLINT
+
+	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
 
 	auto memento = subject->Execute();
 	EXPECT_EQ(memento, nullptr);
-	
+
 	infas::IFileImpl::Clear();
 }
 
-TEST(AddListRecipe, file_is_removed_to_list_by_memento)	 // NOLINT
+TEST(AddListWeek, file_is_removed_to_list_by_memento)  // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::make_shared<infas::fake::FileImpl>();
@@ -53,7 +65,7 @@ TEST(AddListRecipe, file_is_removed_to_list_by_memento)	 // NOLINT
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 
-	auto subject = biz::AddListRecipe::Create();
+	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
 
 	auto memento = subject->Execute();
@@ -68,11 +80,11 @@ TEST(AddListRecipe, file_is_removed_to_list_by_memento)	 // NOLINT
 		}
 	}
 	EXPECT_FALSE(containsFile);
-	
+
 	infas::IFileImpl::Clear();
 }
 
-TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
+TEST(AddListWeek, file_is_readded_to_list_by_memento)  // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::make_shared<infas::fake::FileImpl>();
@@ -80,7 +92,7 @@ TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 
-	auto subject = biz::AddListRecipe::Create();
+	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
 
 	auto memento = subject->Execute();
@@ -96,6 +108,6 @@ TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
 		}
 	}
 	EXPECT_TRUE(containsFile);
-	
+
 	infas::IFileImpl::Clear();
 }

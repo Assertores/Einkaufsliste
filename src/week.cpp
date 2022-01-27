@@ -5,9 +5,7 @@
 #include <algorithm>
 #include <sstream>
 
-static constexpr const char* locDescriptionKey = "Description";
-static constexpr const char* locIngredientsKey = "Ingredients";
-static constexpr const char* locNameKey = "Name";
+static const std::filesystem::path locDataKey = "Data";
 
 namespace common {
 std::string
@@ -100,7 +98,7 @@ Week::Print() const {
 
 	for (const auto& day : days) {
 		result << day << '\n';
-		for (const auto& it : GetSubKeys(day)) {
+		for (const auto& it : GetSubKeys(locDataKey / day)) {
 			result << it.filename().string() << " | " << ReadFromField(it) << '\n';
 		}
 	}
@@ -110,21 +108,21 @@ Week::Print() const {
 
 void
 Week::AddRecipe(const Recipe& aRecipe, WeekDay aWeekDay, DayTime aDayTime) {
-	std::filesystem::path key(ToString(aWeekDay));
+	std::filesystem::path key = locDataKey /ToString(aWeekDay);
 	key /= ToString(aDayTime);
 	WriteField(key, aRecipe.GetFile());
 }
 
 Recipe
 Week::GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const {
-	std::filesystem::path key(ToString(aWeekDay));
+	std::filesystem::path key = locDataKey / ToString(aWeekDay);
 	key /= ToString(aDayTime);
 	return Recipe(ReadFromField(key));
 }
 
 void
 Week::RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime) {
-	std::filesystem::path key(ToString(aWeekDay));
+	std::filesystem::path key = locDataKey / ToString(aWeekDay);
 	key /= ToString(aDayTime);
 	WriteField(key, "");
 }
@@ -132,7 +130,7 @@ Week::RemoveRecipe(WeekDay aWeekDay, DayTime aDayTime) {
 std::vector<Recipe>
 Week::GetAllRecipes() const {
 	std::vector<Recipe> result;
-	auto keys = GetSubKeys("");
+	auto keys = GetSubKeys(locDataKey);
 	result.reserve(keys.size());
 	for (const auto& it : keys) {
 		result.emplace_back(ReadFromField(it));

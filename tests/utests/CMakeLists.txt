@@ -17,6 +17,7 @@ target_link_libraries(UnitTests
 target_sources(UnitTests
 	PRIVATE
 		"src/add_list_recipe_test.cpp"
+		"src/add_list_week_test.cpp"
 		"src/argument_parser_test.cpp"
 		"src/command_chain_test.cpp"
 		"src/file_implementation_test.cpp"
