@@ -66,7 +66,8 @@ public:
 	};
 	std::function<std::vector<std::string>(std::filesystem::path)> getField = [this](auto aKey) {
 		getFieldCount++;
-		return myContent.find(aKey)->second;
+		auto tmp = myContent.find(aKey);
+		return tmp == myContent.end() ? std::vector<std::string>{} : tmp->second;
 	};
 	std::function<std::vector<std::filesystem::path>(std::filesystem::path)> getKeys =
 		[this](auto aKey) {

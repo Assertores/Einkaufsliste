@@ -44,7 +44,7 @@ public:
 	};
 	std::function<common::Unit()> askForUnit = [this]() {
 		askForUnitCount++;
-		return common::Unit{0, "", ""};
+		return common::Unit{12, "kg", "Apple"}; // NOLINT
 	};
 	std::function<std::string()> askForText = [this]() {
 		askForTextCount++;

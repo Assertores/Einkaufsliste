@@ -59,6 +59,9 @@ IFile::ReadFromField(const std::filesystem::path& aKey) const {
 void
 IFile::AddToField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue) {
 	for (const auto& it : aValue) {
+		if(it.empty()){
+			continue;
+		}
 		myFileImplementation->AddToKey(aKey, it);
 	}
 }
