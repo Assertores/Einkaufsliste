@@ -22,6 +22,7 @@ target_sources(UnitTests
 		"src/add_week_recipe_test.cpp"
 		"src/argument_parser_test.cpp"
 		"src/change_recipe_description_test.cpp"
+		"src/change_recipe_name_test.cpp"
 		"src/command_chain_test.cpp"
 		"src/file_implementation_test.cpp"
 		"src/github_updater_test.cpp"
