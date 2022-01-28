@@ -57,7 +57,7 @@ TEST(AddListWeek, adding_file_to_list_can_not_be_undone)  // NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(AddListWeek, file_is_removed_to_list_by_memento)  // NOLINT
+TEST(AddListWeek, file_is_removed_from_list_by_memento)	 // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::make_shared<infas::fake::FileImpl>();

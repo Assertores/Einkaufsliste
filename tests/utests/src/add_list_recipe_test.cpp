@@ -41,11 +41,11 @@ TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
 
 	auto memento = subject->Execute();
 	EXPECT_EQ(memento, nullptr);
-	
+
 	infas::IFileImpl::Clear();
 }
 
-TEST(AddListRecipe, file_is_removed_to_list_by_memento)	 // NOLINT
+TEST(AddListRecipe, file_is_removed_from_list_by_memento)  // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::make_shared<infas::fake::FileImpl>();
@@ -68,7 +68,7 @@ TEST(AddListRecipe, file_is_removed_to_list_by_memento)	 // NOLINT
 		}
 	}
 	EXPECT_FALSE(containsFile);
-	
+
 	infas::IFileImpl::Clear();
 }
 
@@ -96,6 +96,6 @@ TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
 		}
 	}
 	EXPECT_TRUE(containsFile);
-	
+
 	infas::IFileImpl::Clear();
 }
