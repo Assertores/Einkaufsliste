@@ -6,7 +6,8 @@
 
 TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
 {
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
@@ -31,7 +32,8 @@ TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
 
 TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
 {
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
@@ -49,7 +51,8 @@ TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
 TEST(AddListRecipe, file_is_removed_from_list_by_memento)  // NOLINT
 {
 	GTEST_SKIP();
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
@@ -76,7 +79,8 @@ TEST(AddListRecipe, file_is_removed_from_list_by_memento)  // NOLINT
 TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
 {
 	GTEST_SKIP();
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));

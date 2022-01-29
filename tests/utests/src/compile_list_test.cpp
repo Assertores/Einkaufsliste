@@ -25,7 +25,8 @@ TEST(CompileList, list_is_compiled)	 // NOLINT
 	SetupMockUnitConvertion();
 	const common::Unit unit(12, "kg", "wfndsauk");
 
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 	common::Recipe(mockList).AddIngredient(unit);
@@ -53,7 +54,8 @@ TEST(CompileList, list_is_compiled)	 // NOLINT
 
 TEST(CompileList, compiling_a_list_can_not_be_undone)  // NOLINT
 {
-	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
 	list->Set(std::make_optional<common::List>(mockList));
 

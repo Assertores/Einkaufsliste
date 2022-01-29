@@ -45,7 +45,9 @@ TEST(RemoveWeekRecipe, recipe_is_readded_to_week_by_memento)  // NOLINT
 	memento->Revert();
 
 	EXPECT_GT(mockWeek->myContent.size(), 1);
-	const auto result = common::Week(mockWeek).GetRecipe(infas::fake::Frontend::defaultWeekDay, infas::fake::Frontend::defaultDayTime);
+	const auto result = common::Week(mockWeek).GetRecipe(
+		infas::fake::Frontend::defaultWeekDay,
+		infas::fake::Frontend::defaultDayTime);
 	EXPECT_EQ(result, common::Recipe(infas::fake::Frontend::defaultFilePath));
 
 	infas::IFileImpl::Clear();

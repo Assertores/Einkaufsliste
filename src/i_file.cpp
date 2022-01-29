@@ -44,7 +44,7 @@ IFile::FieldIsArray(const std::filesystem::path& aKey) const {
 void
 IFile::WriteField(const std::filesystem::path& aKey, std::string_view aValue) {
 	myFileImplementation->ClearField(aKey);
-	if(aValue.empty()){
+	if (aValue.empty()) {
 		return;
 	}
 	myFileImplementation->AddToKey(aKey, aValue);
@@ -62,7 +62,7 @@ IFile::ReadFromField(const std::filesystem::path& aKey) const {
 void
 IFile::AddToField(const std::filesystem::path& aKey, const std::vector<std::string_view>& aValue) {
 	for (const auto& it : aValue) {
-		if(it.empty()){
+		if (it.empty()) {
 			continue;
 		}
 		myFileImplementation->AddToKey(aKey, it);

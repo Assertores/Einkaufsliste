@@ -108,7 +108,7 @@ Week::Print() const {
 
 void
 Week::AddRecipe(const Recipe& aRecipe, WeekDay aWeekDay, DayTime aDayTime) {
-	std::filesystem::path key = locDataKey /ToString(aWeekDay);
+	std::filesystem::path key = locDataKey / ToString(aWeekDay);
 	key /= ToString(aDayTime);
 	WriteField(key, aRecipe.GetFile());
 }

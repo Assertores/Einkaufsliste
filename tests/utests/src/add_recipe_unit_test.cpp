@@ -21,7 +21,8 @@ SetupMockUnitConvertion() {
 TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -41,7 +42,8 @@ TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
 TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -61,7 +63,8 @@ TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
 TEST(AddRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));

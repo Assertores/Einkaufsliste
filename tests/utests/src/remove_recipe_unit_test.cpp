@@ -18,11 +18,12 @@ SetupMockUnitConvertion() {
 }
 }  // namespace
 
-TEST(RemoveRecipeUnit, unit_is_removed_from_recipe)  // NOLINT
+TEST(RemoveRecipeUnit, unit_is_removed_from_recipe)	 // NOLINT
 {
 	SetupMockUnitConvertion();
 
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -40,11 +41,12 @@ TEST(RemoveRecipeUnit, unit_is_removed_from_recipe)  // NOLINT
 	EXPECT_EQ(mockRecipe->myContent["Ingredients"].size(), 0);
 }
 
-TEST(RemoveRecipeUnit, unit_is_readded_to_recipe_by_memento)	 // NOLINT
+TEST(RemoveRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
 {
 	SetupMockUnitConvertion();
 
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -66,7 +68,8 @@ TEST(RemoveRecipeUnit, unit_is_removed_again_from_recipe_by_memento)  // NOLINT
 {
 	SetupMockUnitConvertion();
 
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));

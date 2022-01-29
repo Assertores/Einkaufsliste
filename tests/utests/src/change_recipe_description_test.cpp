@@ -6,7 +6,8 @@
 
 TEST(ChangeRecipeDescription, description_is_added_to_recipe)  // NOLINT
 {
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -27,7 +28,8 @@ TEST(ChangeRecipeDescription, description_is_added_to_recipe)  // NOLINT
 TEST(ChangeRecipeDescription, description_is_reverted_to_previous_description_by_memento)  // NOLINT
 {
 	std::string_view firstDescription = "bnzdsfbasefksadf";
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -48,7 +50,8 @@ TEST(ChangeRecipeDescription, description_is_reverted_to_previous_description_by
 
 TEST(ChangeRecipeDescription, description_is_readded_to_recipe_by_memento)	// NOLINT
 {
-	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
+		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
