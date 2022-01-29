@@ -1,13 +1,13 @@
-
 #include "biz/github_updater.h"
 
+#include "assets_folder_fixture.h"
 #include "biz/log_on_console.h"
 
 #include <gtest/gtest.h>
 
 #include <filesystem>
 
-static const std::filesystem::path locAssetDir{ASSETS_DIR "_Live"};
+using GithubTestFixture = AssetsFolderFixture;
 
 class GithubUpdaterStub : public biz::GithubUpdater {
 public:
@@ -136,42 +136,6 @@ public:
 	std::string myAssetNameLin = "Einkaufsliste_1.0.0_linux.zip";
 	std::string myDownloadUrlWin = "www.something.com/to/download/win10.zip";
 	std::string myDownloadUrlLin = "www.something.com/to/download/linux.zip";
-};
-
-class GithubTestFixture : public ::testing::Test {
-protected:
-	void SetUp() override {
-		std::filesystem::copy(
-			ASSETS_DIR,
-			locAssetDir,
-			std::filesystem::copy_options::overwrite_existing
-				| std::filesystem::copy_options::recursive);
-
-		infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
-		infas::ILogger::SetLogMask(infas::locLogMaskAll);
-	}
-
-	void TearDown() override {
-		if (HasFailure()) {
-			infas::ILogger::SetImplementation(biz::LogOnConsole(std::cout));
-			std::cout << "===== ===== assetContent ===== =====\n";
-			for (const auto& it : std::filesystem::recursive_directory_iterator(
-					 std::filesystem::path(locAssetDir))) {
-				std::cout << " > " << it.path().u8string() << '\n';
-				if (it.is_regular_file()) {
-					auto file = std::ifstream(it.path());
-					std::cout << std::string(
-						(std::istreambuf_iterator<char>(file)),
-						(std::istreambuf_iterator<char>()))
-							  << '\n';
-					file.close();
-				}
-			}
-		}
-		infas::ILogger::Clear();
-
-		std::filesystem::remove_all(locAssetDir);
-	}
 };
 
 TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)  // NOLINT

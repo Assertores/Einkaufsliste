@@ -6,6 +6,8 @@
 
 #include <thread>
 
+// TODO(andreas): ingetrate asset folder fixture
+
 using namespace std::chrono_literals;
 
 static constexpr auto locSleepTime = 5ms;

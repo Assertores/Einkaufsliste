@@ -11,3 +11,8 @@ target_link_libraries(MTStartProcess
 	PRIVATE
 		biz
 )
+
+target_include_directories(MTStartProcess
+	PUBLIC
+		"../utility"
+)

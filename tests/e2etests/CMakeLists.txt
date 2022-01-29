@@ -13,6 +13,11 @@ target_link_libraries(EndToEndTests
 		GTest::gtest_main
 )
 
+target_include_directories(EndToEndTests
+	PUBLIC
+		"../utility"
+)
+
 target_sources(EndToEndTests
 	PRIVATE
 		"src/test.cpp"

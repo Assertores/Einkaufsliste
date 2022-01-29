@@ -13,6 +13,11 @@ target_link_libraries(IntegrationTests
 		GTest::gtest_main
 )
 
+target_include_directories(IntegrationTests
+	PUBLIC
+		"../utility"
+)
+
 target_sources(IntegrationTests
 	PRIVATE
 		"src/recipe_test.cpp"

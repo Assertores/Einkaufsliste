@@ -30,7 +30,8 @@ include(CTest)
 
 include("root.cmake")
 
-add_subdirectory("tests/manualtests")
+add_subdirectory("tests/dependencytests")
 add_subdirectory("tests/e2etests")
-add_subdirectory("tests/utests")
 add_subdirectory("tests/itests")
+add_subdirectory("tests/manualtests")
+add_subdirectory("tests/utests")

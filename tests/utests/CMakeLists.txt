@@ -14,6 +14,11 @@ target_link_libraries(UnitTests
 		GTest::gmock
 )
 
+target_include_directories(UnitTests
+	PUBLIC
+		"../utility"
+)
+
 target_sources(UnitTests
 	PRIVATE
 		"src/add_list_recipe_test.cpp"
