@@ -24,6 +24,7 @@ target_sources(UnitTests
 		"src/change_recipe_description_test.cpp"
 		"src/change_recipe_name_test.cpp"
 		"src/command_chain_test.cpp"
+		"src/compile_list_test.cpp"
 		"src/file_implementation_test.cpp"
 		"src/github_updater_test.cpp"
 		"src/log_on_console_test.cpp"
