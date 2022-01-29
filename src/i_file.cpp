@@ -44,6 +44,9 @@ IFile::FieldIsArray(const std::filesystem::path& aKey) const {
 void
 IFile::WriteField(const std::filesystem::path& aKey, std::string_view aValue) {
 	myFileImplementation->ClearField(aKey);
+	if(aValue.empty()){
+		return;
+	}
 	myFileImplementation->AddToKey(aKey, aValue);
 }
 

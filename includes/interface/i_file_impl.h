@@ -61,7 +61,7 @@ public:
 		myContent[aKey].erase(std::find(myContent[aKey].begin(), myContent[aKey].end(), aValue));
 	};
 	std::function<void(std::filesystem::path)> clearField = [this](auto aKey) {
-		myContent[aKey].clear();
+		myContent.erase(aKey);
 		clearFieldCount++;
 	};
 	std::function<std::vector<std::string>(std::filesystem::path)> getField = [this](auto aKey) {

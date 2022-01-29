@@ -34,6 +34,8 @@ target_sources(UnitTests
 		"src/open_list_test.cpp"
 		"src/open_recipe_test.cpp"
 		"src/open_week_test.cpp"
+		"src/remove_recipe_unit_test.cpp"
+		"src/remove_week_recipe_test.cpp"
 		"src/unit_test.cpp"
 )
 

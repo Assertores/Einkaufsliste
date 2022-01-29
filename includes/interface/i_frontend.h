@@ -26,6 +26,7 @@ class Frontend : public IFrontend {
 public:
 	static constexpr auto defaultFilePath = "./default/file/path.fake";
 	static constexpr auto defaultFolderPath = "./default/folder";
+	static common::Unit DefaultUnion() { return common::Unit{3, "kg", "Apple"}; };
 	static constexpr auto defaultText = "default text";
 	static constexpr auto defaultWeekDay = common::WeekDay::Friday;
 	static constexpr auto defaultDayTime = common::DayTime{4, 23};
@@ -44,7 +45,7 @@ public:
 	};
 	std::function<common::Unit()> askForUnit = [this]() {
 		askForUnitCount++;
-		return common::Unit{12, "kg", "Apple"}; // NOLINT
+		return DefaultUnion();	// NOLINT
 	};
 	std::function<std::string()> askForText = [this]() {
 		askForTextCount++;
