@@ -13,9 +13,9 @@ TEST(Logger, logs_get_replayed)	 // NOLINT
 
 	infas::ILogger::SetImplementation(subject);
 
-	EXPECT_EQ(subject.doLogCount, 1);
-
 	infas::ILogger::Clear();
+
+	EXPECT_EQ(subject.doLogCount, 1);
 }
 
 TEST(Logger, replay_data_is_same)  // NOLINT
@@ -39,11 +39,11 @@ TEST(Logger, replay_data_is_same)  // NOLINT
 
 	infas::ILogger::SetImplementation(std::move(subject));
 
+	infas::ILogger::Clear();
+
 	EXPECT_EQ(outLogLevel, logLevel);
 	EXPECT_EQ(outLogType, logType);
 	EXPECT_EQ(outLog, log);
-
-	infas::ILogger::Clear();
 }
 
 TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT

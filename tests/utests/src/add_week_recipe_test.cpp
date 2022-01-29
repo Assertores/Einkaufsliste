@@ -6,7 +6,7 @@
 
 TEST(AddWeekRecipe, file_is_added_to_week)	// NOLINT
 {
-	auto mockWeek = std::make_shared<infas::fake::FileImpl>();
+	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto week = std::make_shared<common::Observable<std::optional<common::Week>>>();
 	week->Set(std::make_optional<common::Week>(mockWeek));
@@ -15,6 +15,8 @@ TEST(AddWeekRecipe, file_is_added_to_week)	// NOLINT
 	subject->SetReferences(frontend, week);
 
 	subject->Execute();
+
+	infas::IFileImpl::Clear();
 
 	bool containsFile = false;
 	for (const auto& it : mockWeek->myContent) {
@@ -25,13 +27,11 @@ TEST(AddWeekRecipe, file_is_added_to_week)	// NOLINT
 		}
 	}
 	EXPECT_TRUE(containsFile);
-
-	infas::IFileImpl::Clear();
 }
 
 TEST(AddWeekRecipe, file_is_removed_from_week_by_memento)  // NOLINT
 {
-	auto mockWeek = std::make_shared<infas::fake::FileImpl>();
+	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto week = std::make_shared<common::Observable<std::optional<common::Week>>>();
 	week->Set(std::make_optional<common::Week>(mockWeek));
@@ -42,6 +42,8 @@ TEST(AddWeekRecipe, file_is_removed_from_week_by_memento)  // NOLINT
 	auto memento = subject->Execute();
 	memento->Revert();
 
+	infas::IFileImpl::Clear();
+
 	bool containsFile = false;
 	for (const auto& it : mockWeek->myContent) {
 		if (std::find(it.second.begin(), it.second.end(), infas::fake::Frontend::defaultFilePath)
@@ -51,13 +53,11 @@ TEST(AddWeekRecipe, file_is_removed_from_week_by_memento)  // NOLINT
 		}
 	}
 	EXPECT_FALSE(containsFile);
-
-	infas::IFileImpl::Clear();
 }
 
 TEST(AddWeekRecipe, file_is_readded_to_week_by_memento)	 // NOLINT
 {
-	auto mockWeek = std::make_shared<infas::fake::FileImpl>();
+	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto week = std::make_shared<common::Observable<std::optional<common::Week>>>();
 	week->Set(std::make_optional<common::Week>(mockWeek));
@@ -69,6 +69,8 @@ TEST(AddWeekRecipe, file_is_readded_to_week_by_memento)	 // NOLINT
 	memento->Revert();
 	memento->ReExecute();
 
+	infas::IFileImpl::Clear();
+
 	bool containsFile = false;
 	for (const auto& it : mockWeek->myContent) {
 		if (std::find(it.second.begin(), it.second.end(), infas::fake::Frontend::defaultFilePath)
@@ -78,6 +80,4 @@ TEST(AddWeekRecipe, file_is_readded_to_week_by_memento)	 // NOLINT
 		}
 	}
 	EXPECT_TRUE(containsFile);
-
-	infas::IFileImpl::Clear();
 }

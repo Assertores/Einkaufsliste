@@ -16,7 +16,7 @@ TEST(LogOnConsole, log_message_is_containt_in_output)  // NOLINT
 
 	subject.DoLog(infas::LogLevel::Debug, infas::LogType::Generic, stringToLog);
 
-	EXPECT_THAT(output.str(), HasSubstr(stringToLog));
-
 	infas::ILogger::Clear();
+
+	EXPECT_THAT(output.str(), HasSubstr(stringToLog));
 }

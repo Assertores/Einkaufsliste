@@ -4,6 +4,8 @@
 
 #include <gtest/gtest.h>
 
+// TODO(andreas): remove this after Convertion rework
+namespace {
 void
 SetupMockUnitConvertion() {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
@@ -14,11 +16,12 @@ SetupMockUnitConvertion() {
 	common::UnitConversion conversion(mockingFileImpl);
 	common::Unit::SetConversionFiles({conversion});
 }
+}  // namespace
 
 TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::make_shared<infas::fake::FileImpl>();
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -28,17 +31,17 @@ TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
 
 	subject->Execute();
 
+	infas::IFileImpl::Clear();
+
 	// TODO(andreas): Silent Contract? find better way to test this.
 	ASSERT_NE(mockRecipe->myContent.find("Ingredients"), mockRecipe->myContent.end());
 	EXPECT_GT(mockRecipe->myContent["Ingredients"].size(), 0);
-
-	infas::IFileImpl::Clear();
 }
 
 TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::make_shared<infas::fake::FileImpl>();
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -49,16 +52,16 @@ TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
 	auto memento = subject->Execute();
 	memento->Revert();
 
+	infas::IFileImpl::Clear();
+
 	ASSERT_NE(mockRecipe->myContent.find("Ingredients"), mockRecipe->myContent.end());
 	EXPECT_EQ(mockRecipe->myContent["Ingredients"].size(), 0);
-
-	infas::IFileImpl::Clear();
 }
 
 TEST(AddRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
 {
 	SetupMockUnitConvertion();
-	auto mockRecipe = std::make_shared<infas::fake::FileImpl>();
+	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
 	recipe->Set(std::make_optional<common::Recipe>(mockRecipe));
@@ -70,8 +73,8 @@ TEST(AddRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
 	memento->Revert();
 	memento->ReExecute();
 
+	infas::IFileImpl::Clear();
+
 	ASSERT_NE(mockRecipe->myContent.find("Ingredients"), mockRecipe->myContent.end());
 	EXPECT_GT(mockRecipe->myContent["Ingredients"].size(), 0);
-
-	infas::IFileImpl::Clear();
 }
