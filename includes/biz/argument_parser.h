@@ -6,7 +6,7 @@
 #include <string>
 #include <string_view>
 
-namespace common {
+namespace infas {
 struct UpdaterSettings;
 }
 
@@ -20,14 +20,14 @@ using Interpreter = std::map<std::string_view, std::function<void(ArgumentQueue&
 void InterpreteStartArguments(
 	const std::vector<std::string_view>& aArgs,
 	AppSettings& aApp,
-	common::UpdaterSettings& aUpdater,
+	infas::UpdaterSettings& aUpdater,
 	PatcherSettings& aPatcher);
 
 void ReadArgumentsFromFile(
-	AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
+	AppSettings& aApp, infas::UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
 
 Interpreter CreateInterpreter(
-	AppSettings& aApp, common::UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
+	AppSettings& aApp, infas::UpdaterSettings& aUpdater, PatcherSettings& aPatcher);
 
 std::vector<std::pair<int, std::string_view>> RunInterpretion(
 	const std::vector<std::string_view>& aArgs, const Interpreter& aInterpreter);

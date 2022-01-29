@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/updater_template_method.h"
+#include "interface/i_updater_template_method.h"
 
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
@@ -9,7 +9,7 @@
 #include <string>
 
 namespace biz {
-class GithubUpdater : public common::UpdaterTemplateMethod {
+class GithubUpdater : public infas::IUpdaterTemplateMethod {
 public:
 	GithubUpdater();
 	explicit GithubUpdater(std::string aUrl);

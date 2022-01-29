@@ -75,7 +75,6 @@ target_sources(biz
 		"includes/common/platform.h"
 		"includes/common/recipe.h"
 		"includes/common/unit.h"
-		"includes/common/updater_template_method.h"
 		"includes/common/unit_conversion.h"
 		"includes/common/week.h"
 		"includes/interface/i_command.h"
@@ -85,6 +84,7 @@ target_sources(biz
 		"includes/interface/i_frontend.h"
 		"includes/interface/i_logger.h"
 		"includes/interface/i_observer.h"
+		"includes/interface/i_updater_template_method.h"
 	PRIVATE
 		"src/add_list_recipe.cpp"
 		"src/add_list_week.cpp"
@@ -101,6 +101,7 @@ target_sources(biz
 		"src/github_updater.cpp"
 		"src/i_file.cpp"
 		"src/i_logger.cpp"
+		"src/i_updater_template_method.cpp"
 		"src/json_parser.cpp"
 		"src/list.cpp"
 		"src/log_on_console.cpp"
@@ -116,7 +117,6 @@ target_sources(biz
 		"src/remove_week_recipe.cpp"
 		"src/unit_conversion.cpp"
 		"src/unit.cpp"
-		"src/updater_template_method.cpp"
 		"src/week.cpp"
 )
 

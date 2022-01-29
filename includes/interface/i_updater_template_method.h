@@ -2,16 +2,16 @@
 
 #include <string>
 
-namespace common {
+namespace infas {
 struct UpdaterSettings {
 	bool doUpdate;
 	bool getPrerelease;
 	std::string url;
 };
 
-class UpdaterTemplateMethod {
+class IUpdaterTemplateMethod {
 public:
-	virtual ~UpdaterTemplateMethod() = default;
+	virtual ~IUpdaterTemplateMethod() = default;
 
 	bool Execute(const UpdaterSettings& aSettings);
 
@@ -24,4 +24,4 @@ protected:
 	virtual bool ApplyPatch() = 0;
 	virtual void CleanUp() = 0;
 };
-}  // namespace common
+}  // namespace infas

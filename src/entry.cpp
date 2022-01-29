@@ -21,12 +21,12 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	}
 
 	AppSettings appSettings{true, FrontendType::Cli, aOutput, aInput};
-	common::UpdaterSettings updaterSettings{true, false, ""};
+	infas::UpdaterSettings updaterSettings{true, false, ""};
 	PatcherSettings patcherSettings{true};
 
 	InterpreteStartArguments(aArgs, appSettings, updaterSettings, patcherSettings);
 
-	std::unique_ptr<common::UpdaterTemplateMethod> updater = nullptr;
+	std::unique_ptr<infas::IUpdaterTemplateMethod> updater = nullptr;
 	// NOTE(andreas): here we can deside whitch updater to use. currently there is only this one
 	{
 		if (!updaterSettings.url.empty()) {
