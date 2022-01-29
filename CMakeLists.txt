@@ -24,6 +24,8 @@ add_subdirectory("extern/json" EXCLUDE_FROM_ALL)
 # NOTE(andreas): this file contains a non ASCII copyright simbole whitch prevents clang of compiling it.
 # https://github.com/curl/curl/issues/7765
 file(WRITE "${CMAKE_BINARY_DIR}/_deps/curl-src/lib/libcurl.rc" "")
+# NOTE(andreas): cpr is not complient to there on clang-tidy file.
+file(REMOVE "extern/cpr/.clang-tidy")
 
 include("CodeAnalysis.cmake")
 include(CTest)
