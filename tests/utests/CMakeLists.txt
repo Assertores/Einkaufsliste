@@ -31,6 +31,9 @@ target_sources(UnitTests
 		"src/logger_test.cpp"
 		"src/md_parser_test.cpp"
 		"src/observer_test.cpp"
+		"src/open_list_test.cpp"
+		"src/open_recipe_test.cpp"
+		"src/open_week_test.cpp"
 		"src/unit_test.cpp"
 )
 
