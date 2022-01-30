@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <nlohmann/json.hpp>
 
-TEST(Json, can_deal_with_array_on_root_level)  // NOLINT
+TEST(Json, can_deal_with_array_on_root_level) // NOLINT
 {
 	const auto* const json = R"json([{"sasaskd": "asdfsa"}])json";
 	const auto subject = nlohmann::json::parse(json);
@@ -9,7 +9,7 @@ TEST(Json, can_deal_with_array_on_root_level)  // NOLINT
 	EXPECT_TRUE(subject.is_array());
 }
 
-TEST(Json, can_retreave_elements_with_array_opperator)	// NOLINT
+TEST(Json, can_retreave_elements_with_array_opperator) // NOLINT
 {
 	const auto* const json = R"json([{"sasaskd": "asdfsa"}])json";
 	const auto subject = nlohmann::json::parse(json)[0];
@@ -17,7 +17,7 @@ TEST(Json, can_retreave_elements_with_array_opperator)	// NOLINT
 	EXPECT_TRUE(subject.is_object());
 }
 
-TEST(Json, can_find_field_in_object)  // NOLINT
+TEST(Json, can_find_field_in_object) // NOLINT
 {
 	const std::string key = "sasaskd";
 
@@ -27,7 +27,7 @@ TEST(Json, can_find_field_in_object)  // NOLINT
 	EXPECT_TRUE(subject.contains(key));
 }
 
-TEST(Json, can_deal_with_string_field_types)  // NOLINT
+TEST(Json, can_deal_with_string_field_types) // NOLINT
 {
 	const std::string key = "sasaskd";
 
@@ -37,7 +37,7 @@ TEST(Json, can_deal_with_string_field_types)  // NOLINT
 	EXPECT_TRUE(subject[key].is_string());
 }
 
-TEST(Json, can_retreave_string_value_from_field)  // NOLINT
+TEST(Json, can_retreave_string_value_from_field) // NOLINT
 {
 	const std::string key = "sasaskd";
 	const std::string value = "asdfsa";
@@ -48,7 +48,7 @@ TEST(Json, can_retreave_string_value_from_field)  // NOLINT
 	EXPECT_EQ(subject[key].get<std::string>(), value);
 }
 
-TEST(Json, can_iterate_over_array)	// NOLINT
+TEST(Json, can_iterate_over_array) // NOLINT
 {
 	const std::string first = "afzukaesub";
 	const std::string second = "sauneksae";

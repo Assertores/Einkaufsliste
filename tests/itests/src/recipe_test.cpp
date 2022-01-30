@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(Recipe, read_and_write)  // NOLINT
+TEST(Recipe, read_and_write) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };

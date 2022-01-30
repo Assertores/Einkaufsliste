@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(OpenList, list_is_opend)  // NOLINT
+TEST(OpenList, list_is_opend) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();
@@ -20,7 +20,7 @@ TEST(OpenList, list_is_opend)  // NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(OpenList, opening_a_list_can_not_be_undone)  // NOLINT
+TEST(OpenList, opening_a_list_can_not_be_undone) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto list = std::make_shared<common::Observable<std::optional<common::List>>>();

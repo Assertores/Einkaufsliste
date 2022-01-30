@@ -57,4 +57,4 @@ List::Compile() {
 		AddToField(locIngreadianceKey, {Unit::ToString(it.second)});
 	}
 }
-}  // namespace common
+} // namespace common

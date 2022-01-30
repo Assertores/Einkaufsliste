@@ -62,7 +62,7 @@ MdParser::GetKeys(std::filesystem::path aKey) const {
 	for (const auto& it : myContent) {
 		auto relPath = it.first.lexically_relative(aKey);
 		if (relPath != "."
-			&& *relPath.begin() != "..")  // NOLINT TODO(andreas): check if key is a parent path
+			&& *relPath.begin() != "..") // NOLINT TODO(andreas): check if key is a parent path
 		{
 			result.push_back(it.first);
 		}
@@ -137,4 +137,4 @@ MdParser::Serialize(std::ostream& aOut) {
 		aOut << '\n';
 	}
 }
-}  // namespace common
+} // namespace common

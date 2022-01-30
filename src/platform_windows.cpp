@@ -67,8 +67,8 @@ StartProcess(
 
 std::filesystem::path
 CurrentExe() {
-	wchar_t exePath[UNICODE_STRING_MAX_CHARS];						 // NOLINT
-	GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS);	 // NOLINT
+	wchar_t exePath[UNICODE_STRING_MAX_CHARS];						// NOLINT
+	GetModuleFileNameW(nullptr, exePath, UNICODE_STRING_MAX_CHARS); // NOLINT
 	return exePath;
 }
-}  // namespace common
+} // namespace common

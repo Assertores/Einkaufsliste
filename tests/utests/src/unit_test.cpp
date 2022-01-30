@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(Unit, parses_it_correctly)	 // NOLINT
+TEST(Unit, parses_it_correctly) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
@@ -22,7 +22,7 @@ TEST(Unit, parses_it_correctly)	 // NOLINT
 	EXPECT_EQ(result, "apple 1kg & 3kg");
 }
 
-TEST(Unit, different_types_are_not_parsed)	// NOLINT
+TEST(Unit, different_types_are_not_parsed) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
@@ -39,7 +39,7 @@ TEST(Unit, different_types_are_not_parsed)	// NOLINT
 	EXPECT_EQ(result, "");
 }
 
-TEST(Unit, same_types_can_be_added_together)  // NOLINT
+TEST(Unit, same_types_can_be_added_together) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
@@ -57,7 +57,7 @@ TEST(Unit, same_types_can_be_added_together)  // NOLINT
 	EXPECT_EQ(result, "apple 4kg");
 }
 
-TEST(Unit, different_types_can_not_be_added_together)  // NOLINT
+TEST(Unit, different_types_can_not_be_added_together) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };
@@ -75,13 +75,13 @@ TEST(Unit, different_types_can_not_be_added_together)  // NOLINT
 	EXPECT_EQ(result, "apple 1kg");
 }
 
-TEST(Unit, type_can_be_deduced_from_string)	 // NOLINT
+TEST(Unit, type_can_be_deduced_from_string) // NOLINT
 {
 	auto subject = common::Unit::ResultsInUnitsOfType("apple 1kg & 3kg");
 	EXPECT_EQ(subject, "apple");
 }
 
-TEST(Unit, parses_string_into_units)  // NOLINT
+TEST(Unit, parses_string_into_units) // NOLINT
 {
 	auto mockingFileImpl = std::make_shared<infas::fake::FileImpl>();
 	mockingFileImpl->getField = [](auto /*unused*/) { return std::vector<std::string>{"1"}; };

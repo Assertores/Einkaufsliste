@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(RemoveWeekRecipe, recipe_is_removed_from_week)	 // NOLINT
+TEST(RemoveWeekRecipe, recipe_is_removed_from_week) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -26,7 +26,7 @@ TEST(RemoveWeekRecipe, recipe_is_removed_from_week)	 // NOLINT
 	EXPECT_LE(mockWeek->myContent.size(), 1);
 }
 
-TEST(RemoveWeekRecipe, recipe_is_readded_to_week_by_memento)  // NOLINT
+TEST(RemoveWeekRecipe, recipe_is_readded_to_week_by_memento) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -53,7 +53,7 @@ TEST(RemoveWeekRecipe, recipe_is_readded_to_week_by_memento)  // NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(RemoveWeekRecipe, recipe_is_removed_again_from_week_by_memento)  // NOLINT
+TEST(RemoveWeekRecipe, recipe_is_removed_again_from_week_by_memento) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));

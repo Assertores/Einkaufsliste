@@ -23,5 +23,5 @@ public:
 	int reExecuteCount = 0;
 	int revertCount = 0;
 };
-}  // namespace fake
-}  // namespace infas
+} // namespace fake
+} // namespace infas

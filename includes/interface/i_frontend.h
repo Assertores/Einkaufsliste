@@ -45,7 +45,7 @@ public:
 	};
 	std::function<common::Unit()> askForUnit = [this]() {
 		askForUnitCount++;
-		return DefaultUnion();	// NOLINT
+		return DefaultUnion(); // NOLINT
 	};
 	std::function<std::string()> askForText = [this]() {
 		askForTextCount++;
@@ -78,5 +78,5 @@ public:
 	int askForWeekDayCount = 0;
 	int askForDayTimeCount = 0;
 };
-}  // namespace fake
-};	// namespace infas
+} // namespace fake
+}; // namespace infas

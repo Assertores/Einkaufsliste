@@ -39,4 +39,4 @@ private:
 	std::shared_ptr<common::Observable<std::optional<common::List>>> myCurrentList =
 		std::make_shared<common::Observable<std::optional<common::List>>>();
 };
-}  // namespace biz
+} // namespace biz

@@ -24,5 +24,5 @@ public:
 
 	int executeCount = 0;
 };
-}  // namespace fake
-}  // namespace infas
+} // namespace fake
+} // namespace infas

@@ -22,4 +22,4 @@ public:
 
 	void Compile();
 };
-}  // namespace common
+} // namespace common

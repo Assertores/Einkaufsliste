@@ -31,4 +31,4 @@ OpenList::SetReferences(
 	myFrontend = std::move(aFrontend);
 	myListObservable = std::move(aListObservable);
 }
-}  // namespace biz
+} // namespace biz

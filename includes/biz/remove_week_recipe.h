@@ -36,4 +36,4 @@ private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::Week>>> myWeek;
 };
-}  // namespace biz
+} // namespace biz

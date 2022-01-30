@@ -218,8 +218,8 @@ GithubUpdater::GetPatchPath() {
 
 std::filesystem::path
 GithubUpdater::GetVersionPath() {
-	return GetExePath() / "version.txt";  // TODO(andreas): do i want to compile the version number
-										  // into the executable
+	return GetExePath() / "version.txt"; // TODO(andreas): do i want to compile the version number
+										 // into the executable
 }
 
 bool
@@ -254,4 +254,4 @@ GithubUpdater::CompareVersion(
 	aOutIsNewer = false;
 	return true;
 }
-}  // namespace biz
+} // namespace biz

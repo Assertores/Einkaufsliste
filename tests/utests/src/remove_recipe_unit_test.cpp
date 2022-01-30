@@ -16,9 +16,9 @@ SetupMockUnitConvertion() {
 	common::UnitConversion conversion(mockingFileImpl);
 	common::Unit::SetConversionFiles({conversion});
 }
-}  // namespace
+} // namespace
 
-TEST(RemoveRecipeUnit, unit_is_removed_from_recipe)	 // NOLINT
+TEST(RemoveRecipeUnit, unit_is_removed_from_recipe) // NOLINT
 {
 	SetupMockUnitConvertion();
 
@@ -41,7 +41,7 @@ TEST(RemoveRecipeUnit, unit_is_removed_from_recipe)	 // NOLINT
 	EXPECT_EQ(mockRecipe->myContent["Ingredients"].size(), 0);
 }
 
-TEST(RemoveRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
+TEST(RemoveRecipeUnit, unit_is_readded_to_recipe_by_memento) // NOLINT
 {
 	SetupMockUnitConvertion();
 
@@ -64,7 +64,7 @@ TEST(RemoveRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
 	EXPECT_GT(mockRecipe->myContent["Ingredients"].size(), 0);
 }
 
-TEST(RemoveRecipeUnit, unit_is_removed_again_from_recipe_by_memento)  // NOLINT
+TEST(RemoveRecipeUnit, unit_is_removed_again_from_recipe_by_memento) // NOLINT
 {
 	SetupMockUnitConvertion();
 

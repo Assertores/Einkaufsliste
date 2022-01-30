@@ -33,4 +33,4 @@ CommandChain::Redo() {
 	myBackOffset--;
 	return true;
 }
-}  // namespace common
+} // namespace common

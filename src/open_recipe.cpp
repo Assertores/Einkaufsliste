@@ -30,4 +30,4 @@ OpenRecipe::Execute() {
 
 	return nullptr;
 }
-}  // namespace biz
+} // namespace biz

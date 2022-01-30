@@ -18,9 +18,9 @@ LogOnConsole::DoLog(infas::LogLevel aLevel, infas::LogType aType, std::string_vi
 		time.data(),
 		locBufferSize,
 		"%d.%m.%Y %H:%M:%S",
-		localtime(&t));	 // NOLINT(clang-diagnostic-deprecated-declarations)
+		localtime(&t)); // NOLINT(clang-diagnostic-deprecated-declarations)
 
 	myOut << time.c_str() << " | " << infas::ToString(aLevel) << ' ' << infas::ToString(aType)
 		  << ": " << aLog << '\n';
 }
-}  // namespace biz
+} // namespace biz

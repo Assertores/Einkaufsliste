@@ -7,7 +7,7 @@
 
 using testing::HasSubstr;
 
-TEST(LogOnConsole, log_message_is_containt_in_output)  // NOLINT
+TEST(LogOnConsole, log_message_is_containt_in_output) // NOLINT
 {
 	std::string stringToLog = "labsuzfuabef";
 

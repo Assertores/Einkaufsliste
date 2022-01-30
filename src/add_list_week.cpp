@@ -60,9 +60,9 @@ AddListWeek::Execute() {
 void
 AddListWeek::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<common::Observable<std::optional<common::List>>> aCurrentList)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::List>>> aCurrentList) // NOLINT
 {
 	myList = aCurrentList;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace biz
+} // namespace biz

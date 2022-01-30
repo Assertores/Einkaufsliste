@@ -19,7 +19,7 @@ CompareStreams(std::ifstream&& aLhs, std::ifstream&& aRhs) {
 	return aLhs.eof() == aRhs.eof();
 }
 
-TEST_F(ElevenZipFixture, wont_throw_while_unzipping)  // NOLINT
+TEST_F(ElevenZipFixture, wont_throw_while_unzipping) // NOLINT
 {
 	const auto zipPath = locAssetDir / "archive.zip";
 	const auto extractPath = locAssetDir / "extracted";
@@ -29,7 +29,7 @@ TEST_F(ElevenZipFixture, wont_throw_while_unzipping)  // NOLINT
 	EXPECT_NO_THROW(elz::extractZip(zipPath, extractPath));
 }
 
-TEST_F(ElevenZipFixture, files_are_created_when_unziped)  // NOLINT
+TEST_F(ElevenZipFixture, files_are_created_when_unziped) // NOLINT
 {
 	const auto zipPath = locAssetDir / "archive.zip";
 	const auto extractPath = locAssetDir / "extracted";
@@ -44,7 +44,7 @@ TEST_F(ElevenZipFixture, files_are_created_when_unziped)  // NOLINT
 	EXPECT_TRUE(std::filesystem::exists(extractPath / "subfolder" / "moreStuff.txt"));
 }
 
-TEST_F(ElevenZipFixture, files_are_equivalent_to_original_when_unziped)	 // NOLINT
+TEST_F(ElevenZipFixture, files_are_equivalent_to_original_when_unziped) // NOLINT
 {
 	const auto zipPath = locAssetDir / "archive.zip";
 	const auto extractPath = locAssetDir / "extracted";

@@ -16,9 +16,9 @@ SetupMockUnitConvertion() {
 	common::UnitConversion conversion(mockingFileImpl);
 	common::Unit::SetConversionFiles({conversion});
 }
-}  // namespace
+} // namespace
 
-TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
+TEST(AddRecipeUnit, unit_is_added_to_recipe) // NOLINT
 {
 	SetupMockUnitConvertion();
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
@@ -39,7 +39,7 @@ TEST(AddRecipeUnit, unit_is_added_to_recipe)  // NOLINT
 	EXPECT_GT(mockRecipe->myContent["Ingredients"].size(), 0);
 }
 
-TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
+TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento) // NOLINT
 {
 	SetupMockUnitConvertion();
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
@@ -60,7 +60,7 @@ TEST(AddRecipeUnit, unit_is_removed_from_recipe_by_memento)	 // NOLINT
 	EXPECT_EQ(mockRecipe->myContent["Ingredients"].size(), 0);
 }
 
-TEST(AddRecipeUnit, unit_is_readded_to_recipe_by_memento)  // NOLINT
+TEST(AddRecipeUnit, unit_is_readded_to_recipe_by_memento) // NOLINT
 {
 	SetupMockUnitConvertion();
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(

@@ -25,4 +25,4 @@ public:
 	void SetName(std::string_view aName);
 	[[nodiscard]] std::string GetName() const;
 };
-}  // namespace common
+} // namespace common

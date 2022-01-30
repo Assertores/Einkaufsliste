@@ -51,4 +51,4 @@ private:
 
 	std::shared_ptr<infas::IFile> myCurrentFile;
 };
-}  // namespace biz
+} // namespace biz

@@ -6,4 +6,4 @@ struct PatcherSettings {
 };
 
 void Patch(const PatcherSettings& aSettings);
-}  // namespace biz
+} // namespace biz

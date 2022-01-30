@@ -37,4 +37,4 @@ private:
 	std::optional<UnitConversion> myConversionFile;
 	static std::vector<UnitConversion> myConversionFiles;
 };
-}  // namespace common
+} // namespace common

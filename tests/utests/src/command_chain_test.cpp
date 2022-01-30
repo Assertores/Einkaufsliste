@@ -16,7 +16,7 @@ public:
 	MOCK_METHOD(void, Revert, (), (override));
 };
 
-TEST(CommandChain, add_nullptr_is_ignored)	// NOLINT
+TEST(CommandChain, add_nullptr_is_ignored) // NOLINT
 {
 	common::CommandChain subject;
 
@@ -26,7 +26,7 @@ TEST(CommandChain, add_nullptr_is_ignored)	// NOLINT
 	EXPECT_FALSE(subject.Redo());
 }
 
-TEST(CommandChain, revertable_command_is_reverted)	// NOLINT
+TEST(CommandChain, revertable_command_is_reverted) // NOLINT
 {
 	common::CommandChain subject;
 	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
@@ -38,7 +38,7 @@ TEST(CommandChain, revertable_command_is_reverted)	// NOLINT
 	EXPECT_TRUE(subject.Undo());
 }
 
-TEST(CommandChain, revertable_command_is_executed_again)  // NOLINT
+TEST(CommandChain, revertable_command_is_executed_again) // NOLINT
 {
 	common::CommandChain subject;
 	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
@@ -51,7 +51,7 @@ TEST(CommandChain, revertable_command_is_executed_again)  // NOLINT
 	EXPECT_TRUE(subject.Redo());
 }
 
-TEST(CommandChain, you_can_revert_and_reexecute_a_chain_of_commands)  // NOLINT
+TEST(CommandChain, you_can_revert_and_reexecute_a_chain_of_commands) // NOLINT
 {
 	common::CommandChain subject;
 	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
@@ -72,7 +72,7 @@ TEST(CommandChain, you_can_revert_and_reexecute_a_chain_of_commands)  // NOLINT
 	subject.Redo();
 }
 
-TEST(CommandChain, you_can_change_the_history_of_commands)	// NOLINT
+TEST(CommandChain, you_can_change_the_history_of_commands) // NOLINT
 {
 	common::CommandChain subject;
 	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();
@@ -105,7 +105,7 @@ TEST(CommandChain, you_can_change_the_history_of_commands)	// NOLINT
 	subject.Redo();
 }
 
-TEST(CommandChain, a_non_revertable_command_wont_clear_the_history)	 // NOLINT
+TEST(CommandChain, a_non_revertable_command_wont_clear_the_history) // NOLINT
 {
 	common::CommandChain subject;
 	auto command1 = std::make_unique<NiceMock<CommandMementoMock>>();

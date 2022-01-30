@@ -26,4 +26,4 @@ private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::Recipe>>> myRecipeObservable;
 };
-}  // namespace biz
+} // namespace biz

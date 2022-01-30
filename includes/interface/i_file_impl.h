@@ -77,7 +77,7 @@ public:
 				auto relPath = it.first.lexically_relative(aKey);
 				if (relPath != "."
 					&& *relPath.begin()
-						   != "..")	 // NOLINT TODO(andreas): check if key is a parent path
+						   != "..") // NOLINT TODO(andreas): check if key is a parent path
 				{
 					result.push_back(it.first);
 				}
@@ -117,7 +117,7 @@ public:
 	std::map<std::filesystem::path, std::vector<std::string>> myContent;
 	std::filesystem::path myPath;
 };
-}  // namespace fake
+} // namespace fake
 
 template <typename Impl, typename>
 std::shared_ptr<IFileImpl>
@@ -135,4 +135,4 @@ IFileImpl::Open(const std::filesystem::path& aPath) {
 	}
 	return file;
 }
-}  // namespace infas
+} // namespace infas

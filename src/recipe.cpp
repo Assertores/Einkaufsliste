@@ -117,4 +117,4 @@ std::string
 Recipe::GetName() const {
 	return ReadFromField(locNameKey);
 }
-}  // namespace common
+} // namespace common

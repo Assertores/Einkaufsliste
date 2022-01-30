@@ -36,4 +36,4 @@ public:
 	cpr::Url myPatch{};
 	std::string myNewVersion{};
 };
-}  // namespace biz
+} // namespace biz

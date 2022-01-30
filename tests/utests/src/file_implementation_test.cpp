@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(FileImpl, opening_same_file_twice_returns_cashed_instance)	 // NOLINT
+TEST(FileImpl, opening_same_file_twice_returns_cashed_instance) // NOLINT
 {
 	auto subject1 = infas::IFileImpl::Open<infas::fake::FileImpl>("some/path");
 	auto subject2 = infas::IFileImpl::Open<infas::fake::FileImpl>("some/path");
@@ -12,7 +12,7 @@ TEST(FileImpl, opening_same_file_twice_returns_cashed_instance)	 // NOLINT
 	EXPECT_EQ(subject1, subject2);
 }
 
-TEST(FileImpl, opening_different_file_returns_different_instance)  // NOLINT
+TEST(FileImpl, opening_different_file_returns_different_instance) // NOLINT
 {
 	auto subject1 = infas::IFileImpl::Open<infas::fake::FileImpl>("some/path");
 	auto subject2 = infas::IFileImpl::Open<infas::fake::FileImpl>("some/different/path");
@@ -22,7 +22,7 @@ TEST(FileImpl, opening_different_file_returns_different_instance)  // NOLINT
 	EXPECT_NE(subject1, subject2);
 }
 
-TEST(FileImpl, opening_calls_open_funktion_on_instance)	 // NOLINT
+TEST(FileImpl, opening_calls_open_funktion_on_instance) // NOLINT
 {
 	auto subject = infas::IFileImpl::Open<infas::fake::FileImpl>("some/path");
 

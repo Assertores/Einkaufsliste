@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
+TEST(AddListRecipe, file_is_added_to_list) // NOLINT
 {
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -30,7 +30,7 @@ TEST(AddListRecipe, file_is_added_to_list)	// NOLINT
 	EXPECT_TRUE(containsFile);
 }
 
-TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
+TEST(AddListRecipe, adding_file_to_list_can_not_be_undone) // NOLINT
 {
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -48,7 +48,7 @@ TEST(AddListRecipe, adding_file_to_list_can_not_be_undone)	// NOLINT
 	EXPECT_EQ(memento, nullptr);
 }
 
-TEST(AddListRecipe, file_is_removed_from_list_by_memento)  // NOLINT
+TEST(AddListRecipe, file_is_removed_from_list_by_memento) // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
@@ -76,7 +76,7 @@ TEST(AddListRecipe, file_is_removed_from_list_by_memento)  // NOLINT
 	EXPECT_FALSE(containsFile);
 }
 
-TEST(AddListRecipe, file_is_readded_to_list_by_memento)	 // NOLINT
+TEST(AddListRecipe, file_is_readded_to_list_by_memento) // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(

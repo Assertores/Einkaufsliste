@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(ArgumentParser, ignores_first_argument)  // NOLINT
+TEST(ArgumentParser, ignores_first_argument) // NOLINT
 {
 	std::string argument = "asdfefc";
 	std::vector<std::string_view> args{argument};
@@ -16,7 +16,7 @@ TEST(ArgumentParser, ignores_first_argument)  // NOLINT
 	EXPECT_FALSE(wasCalled);
 }
 
-TEST(ArgumentParser, lambda_is_called_if_argument_is_encountered)  // NOLINT
+TEST(ArgumentParser, lambda_is_called_if_argument_is_encountered) // NOLINT
 {
 	std::string argument = "asdfefc";
 	std::vector<std::string_view> args{"", argument};
@@ -30,7 +30,7 @@ TEST(ArgumentParser, lambda_is_called_if_argument_is_encountered)  // NOLINT
 	EXPECT_TRUE(wasCalled);
 }
 
-TEST(ArgumentParser, argument_is_removed_from_queue_on_lambda_call)	 // NOLINT
+TEST(ArgumentParser, argument_is_removed_from_queue_on_lambda_call) // NOLINT
 {
 	std::string argument1 = "asdfefc";
 	std::string argument2 = "basdzte";
@@ -45,7 +45,7 @@ TEST(ArgumentParser, argument_is_removed_from_queue_on_lambda_call)	 // NOLINT
 	EXPECT_EQ(firstElement, argument2);
 }
 
-TEST(ArgumentParser, unparsed_arguments_are_returned)  // NOLINT
+TEST(ArgumentParser, unparsed_arguments_are_returned) // NOLINT
 {
 	std::string argument1 = "asdfefc";
 	std::string argument2 = "basdzte";

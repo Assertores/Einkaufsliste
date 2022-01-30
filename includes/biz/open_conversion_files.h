@@ -20,4 +20,4 @@ public:
 private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 };
-}  // namespace biz
+} // namespace biz

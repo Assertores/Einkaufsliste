@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(OpenRecipe, recipe_is_opend)  // NOLINT
+TEST(OpenRecipe, recipe_is_opend) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();
@@ -20,7 +20,7 @@ TEST(OpenRecipe, recipe_is_opend)  // NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(OpenRecipe, opening_a_recipe_can_not_be_undone)  // NOLINT
+TEST(OpenRecipe, opening_a_recipe_can_not_be_undone) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto recipe = std::make_shared<common::Observable<std::optional<common::Recipe>>>();

@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(AddWeekRecipe, file_is_added_to_week)	// NOLINT
+TEST(AddWeekRecipe, file_is_added_to_week) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -30,7 +30,7 @@ TEST(AddWeekRecipe, file_is_added_to_week)	// NOLINT
 	EXPECT_TRUE(containsFile);
 }
 
-TEST(AddWeekRecipe, file_is_removed_from_week_by_memento)  // NOLINT
+TEST(AddWeekRecipe, file_is_removed_from_week_by_memento) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -57,7 +57,7 @@ TEST(AddWeekRecipe, file_is_removed_from_week_by_memento)  // NOLINT
 	EXPECT_FALSE(containsFile);
 }
 
-TEST(AddWeekRecipe, file_is_readded_to_week_by_memento)	 // NOLINT
+TEST(AddWeekRecipe, file_is_readded_to_week_by_memento) // NOLINT
 {
 	auto mockWeek = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));

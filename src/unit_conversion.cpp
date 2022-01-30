@@ -33,7 +33,7 @@ UnitConversion::GetConversionRate(std::string_view aCurrentUnit, float& aOutConv
 	}
 	float value = std::numeric_limits<float>::quiet_NaN();
 #if gcc_is_unable_to_compile_from_chars
-	const auto* end = rate.data() + rate.size();  // NOLINT
+	const auto* end = rate.data() + rate.size(); // NOLINT
 	auto errors = std::from_chars(rate.data(), end, value);
 	if (errors.ec != std::errc() || errors.ptr != end) {
 		infas::ILogger::Log(
@@ -44,9 +44,9 @@ UnitConversion::GetConversionRate(std::string_view aCurrentUnit, float& aOutConv
 	}
 #else
 	// don't ask!!
-	char* ptr = nullptr;  // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
+	char* ptr = nullptr; // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
 	value = std::strtof(rate.data(), &ptr);
-	if (ptr != rate.data() + rate.size())  // NOLINT
+	if (ptr != rate.data() + rate.size()) // NOLINT
 	{
 		infas::ILogger::Log(
 			infas::LogLevel::Error,
@@ -84,4 +84,4 @@ UnitConversion::GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) c
 	aOutConvertedAmount = currentConvertedAmount;
 	return currentUnit;
 }
-}  // namespace common
+} // namespace common

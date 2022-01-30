@@ -87,4 +87,4 @@ std::vector<std::filesystem::path>
 IFile::GetSubKeys(const std::filesystem::path& aRoot) const {
 	return myFileImplementation->GetKeys(aRoot);
 }
-}  // namespace infas
+} // namespace infas

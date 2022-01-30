@@ -48,4 +48,4 @@ IUpdaterTemplateMethod::Execute(const UpdaterSettings& aSettings) {
 	CleanUp();
 	return isPatched;
 }
-}  // namespace infas
+} // namespace infas

@@ -13,7 +13,7 @@ using namespace std::chrono_literals;
 static constexpr auto locSleepTime = 5ms;
 static const std::filesystem::path locAssetDir{ASSETS_DIR};
 
-TEST(application, complains_if_command_is_unrecogniced)	 // NOLINT
+TEST(application, complains_if_command_is_unrecogniced) // NOLINT
 {
 	std::stringstream out;
 	biz::Entry(
@@ -30,7 +30,7 @@ TEST(application, complains_if_command_is_unrecogniced)	 // NOLINT
 	EXPECT_FALSE(out.str().empty());
 }
 
-TEST(application, reacts_to_exit_commands)	// NOLINT
+TEST(application, reacts_to_exit_commands) // NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
@@ -44,7 +44,7 @@ TEST(application, reacts_to_exit_commands)	// NOLINT
 	thread.join();
 }
 
-TEST(application, reacts_to_quit_commands)	// NOLINT
+TEST(application, reacts_to_quit_commands) // NOLINT
 {
 	std::stringstream out;
 	std::stringstream in;
@@ -58,7 +58,7 @@ TEST(application, reacts_to_quit_commands)	// NOLINT
 	thread.join();
 }
 
-TEST(application, can_undo)	 // NOLINT
+TEST(application, can_undo) // NOLINT
 {
 	const auto* const name = "dfzjzejdsaf";
 	const auto fileName = locAssetDir / "exampleRecipeLive.md";
@@ -94,7 +94,7 @@ TEST(application, can_undo)	 // NOLINT
 	EXPECT_EQ(result.GetName(), prevName);
 }
 
-TEST(application, can_redo)	 // NOLINT
+TEST(application, can_redo) // NOLINT
 {
 	const auto* const name = "ezzsjzsdaf";
 	const auto fileName = locAssetDir / "exampleRecipeLive.md";
@@ -129,7 +129,7 @@ TEST(application, can_redo)	 // NOLINT
 	EXPECT_EQ(result.GetName(), name);
 }
 
-TEST(application, can_open_recipe)	// NOLINT
+TEST(application, can_open_recipe) // NOLINT
 {
 	const auto fileName = locAssetDir / "exampleRecipeLive.md";
 	std::filesystem::copy_file(
@@ -154,7 +154,7 @@ TEST(application, can_open_recipe)	// NOLINT
 	thread.join();
 }
 
-TEST(application, can_name_recipe)	// NOLINT
+TEST(application, can_name_recipe) // NOLINT
 {
 	const auto* const name = "hsaudfhak";
 	const auto fileName = locAssetDir / "exampleRecipeLive.md";
@@ -187,7 +187,7 @@ TEST(application, can_name_recipe)	// NOLINT
 	EXPECT_EQ(result.GetName(), name);
 }
 
-TEST(application, can_add_description_to_recipe)  // NOLINT
+TEST(application, can_add_description_to_recipe) // NOLINT
 {
 	const auto* const description = "bsdgse";
 	const auto fileName = locAssetDir / "exampleRecipeLive.md";
@@ -221,7 +221,7 @@ TEST(application, can_add_description_to_recipe)  // NOLINT
 }
 
 #if not_tesable
-TEST(application, can - open - conversion - file)  // NOLINT
+TEST(application, can - open - conversion - file) // NOLINT
 {
 	const auto* const conversionFileName = "assets/exampleConversion.md";
 
@@ -244,7 +244,7 @@ TEST(application, can - open - conversion - file)  // NOLINT
 }
 #endif
 
-TEST(application, can_add_ingrediance_to_recipe)  // NOLINT
+TEST(application, can_add_ingrediance_to_recipe) // NOLINT
 {
 	const auto* const type = "bsdgse";
 	const auto amount = 3;
@@ -297,7 +297,7 @@ TEST(application, can_add_ingrediance_to_recipe)  // NOLINT
 	EXPECT_EQ(ingrediance[0], common::Unit(amount, unit, type));
 }
 
-TEST(application, can_remove_ingrediance_from_recipe)  // NOLINT
+TEST(application, can_remove_ingrediance_from_recipe) // NOLINT
 {
 	const auto* const type = "bsdgse";
 	const auto amount = 3;

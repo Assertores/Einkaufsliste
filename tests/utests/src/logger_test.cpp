@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(Logger, logs_get_replayed)	 // NOLINT
+TEST(Logger, logs_get_replayed) // NOLINT
 {
 	infas::fake::Logger subject;
 	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);
@@ -18,7 +18,7 @@ TEST(Logger, logs_get_replayed)	 // NOLINT
 	EXPECT_EQ(subject.doLogCount, 1);
 }
 
-TEST(Logger, replay_data_is_same)  // NOLINT
+TEST(Logger, replay_data_is_same) // NOLINT
 {
 	auto logLevel = infas::LogLevel::Error;
 	auto logType = infas::LogType::Generic;
@@ -46,7 +46,7 @@ TEST(Logger, replay_data_is_same)  // NOLINT
 	EXPECT_EQ(outLog, log);
 }
 
-TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT
+TEST(Logger, only_higher_or_equal_log_level_is_loged) // NOLINT
 {
 	infas::fake::Logger subject;
 	infas::ILogger::SetLogLevel(infas::LogLevel::Error);
@@ -63,7 +63,7 @@ TEST(Logger, only_higher_or_equal_log_level_is_loged)  // NOLINT
 	infas::ILogger::Clear();
 }
 
-TEST(Logger, only_logs_Type_in_mask)  // NOLINT
+TEST(Logger, only_logs_Type_in_mask) // NOLINT
 {
 	infas::fake::Logger subject;
 	infas::ILogger::SetLogLevel(infas::LogLevel::Verbose);

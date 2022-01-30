@@ -90,18 +90,18 @@ Unit::FromString(std::string_view aString) {
 		float value = std::numeric_limits<float>::quiet_NaN();
 #if gcc_is_unable_to_compile_from_chars
 		auto errors =
-			std::from_chars(element.data(), element.data() + element.size(), value);  // NOLINT
+			std::from_chars(element.data(), element.data() + element.size(), value); // NOLINT
 		auto unit = element.substr(errors.ptr - element.data());
 #else
 		// don't ask!!
-		char* ptr = nullptr;  // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
+		char* ptr = nullptr; // NOLINT(cppcoreguidelines-pro-type-vararg, hicpp-vararg)
 		value = std::strtof(element.data(), &ptr);
 		auto unit = element.substr(ptr - element.data());
 #endif
 		result.emplace_back(value, unit, type);
 	}
 
-	return result;	// TODO(andreas): where do i get the ConversionFile
+	return result; // TODO(andreas): where do i get the ConversionFile
 }
 
 std::string
@@ -131,4 +131,4 @@ Unit::ToString(const std::vector<Unit>& aUnits) {
 	auto result = strBuilder.str();
 	return valid ? result.substr(0, result.size() - 3) : "";
 }
-}  // namespace common
+} // namespace common

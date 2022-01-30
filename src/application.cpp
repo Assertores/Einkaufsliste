@@ -107,4 +107,4 @@ Application::Run(const AppSettings& aSettings) {
 	infas::IFileImpl::Clear();
 	infas::ILogger::Clear();
 }
-}  // namespace biz
+} // namespace biz

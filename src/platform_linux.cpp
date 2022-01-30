@@ -29,4 +29,4 @@ std::filesystem::path
 CurrentExe() {
 	return std::filesystem::canonical("/proc/self/exe");
 }
-}  // namespace common
+} // namespace common

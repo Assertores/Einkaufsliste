@@ -50,4 +50,4 @@ JsonParser::GetKeys(std::filesystem::path aKey) const {
 	infas::ILogger::Log(infas::LogLevel::Fatal, infas::LogType::File, "not implemented");
 	return {};
 }
-}  // namespace common
+} // namespace common

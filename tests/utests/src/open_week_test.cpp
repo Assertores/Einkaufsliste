@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(OpenWeek, week_is_opend)  // NOLINT
+TEST(OpenWeek, week_is_opend) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto week = std::make_shared<common::Observable<std::optional<common::Week>>>();
@@ -20,7 +20,7 @@ TEST(OpenWeek, week_is_opend)  // NOLINT
 	infas::IFileImpl::Clear();
 }
 
-TEST(OpenWeek, opening_a_week_can_not_be_undone)  // NOLINT
+TEST(OpenWeek, opening_a_week_can_not_be_undone) // NOLINT
 {
 	auto frontend = std::make_shared<infas::fake::Frontend>();
 	auto week = std::make_shared<common::Observable<std::optional<common::Week>>>();

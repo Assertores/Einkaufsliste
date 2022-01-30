@@ -30,4 +30,4 @@ OpenWeek::Execute() {
 
 	return nullptr;
 }
-}  // namespace biz
+} // namespace biz

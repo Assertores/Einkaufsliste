@@ -24,4 +24,4 @@ void
 CompileList::SetReferences(std::weak_ptr<common::Observable<std::optional<common::List>>> aList) {
 	myList = std::move(aList);
 }
-}  // namespace biz
+} // namespace biz

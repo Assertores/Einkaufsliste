@@ -51,9 +51,9 @@ ChangeRecipeName::Execute() {
 void
 ChangeRecipeName::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::Recipe>>> aCurrentRecipe) // NOLINT
 {
 	myRecipe = aCurrentRecipe;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace biz
+} // namespace biz

@@ -89,7 +89,7 @@ public:
 
 	int doLogCount = 0;
 };
-}  // namespace fake
+} // namespace fake
 
 template <typename LogT, typename>
 void
@@ -145,4 +145,4 @@ ToString(const LogType& aLevel) {
 	ILogger::Log(LogLevel::Error, LogType::Generic, "invalid log level");
 	return "";
 }
-};	// namespace infas
+}; // namespace infas

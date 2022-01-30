@@ -29,4 +29,4 @@ private:
 	std::map<std::filesystem::path, std::vector<std::string>> myContent;
 	std::filesystem::path myFile;
 };
-}  // namespace common
+} // namespace common

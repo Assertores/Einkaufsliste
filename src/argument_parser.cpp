@@ -85,4 +85,4 @@ RunInterpretion(const std::vector<std::string_view>& aArgs, const Interpreter& a
 	}
 	return invalidArguments;
 }
-}  // namespace biz
+} // namespace biz

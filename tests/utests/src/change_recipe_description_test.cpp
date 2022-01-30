@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(ChangeRecipeDescription, description_is_added_to_recipe)  // NOLINT
+TEST(ChangeRecipeDescription, description_is_added_to_recipe) // NOLINT
 {
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -25,7 +25,7 @@ TEST(ChangeRecipeDescription, description_is_added_to_recipe)  // NOLINT
 	EXPECT_EQ(mockRecipe->myContent["Description"][0], infas::fake::Frontend::defaultText);
 }
 
-TEST(ChangeRecipeDescription, description_is_reverted_to_previous_description_by_memento)  // NOLINT
+TEST(ChangeRecipeDescription, description_is_reverted_to_previous_description_by_memento) // NOLINT
 {
 	std::string_view firstDescription = "bnzdsfbasefksadf";
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
@@ -48,7 +48,7 @@ TEST(ChangeRecipeDescription, description_is_reverted_to_previous_description_by
 	EXPECT_EQ(mockRecipe->myContent["Description"][0], firstDescription);
 }
 
-TEST(ChangeRecipeDescription, description_is_readded_to_recipe_by_memento)	// NOLINT
+TEST(ChangeRecipeDescription, description_is_readded_to_recipe_by_memento) // NOLINT
 {
 	auto mockRecipe = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));

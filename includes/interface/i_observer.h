@@ -19,5 +19,5 @@ public:
 
 	int onChangeCount = 0;
 };
-}  // namespace fake
-};	// namespace infas
+} // namespace fake
+}; // namespace infas

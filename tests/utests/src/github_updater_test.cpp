@@ -138,7 +138,7 @@ public:
 	std::string myDownloadUrlLin = "www.something.com/to/download/linux.zip";
 };
 
-TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)  // NOLINT
+TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch) // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v2.0.0";
@@ -152,7 +152,7 @@ TEST_F(GithubTestFixture, higher_version_is_identifyed_as_patch)  // NOLINT
 	EXPECT_TRUE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)	// NOLINT
+TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch) // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v0.0.0";
@@ -166,7 +166,7 @@ TEST_F(GithubTestFixture, lower_version_is_identifyed_as_no_patch)	// NOLINT
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
+TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch) // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myTestVersion = "v1.2.3";
@@ -174,14 +174,14 @@ TEST_F(GithubTestFixture, same_version_is_identifyed_as_no_patch)  // NOLINT
 	EXPECT_FALSE(subject.IsPatchUpdate());
 }
 
-TEST_F(GithubTestFixture, can_handle_negative_numbers)	// NOLINT
+TEST_F(GithubTestFixture, can_handle_negative_numbers) // NOLINT
 {
 	bool isNewer = false;
 	ASSERT_TRUE(biz::GithubUpdater::CompareVersion("v0.0.-1", "v0.0.0", isNewer));
 	EXPECT_TRUE(isNewer);
 }
 
-TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
+TEST_F(GithubTestFixture, download_url_is_read_out_from_json) // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.RetrieveMetaData(false);
@@ -195,7 +195,7 @@ TEST_F(GithubTestFixture, download_url_is_read_out_from_json)  // NOLINT
 #endif
 }
 
-TEST_F(GithubTestFixture, patch_zip_is_unpacked)  // NOLINT
+TEST_F(GithubTestFixture, patch_zip_is_unpacked) // NOLINT
 {
 	GithubUpdaterStub subject;
 	ASSERT_TRUE(subject.ExtractPatch());
@@ -220,7 +220,7 @@ TEST_F(GithubTestFixture, patch_zip_is_unpacked)  // NOLINT
 	EXPECT_EQ(moreStuffContent, "different content");
 }
 
-TEST_F(GithubTestFixture, patch_is_applied_to_folder)  // NOLINT
+TEST_F(GithubTestFixture, patch_is_applied_to_folder) // NOLINT
 {
 	GithubUpdaterStub subject;
 	ASSERT_TRUE(subject.ExtractPatch());
@@ -245,7 +245,7 @@ TEST_F(GithubTestFixture, patch_is_applied_to_folder)  // NOLINT
 	EXPECT_EQ(moreStuffContent, "different content");
 }
 
-TEST_F(GithubTestFixture, existing_files_are_renaimed_to_old)  // NOLINT
+TEST_F(GithubTestFixture, existing_files_are_renaimed_to_old) // NOLINT
 {
 	GithubUpdaterStub subject;
 	ASSERT_TRUE(subject.ExtractPatch());
@@ -261,7 +261,7 @@ TEST_F(GithubTestFixture, existing_files_are_renaimed_to_old)  // NOLINT
 	EXPECT_EQ(stuffContent, "SHOULD BE OVERWRITTEN");
 }
 
-TEST_F(GithubTestFixture, version_file_is_not_overwritten)	// NOLINT
+TEST_F(GithubTestFixture, version_file_is_not_overwritten) // NOLINT
 {
 	GithubUpdaterStub subject;
 	ASSERT_TRUE(subject.ExtractPatch());
@@ -271,7 +271,7 @@ TEST_F(GithubTestFixture, version_file_is_not_overwritten)	// NOLINT
 	// TODO(andreas): this test is not sufficiont!!!
 }
 
-TEST_F(GithubTestFixture, new_version_is_written_to_version_file)  // NOLINT
+TEST_F(GithubTestFixture, new_version_is_written_to_version_file) // NOLINT
 {
 	GithubUpdaterStub subject;
 	subject.myNewVersion = "asbfnuaeklskd";
@@ -286,7 +286,7 @@ TEST_F(GithubTestFixture, new_version_is_written_to_version_file)  // NOLINT
 	EXPECT_EQ(versionContent, subject.myNewVersion);
 }
 
-TEST_F(GithubTestFixture, temporary_files_are_cleaned_up)  // NOLINT
+TEST_F(GithubTestFixture, temporary_files_are_cleaned_up) // NOLINT
 {
 	GithubUpdaterStub subject;
 	ASSERT_TRUE(subject.ExtractPatch());
@@ -296,16 +296,16 @@ TEST_F(GithubTestFixture, temporary_files_are_cleaned_up)  // NOLINT
 	EXPECT_FALSE(std::filesystem::exists(subject.GetZipPath()));
 }
 
-TEST_F(GithubTestFixture, cleanup_wont_crash_on_partial_data)  // NOLINT
+TEST_F(GithubTestFixture, cleanup_wont_crash_on_partial_data) // NOLINT
 {
 	GithubUpdaterStub subject;
-	EXPECT_NO_THROW(subject.CleanUp());	 // NOLINT
+	EXPECT_NO_THROW(subject.CleanUp()); // NOLINT
 
 	EXPECT_FALSE(std::filesystem::exists(subject.GetPatchPath()));
 	EXPECT_FALSE(std::filesystem::exists(subject.GetZipPath()));
 }
 
-TEST_F(GithubTestFixture, extraction_fails_if_zip_file_is_missing)	// NOLINT
+TEST_F(GithubTestFixture, extraction_fails_if_zip_file_is_missing) // NOLINT
 {
 	GithubUpdaterStub subject;
 	std::filesystem::remove(locAssetDir / "patch.zip");

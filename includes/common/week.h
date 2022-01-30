@@ -42,4 +42,4 @@ public:
 	[[nodiscard]] Recipe GetRecipe(WeekDay aWeekDay, DayTime aDayTime) const;
 	[[nodiscard]] std::vector<Recipe> GetAllRecipes() const;
 };
-}  // namespace common
+} // namespace common

@@ -18,4 +18,4 @@ public:
 	[[nodiscard]] std::vector<std::filesystem::path> GetKeys(
 		std::filesystem::path aKey) const override;
 };
-}  // namespace common
+} // namespace common

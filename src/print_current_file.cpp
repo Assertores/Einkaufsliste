@@ -79,4 +79,4 @@ PrintCurrentFile::OnChange(std::optional<common::List> aElement) {
 	}
 	myCurrentFile = std::make_shared<common::List>(std::move(aElement.value()));
 }
-}  // namespace biz
+} // namespace biz

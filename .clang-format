@@ -31,6 +31,7 @@ ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 IndentCaseLabels: false
 IndentWidth: 4
+SpacesBeforeTrailingComments: 1
 Standard: c++17
 TabWidth: 4
 UseCRLF: false

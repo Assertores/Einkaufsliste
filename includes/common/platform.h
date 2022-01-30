@@ -14,4 +14,4 @@ void StartProcess(
 	const std::filesystem::path& aWorkingDirectory);
 
 std::filesystem::path CurrentExe();
-}  // namespace common
+} // namespace common

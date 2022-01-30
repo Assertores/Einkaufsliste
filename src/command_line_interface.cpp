@@ -171,4 +171,4 @@ CommandLineInterface::Poll() {
 	it->second();
 	return false;
 }
-}  // namespace biz
+} // namespace biz

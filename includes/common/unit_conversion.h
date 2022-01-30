@@ -21,4 +21,4 @@ public:
 	void SetConversionRate(std::string_view aUnit, float aConversionRate);
 	std::string GetBestUnit(float aBaseUnitAmount, float& aOutConvertedAmount) const;
 };
-}  // namespace common
+} // namespace common

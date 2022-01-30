@@ -18,4 +18,4 @@ private:
 	std::vector<std::unique_ptr<infas::ICommandMemento>> myCommandHistory;
 	size_t myBackOffset = 0;
 };
-}  // namespace common
+} // namespace common

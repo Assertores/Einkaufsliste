@@ -23,4 +23,4 @@ private:
 	std::weak_ptr<infas::IFrontend> myFrontend;
 	std::weak_ptr<common::Observable<std::optional<common::List>>> myListObservable;
 };
-}  // namespace biz
+} // namespace biz

@@ -18,9 +18,9 @@ SetupMockUnitConvertion() {
 	common::UnitConversion conversion(mockingFileImpl);
 	common::Unit::SetConversionFiles({conversion});
 }
-}  // namespace
+} // namespace
 
-TEST(CompileList, list_is_compiled)	 // NOLINT
+TEST(CompileList, list_is_compiled) // NOLINT
 {
 	SetupMockUnitConvertion();
 	const common::Unit unit(12, "kg", "wfndsauk");
@@ -52,7 +52,7 @@ TEST(CompileList, list_is_compiled)	 // NOLINT
 	EXPECT_TRUE(containsUnit);
 }
 
-TEST(CompileList, compiling_a_list_can_not_be_undone)  // NOLINT
+TEST(CompileList, compiling_a_list_can_not_be_undone) // NOLINT
 {
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));

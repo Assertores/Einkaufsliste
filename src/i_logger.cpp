@@ -29,4 +29,4 @@ void
 ILogger::SetLogMask(LogMask aTypeMask) {
 	myLogMask = aTypeMask;
 }
-}  // namespace infas
+} // namespace infas

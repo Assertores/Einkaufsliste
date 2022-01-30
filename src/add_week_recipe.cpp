@@ -72,9 +72,9 @@ AddWeekRecipe::Execute() {
 void
 AddWeekRecipe::SetReferences(
 	std::weak_ptr<infas::IFrontend> aFrontend,
-	std::shared_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek)	// NOLINT
+	std::shared_ptr<common::Observable<std::optional<common::Week>>> aCurrentWeek) // NOLINT
 {
 	myWeek = aCurrentWeek;
 	myFrontend = std::move(aFrontend);
 }
-}  // namespace biz
+} // namespace biz

@@ -14,4 +14,4 @@ public:
 private:
 	std::ostream& myOut;
 };
-}  // namespace biz
+} // namespace biz

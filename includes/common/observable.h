@@ -55,4 +55,4 @@ Observable<T>::Set(T aValue) noexcept {
 		myObservers.erase(it);
 	}
 }
-}  // namespace common
+} // namespace common

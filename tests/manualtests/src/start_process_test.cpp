@@ -5,7 +5,7 @@
 #include <string>
 
 int
-main(int argc, char** argv)	 // NOLINT
+main(int argc, char** argv) // NOLINT
 {
 	if (argc == 1) {
 		std::cout << "no arguments. starting another instance.\n";

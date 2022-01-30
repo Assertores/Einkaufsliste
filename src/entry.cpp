@@ -51,4 +51,4 @@ Entry(const std::vector<std::string_view>& aArgs, std::ostream& aOutput, std::is
 	app.Run(appSettings);
 	return 0;
 }
-}  // namespace biz
+} // namespace biz

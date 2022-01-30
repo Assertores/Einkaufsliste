@@ -137,4 +137,4 @@ Week::GetAllRecipes() const {
 	}
 	return result;
 }
-}  // namespace common
+} // namespace common

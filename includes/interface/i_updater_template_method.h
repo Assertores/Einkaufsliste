@@ -24,4 +24,4 @@ protected:
 	virtual bool ApplyPatch() = 0;
 	virtual void CleanUp() = 0;
 };
-}  // namespace infas
+} // namespace infas

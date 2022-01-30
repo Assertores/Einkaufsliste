@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-TEST(AddListWeek, file_is_added_to_list)  // NOLINT
+TEST(AddListWeek, file_is_added_to_list) // NOLINT
 {
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -16,7 +16,7 @@ TEST(AddListWeek, file_is_added_to_list)  // NOLINT
 	week.AddRecipe(
 		common::Recipe(infas::fake::Frontend::defaultFilePath),
 		common::WeekDay::Saturday,
-		common::DayTime{10, 20});  // NOLINT
+		common::DayTime{10, 20}); // NOLINT
 
 	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
@@ -36,7 +36,7 @@ TEST(AddListWeek, file_is_added_to_list)  // NOLINT
 	EXPECT_TRUE(containsFile);
 }
 
-TEST(AddListWeek, adding_file_to_list_can_not_be_undone)  // NOLINT
+TEST(AddListWeek, adding_file_to_list_can_not_be_undone) // NOLINT
 {
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
 		infas::IFileImpl::Open<infas::fake::FileImpl>("aubhfuke"));
@@ -48,7 +48,7 @@ TEST(AddListWeek, adding_file_to_list_can_not_be_undone)  // NOLINT
 	week.AddRecipe(
 		common::Recipe(infas::fake::Frontend::defaultFilePath),
 		common::WeekDay::Saturday,
-		common::DayTime{10, 20});  // NOLINT
+		common::DayTime{10, 20}); // NOLINT
 
 	auto subject = biz::AddListWeek::Create();
 	subject->SetReferences(frontend, list);
@@ -60,7 +60,7 @@ TEST(AddListWeek, adding_file_to_list_can_not_be_undone)  // NOLINT
 	EXPECT_EQ(memento, nullptr);
 }
 
-TEST(AddListWeek, file_is_removed_from_list_by_memento)	 // NOLINT
+TEST(AddListWeek, file_is_removed_from_list_by_memento) // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(
@@ -88,7 +88,7 @@ TEST(AddListWeek, file_is_removed_from_list_by_memento)	 // NOLINT
 	EXPECT_FALSE(containsFile);
 }
 
-TEST(AddListWeek, file_is_readded_to_list_by_memento)  // NOLINT
+TEST(AddListWeek, file_is_readded_to_list_by_memento) // NOLINT
 {
 	GTEST_SKIP();
 	auto mockList = std::static_pointer_cast<infas::fake::FileImpl>(

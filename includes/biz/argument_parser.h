@@ -31,4 +31,4 @@ Interpreter CreateInterpreter(
 
 std::vector<std::pair<int, std::string_view>> RunInterpretion(
 	const std::vector<std::string_view>& aArgs, const Interpreter& aInterpreter);
-}  // namespace biz
+} // namespace biz

@@ -20,4 +20,4 @@ public:
 private:
 	std::weak_ptr<common::Observable<std::optional<common::List>>> myList;
 };
-}  // namespace biz
+} // namespace biz
